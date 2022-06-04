@@ -9,6 +9,11 @@ export class ThisIsA implements Sentence {
   noun : Noun;
   constructor(noun: Noun) {
     this.noun = noun;
+    if (Math.floor((Math.random() * 100) + 1) > 50) {
+      this.noun.specific();
+    } else {
+      this.noun.unspecific();
+    }
   }
 
   static create(corpus: Corpus) : Sentence {
@@ -16,10 +21,10 @@ export class ThisIsA implements Sentence {
   }
 
   renderDE(): string {
-    const sentenceDE = sentence`Das ist ${this.noun.nominative().unspecific().renderDE()}`;
+    const sentenceDE = sentence`Das ist ${this.noun.nominative().renderDE()}`;
     return sentenceDE.write();
   }
   renderEN() : string {
-    return "This is " + this.noun.unspecific().renderEN();
+    return "This is " + this.noun.renderEN();
   }
 }

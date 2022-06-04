@@ -7,6 +7,11 @@ export class IFind implements Sentence {
   noun : Noun;
   constructor(noun: Noun) {
     this.noun = noun;
+    if (Math.floor((Math.random() * 100) + 1) > 50) {
+      this.noun.specific();
+    } else {
+      this.noun.unspecific();
+    }
   }
 
   static create(corpus: Corpus) : Sentence {
@@ -14,10 +19,10 @@ export class IFind implements Sentence {
   }
 
   renderDE(): string {
-    const sentenceDE = sentence`Ich finde ${this.noun.specific().accusative().renderDE()}`;
+    const sentenceDE = sentence`Ich finde ${this.noun.accusative().renderDE()}`;
     return sentenceDE.write();
   }
   renderEN() : string {
-    return "I find " + this.noun.specific().renderEN();
+    return "I find " + this.noun.renderEN();
   }
 }

@@ -23,7 +23,13 @@ const sentenceGenerators = [
 export class Corpus {
 
   randomNoun(): Noun {
-    return nouns[Math.floor(Math.random() * nouns.length)];
+    const next = nouns[Math.floor(Math.random() * nouns.length)];
+    // if (Math.floor((Math.random() * 100) + 1) > 20) {
+    //   next.plural();
+    // } else {
+    //   next.singular();
+    // }
+    return next;
   }
 
   randomSentence() : Sentence {

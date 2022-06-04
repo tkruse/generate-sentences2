@@ -9,6 +9,11 @@ export class IHelp implements Sentence {
   noun : Noun;
   constructor(noun: Noun) {
     this.noun = noun;
+    if (Math.floor((Math.random() * 100) + 1) > 50) {
+      this.noun.specific();
+    } else {
+      this.noun.unspecific();
+    }
   }
 
   static create(corpus: Corpus) : Sentence {
@@ -16,10 +21,10 @@ export class IHelp implements Sentence {
   }
 
   renderDE(): string {
-    const sentenceDE = sentence`Ich helfe ${this.noun.unspecific().dative().renderDE()}`;
+    const sentenceDE = sentence`Ich helfe ${this.noun.dative().renderDE()}`;
     return sentenceDE.write();
   }
   renderEN() : string {
-    return "I help " + this.noun.unspecific().renderEN();
+    return "I help " + this.noun.renderEN();
   }
 }
