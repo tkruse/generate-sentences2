@@ -1,16 +1,14 @@
-import { Sentence } from './sentences/Sentence';
-import { IFind } from './sentences/IFind';
-import { ThisIsA } from './sentences/ThisIsA';
-import { IHelp } from './sentences/IHelp';
+import { Sentence } from './Sentence';
 import { Noun } from './Noun';
 import { Attribute } from './Attribute';
 import { GrammaticalCase } from './GrammaticalCase'
-import { noun } from 'satzbau';
+import { noun, sentence } from 'satzbau';
+
 
 
 const nouns = [
     new Noun(noun('das Bett,-en,-es'), "bed"),
-    new Noun(noun('das Haus,-en,-es'), "bed"),
+    new Noun(noun('das Haus,-en,-es'), "house"),
     new Noun(noun('der Tisch,-e,-es'), "table"),
     new Noun(noun('der Koffer,-,-s'), "suitcase"),
     new Noun(noun('die Lampe,-n,-n'), "lamp"),
@@ -18,9 +16,24 @@ const nouns = [
   ];
 
 const sentenceGenerators = [
-  IFind.create,
-  ThisIsA.create,
-  IHelp.create
+  function(noun: Noun) {
+    return new Sentence(
+      noun,
+      sentence`Ich finde ${noun.accusative().renderDE()}`,
+      `I find ${noun.renderEN()}`
+    )},
+  function(noun: Noun) {
+    return new Sentence(
+      noun,
+      sentence `Ich helfe ${noun.dative().renderDE()}`,
+      `I help ${noun.renderEN()}`
+    )},
+  function(noun: Noun) {
+    return new Sentence(
+      noun,
+      sentence `Das ist ${noun.nominative().renderDE()}`,
+      `This is ${noun.renderEN()}`
+    )}
 ];
 
 const attributes = [
@@ -46,9 +59,8 @@ export class Corpus {
     return next;
   }
 
-
-
   randomSentence() : Sentence {
-    return sentenceGenerators[Math.floor(Math.random() * sentenceGenerators.length)](this);
+    const noun = this.randomNoun();
+    return sentenceGenerators[Math.floor(Math.random() * sentenceGenerators.length)](noun);
   }
 }
