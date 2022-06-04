@@ -13,7 +13,6 @@ export class Sentence implements Words {
     this.noun = noun;
 
     const random = Math.floor((Math.random() * 100) + 1);
-    console.log(random);
 
     if (random  < 30) {
       this.noun.specific();

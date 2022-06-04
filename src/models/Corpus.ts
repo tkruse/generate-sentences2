@@ -20,19 +20,21 @@ const sentenceGenerators = [
     return new Sentence(
       noun,
       sentence`Ich finde ${noun.accusative().renderDE()}`,
-      `I find ${noun.renderEN()}`
+      `I find ${noun.renderEN()}.`
     )},
   function(noun: Noun) {
     return new Sentence(
       noun,
       sentence `Ich helfe ${noun.dative().renderDE()}`,
-      `I help ${noun.renderEN()}`
+      `I help ${noun.renderEN()}.`
     )},
   function(noun: Noun) {
+    const article = noun.isPlural ? "are" : "is";
+    const pointer = noun.isPlural ? "These" : "This";
     return new Sentence(
       noun,
       sentence `Das ist ${noun.nominative().renderDE()}`,
-      `This is ${noun.renderEN()}`
+      `${pointer} ${article} ${noun.renderEN()}.`
     )}
 ];
 
@@ -48,6 +50,7 @@ export class Corpus {
 
   randomNoun(): Noun {
     const next = nouns[Math.floor(Math.random() * nouns.length)];
+    // Adjectives buggy for plural
     // if (Math.floor((Math.random() * 100) + 1) > 20) {
     //   next.plural();
     // } else {

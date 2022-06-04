@@ -78,6 +78,12 @@ export class Noun implements Words {
       rNoun = rNoun.unspecific();
     }
 
+    if (this.isPlural) {
+      rNoun = rNoun.plural();
+    } else {
+      rNoun = rNoun.singular();
+    }
+
     if (this.case === "nominative") {
       rNoun = rNoun.nominative();
     } else if (this.case === "accusative") {
@@ -99,7 +105,7 @@ export class Noun implements Words {
 			attribute = this.allAttributes[0].enWord + " ";
 		}
 
-		var article = "a";
+		var article = this.isPlural ? "" : "a";
 		if (this.isNegated) {
 			article = "no";
 		} else if (this.isSpecific) {
@@ -109,8 +115,7 @@ export class Noun implements Words {
 		return article + " "
 		  + attribute
       + this.enoun
-      + (this.isPlural ? "s " : "")
-      ;
+      + (this.isPlural ? "s" : "");
   }
 
 }
