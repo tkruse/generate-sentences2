@@ -4,12 +4,17 @@ import { ThisIsA } from './sentences/ThisIsA';
 import { IHelp } from './sentences/IHelp';
 import { Noun } from './Noun';
 import { Attribute } from './Attribute';
+import { GrammaticalCase } from './GrammaticalCase'
 import { noun } from 'satzbau';
+
 
 const nouns = [
     new Noun(noun('das Bett,-en,-es'), "bed"),
+    new Noun(noun('das Haus,-en,-es'), "bed"),
     new Noun(noun('der Tisch,-e,-es'), "table"),
-    new Noun(noun('die Lampe,-n,-'), "lamp")
+    new Noun(noun('der Koffer,-,-s'), "suitcase"),
+    new Noun(noun('die Lampe,-n,-n'), "lamp"),
+    new Noun(noun('die Tasse,-n,-'), "cup")
   ];
 
 const sentenceGenerators = [
@@ -20,7 +25,9 @@ const sentenceGenerators = [
 
 const attributes = [
   new Attribute("klein", "small"),
-  new Attribute("neu", "new")
+  new Attribute("neu", "new"),
+  new Attribute("schön", "nice"),
+  new Attribute("schwarz", "black"),
 ];
 
 

@@ -1,12 +1,8 @@
 import { Words } from './Words';
 import { Attribute } from './Attribute';
 import { Noun as SBNoun } from 'satzbau';
+import { GrammaticalCase } from './GrammaticalCase'
 
-type GrammaticalCase =
-	| 'nominative'
-	| 'accusative'
-	| 'dative'
-	| 'genitive';
 
 export class Noun implements Words {
 
@@ -87,6 +83,7 @@ export class Noun implements Words {
 		}
     return rNoun.write();
   }
+
   renderEN() : string {
 		var attribute = "";
 		if (this.allAttributes && this.allAttributes.length > 0) {
