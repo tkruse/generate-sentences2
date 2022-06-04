@@ -1,5 +1,5 @@
 import { sentence } from 'satzbau';
-import { Noun } from '../nouns/Noun';
+import { Noun } from '../Noun';
 import { Sentence } from './Sentence';
 import { Corpus } from '../Corpus';
 

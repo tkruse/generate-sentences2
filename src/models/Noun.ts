@@ -1,4 +1,5 @@
-import { Words } from '../Words';
+import { Words } from './Words';
+import { Attribute } from './Attribute';
 import { Noun as SBNoun } from 'satzbau';
 
 type GrammaticalCase =
@@ -14,12 +15,17 @@ export class Noun implements Words {
   isSpecific = false;
   isPlural = false;
   case: GrammaticalCase;
+	allAttributes: Attribute[];
+
+
+  // TODO: colors: blue man, green neutral, red woman, black plural
 
 
   constructor(wnoun: SBNoun, enoun: string) {
     this.wnoun = wnoun;
     this.enoun = enoun;
     this.case = 'nominative';
+		this.allAttributes = [];
   }
 
   specific(): Noun {
@@ -56,6 +62,10 @@ export class Noun implements Words {
     return this;
   }
 
+	attributes(attributes: Attribute[]) {
+		this.allAttributes = attributes;
+	}
+
   renderDE(): string {
     var rNoun = this.wnoun;
     if (this.isSpecific) {
@@ -72,10 +82,18 @@ export class Noun implements Words {
     } else if (this.case === "genitive") {
       rNoun = rNoun.genitive();
     }
+		if (this.allAttributes && this.allAttributes.length > 0) {
+			rNoun = rNoun.attributes(this.allAttributes[0].deWord);
+		}
     return rNoun.write();
   }
   renderEN() : string {
-    return (this.isSpecific ? "the " : "a ")
+		var attribute = "";
+		if (this.allAttributes && this.allAttributes.length > 0) {
+			attribute = this.allAttributes[0].enWord + " ";
+		}
+		return (this.isSpecific ? "the " : "a ")
+		  + attribute
       + this.enoun
       + (this.isPlural ? "s " : "")
       ;

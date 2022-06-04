@@ -2,21 +2,25 @@ import { Sentence } from './sentences/Sentence';
 import { IFind } from './sentences/IFind';
 import { ThisIsA } from './sentences/ThisIsA';
 import { IHelp } from './sentences/IHelp';
-import { Noun } from './nouns/Noun';
-import { Cat } from './nouns/Cat';
-import { Key } from './nouns/Key';
-import { Phone } from './nouns/Phone';
+import { Noun } from './Noun';
+import { Attribute } from './Attribute';
+import { noun } from 'satzbau';
 
 const nouns = [
-    new Cat(),
-    new Key(),
-    new Phone()
+    new Noun(noun('das Bett,-en,-es'), "bed"),
+    new Noun(noun('der Tisch,-e,-es'), "table"),
+    new Noun(noun('die Lampe,-n,-'), "lamp")
   ];
 
 const sentenceGenerators = [
   IFind.create,
   ThisIsA.create,
   IHelp.create
+];
+
+const attributes = [
+  new Attribute("klein", "small"),
+  new Attribute("neu", "new")
 ];
 
 
@@ -29,8 +33,13 @@ export class Corpus {
     // } else {
     //   next.singular();
     // }
+
+    next.attributes([attributes[Math.floor(Math.random() * attributes.length)]])
+    // console.log(next);
     return next;
   }
+
+
 
   randomSentence() : Sentence {
     return sentenceGenerators[Math.floor(Math.random() * sentenceGenerators.length)](this);
