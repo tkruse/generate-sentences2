@@ -70,10 +70,10 @@ export class Noun implements Words {
 
   renderDE(): string {
     var rNoun = this.wnoun;
-    if (this.isSpecific) {
+    if (this.isNegated) {
+      rNoun = rNoun.negated();
+    } else if (this.isSpecific) {
       rNoun = rNoun.specific();
-    } else if (this.isNegated) {
-      rNoun = rNoun.unspecific().negated();
     } else {
       rNoun = rNoun.unspecific();
     }
@@ -94,7 +94,9 @@ export class Noun implements Words {
       rNoun = rNoun.genitive();
     }
 		if (this.allAttributes && this.allAttributes.length > 0) {
-			rNoun = rNoun.attributes(this.allAttributes[0].deWord);
+			console.log(this.allAttributes);
+
+			rNoun = rNoun.attributes(...this.allAttributes.map((x, _) => x.deWord ));
 		}
     return rNoun.write();
   }
@@ -102,7 +104,7 @@ export class Noun implements Words {
   renderEN() : string {
 		var attribute = "";
 		if (this.allAttributes && this.allAttributes.length > 0) {
-			attribute = this.allAttributes[0].enWord + " ";
+			attribute = this.allAttributes.map((x) => x.enWord).join(", ") + " ";
 		}
 
 		var article = this.isPlural ? "" : "a";
