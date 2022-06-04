@@ -8,8 +8,6 @@ export const RandomSentencePair: FC = () => {
 
   const corpus = new Corpus();
 
-  console.log("render");
-
   const [words, setWords] = useState<Words>(() => corpus.randomSentence());
 
   const [hidden, setHidden] = useState(true);
@@ -21,8 +19,6 @@ export const RandomSentencePair: FC = () => {
     setWords(corpus.randomSentence());
     setHidden(true);
   }
-
-  console.log(words.renderDE());
 
   return (
     <>

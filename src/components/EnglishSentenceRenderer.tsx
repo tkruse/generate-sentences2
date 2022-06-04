@@ -6,12 +6,6 @@ type props = {
 };
 
 export const EnglishSentenceRenderer: FC<props> = ({ words }) => {
-  // const [hidden, setDisplay] = useState(false);
-  // function toggleVisibility() {
-  //    hidden===true?setDisplay(false)
-  //    :setDisplay(true);
-  // }
-
   return (
     <div>
       <h3>{words.renderEN()}.</h3>
