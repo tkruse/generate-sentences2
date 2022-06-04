@@ -2,13 +2,10 @@ import { noun } from 'satzbau';
 import { Noun } from './Noun';
 
 
+export class Phone extends Noun {
 
-export class Phone implements Noun {
-  renderDE(): string {
-    const phone = noun('das telefon,-e,-s');
-    return phone.write();
+  constructor() {
+    super(noun('das telefon,-e,-s'), "phone");
   }
-  renderEN() : string {
-    return "a phone";
-  }
+
 }

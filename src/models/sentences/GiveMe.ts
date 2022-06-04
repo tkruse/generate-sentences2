@@ -4,17 +4,17 @@ import { Sentence } from './Sentence';
 
 
 
-export class ThisIsA implements Sentence {
+export class GiveMe implements Sentence {
   noun : Noun;
   constructor(noun: Noun) {
     this.noun = noun;
   }
 
   renderDE(): string {
-    const sentenceDE = sentence`Das ist ${this.noun.unspecific().renderDE()}`;
+    const sentenceDE = sentence`Gib mir ${this.noun.specific().renderDE()}`;
     return sentenceDE.write();
   }
   renderEN() : string {
-    return "This is " + this.noun.unspecific().renderEN();
+    return "Give me " + this.noun.specific().renderEN();
   }
 }

@@ -15,7 +15,7 @@ export const GermanSentenceRenderer: FC<props> = ({ words }) => {
 
   return (
     <div>
-      <h3 hidden={hidden}>{words.renderDE()}.</h3>
+      <h3 hidden={hidden}>{words.renderDE()}</h3>
       <button hidden={!hidden} onClick={toggleVisibility}>Show German</button>
     </div>
   );
