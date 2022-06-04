@@ -12,10 +12,15 @@ export class Sentence implements Words {
   constructor(noun: Noun, templateDE: any, templateEN: any) {
     this.noun = noun;
 
-    if (Math.floor((Math.random() * 100) + 1) > 50) {
+    const random = Math.floor((Math.random() * 100) + 1);
+    console.log(random);
+
+    if (random  < 30) {
       this.noun.specific();
-    } else {
+    } else if (random  < 60) {
       this.noun.unspecific();
+    } else {
+      this.noun.negated();
     }
     this.templateDE = templateDE;
     this.templateEN = templateEN;

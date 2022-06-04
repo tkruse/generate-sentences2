@@ -10,6 +10,7 @@ export class Noun implements Words {
   enoun: string;
   isSpecific = false;
   isPlural = false;
+	isNegated = false;
   case: GrammaticalCase;
 	allAttributes: Attribute[];
 
@@ -57,6 +58,11 @@ export class Noun implements Words {
     this.case = 'nominative';
     return this;
   }
+	negated(): Noun {
+    this.isNegated = true;
+		return this;
+	}
+
 
 	attributes(attributes: Attribute[]) {
 		this.allAttributes = attributes;
@@ -66,9 +72,12 @@ export class Noun implements Words {
     var rNoun = this.wnoun;
     if (this.isSpecific) {
       rNoun = rNoun.specific();
+    } else if (this.isNegated) {
+      rNoun = rNoun.unspecific().negated();
     } else {
       rNoun = rNoun.unspecific();
     }
+
     if (this.case === "nominative") {
       rNoun = rNoun.nominative();
     } else if (this.case === "accusative") {
@@ -89,7 +98,15 @@ export class Noun implements Words {
 		if (this.allAttributes && this.allAttributes.length > 0) {
 			attribute = this.allAttributes[0].enWord + " ";
 		}
-		return (this.isSpecific ? "the " : "a ")
+
+		var article = "a";
+		if (this.isNegated) {
+			article = "no";
+		} else if (this.isSpecific) {
+			article = "the";
+		}
+
+		return article + " "
 		  + attribute
       + this.enoun
       + (this.isPlural ? "s " : "")
