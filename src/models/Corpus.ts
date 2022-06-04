@@ -9,10 +9,18 @@ import { noun, sentence } from 'satzbau';
 const nouns = [
     new Noun(noun('das Bett,-en,-es'), "bed"),
     new Noun(noun('das Haus,-en,-es'), "house"),
+    new Noun(noun('das Bild,-er,-es'), "picture"),
+    new Noun(noun('das Messer,-,-s'), "knife"),
+    new Noun(noun('das Hemd,-en,-es'), "shirt"),
     new Noun(noun('der Tisch,-e,-es'), "table"),
+    new Noun(noun('der Teller,-,-s'), "plate"),
     new Noun(noun('der Koffer,-,-s'), "suitcase"),
+    new Noun(noun('der Kuchen,-,-s'), "cake"),
+    new Noun(noun('der Schuh,-e,-es'), "shoe"),
     new Noun(noun('die Lampe,-n,-n'), "lamp"),
-    new Noun(noun('die Tasse,-n,-'), "cup")
+    new Noun(noun('die Tasse,-n,-'), "cup"),
+    new Noun(noun('die Gabel,-n,-'), "fork"),
+    new Noun(noun('die Socke,-n,-'), "sock"),
   ];
 
 const sentenceGenerators = [
@@ -31,6 +39,12 @@ const sentenceGenerators = [
   function(noun: Noun) {
     return new Sentence(
       noun,
+      sentence`Er kauft ${noun.accusative().renderDE()}`,
+      `He buys ${noun.renderEN()}.`
+    )},
+  function(noun: Noun) {
+    return new Sentence(
+      noun,
       sentence `Ich helfe ${noun.dative().renderDE()}`,
       `I help ${noun.renderEN()}.`
     )},
@@ -41,12 +55,24 @@ const sentenceGenerators = [
       `I sleep with ${noun.renderEN()}.`
     )},
   function(noun: Noun) {
+    return new Sentence(
+      noun,
+      (sentence `Du stehst auf ${noun.dative().renderDE()}`),
+      `You stand on ${noun.renderEN()}.`
+    )},
+  function(noun: Noun) {
     const article = noun.isPlural ? "are" : "is";
     const pointer = noun.isPlural ? "These" : "This";
     return new Sentence(
       noun,
       sentence `Das ist ${noun.nominative().renderDE()}`,
       `${pointer} ${article} ${noun.renderEN()}.`
+    )},
+  function(noun: Noun) {
+    return new Sentence(
+      noun,
+      sentence `Kennst Du ${noun.nominative().renderDE()}`.ask(),
+      `Do you know ${noun.renderEN()}?`
     )},
   function(noun: Noun) {
     return new Sentence(
@@ -61,6 +87,8 @@ const attributes = [
   new Attribute("neu", "new"),
   new Attribute("schön", "nice"),
   new Attribute("schwarz", "black"),
+  new Attribute("billig", "cheap"),
+  new Attribute("leicht", "light")
 ];
 
 
