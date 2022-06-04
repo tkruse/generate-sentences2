@@ -1,8 +1,7 @@
 import { sentence } from 'satzbau';
 import { Noun } from '../nouns/Noun';
 import { Sentence } from './Sentence';
-
-
+import { Corpus } from '../Corpus';
 
 export class GiveMe implements Sentence {
   noun : Noun;
@@ -10,11 +9,15 @@ export class GiveMe implements Sentence {
     this.noun = noun;
   }
 
+  static create(corpus: Corpus) : Sentence {
+    return new GiveMe(corpus.randomNoun());
+  }
+
   renderDE(): string {
-    const sentenceDE = sentence`Gib mir ${this.noun.specific().renderDE()}`;
+    const sentenceDE = sentence`Ich finde ${this.noun.specific().accusative().renderDE()}`;
     return sentenceDE.write();
   }
   renderEN() : string {
-    return "Give me " + this.noun.specific().renderEN();
+    return "I find " + this.noun.specific().renderEN();
   }
 }

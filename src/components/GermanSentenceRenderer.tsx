@@ -3,20 +3,16 @@ import { Words } from '../models/Words';
 
 type props = {
   words: Words;
+  hidden: boolean;
 };
 
 
-export const GermanSentenceRenderer: FC<props> = ({ words }) => {
-  const [hidden, setDisplay] = useState(true);
-  function toggleVisibility() {
-     hidden===true?setDisplay(false)
-     :setDisplay(true);
-  }
+export const GermanSentenceRenderer: FC<props> = ({ words, hidden }) => {
 
   return (
     <div>
       <h3 hidden={hidden}>{words.renderDE()}</h3>
-      <button hidden={!hidden} onClick={toggleVisibility}>Show German</button>
+      <h3 hidden={!hidden}>...</h3>
     </div>
   );
 };

@@ -5,13 +5,22 @@ import { EnglishSentenceRenderer } from './EnglishSentenceRenderer'
 import { Phone } from '../models/nouns/Phone'
 import { ThisIsA } from '../models/sentences/ThisIsA'
 import { GiveMe } from '../models/sentences/GiveMe'
+import { Corpus } from '../models/Corpus'
 
 export const RandomSentencePair: FC = () => {
 
-  const [words, setWords] = useState<Words>(new ThisIsA(new Phone()));
+  const corpus = new Corpus();
+
+  const [words, setWords] = useState<Words>(ThisIsA.create(corpus));
+
+  const [hidden, setHidden] = useState(true);
+  function toggleVisibility() {
+     setHidden(!hidden);
+  }
 
   function generateNext() {
-    setWords(new GiveMe(new Phone()));
+    setWords(GiveMe.create(corpus));
+    setHidden(true);
   }
 
   console.log(words.renderDE());
@@ -20,9 +29,10 @@ export const RandomSentencePair: FC = () => {
   return (
     <>
       <EnglishSentenceRenderer words={words}></EnglishSentenceRenderer>
-      <GermanSentenceRenderer words={words}></GermanSentenceRenderer>
+      <GermanSentenceRenderer words={words} hidden={hidden}></GermanSentenceRenderer>
 
-      <button onClick={generateNext}>Next Sentence</button>
+      <button hidden={!hidden} onClick={toggleVisibility}>Show German</button>
+      <button hidden={hidden} onClick={generateNext}>Next Sentence</button>
     </>
   );
 };
