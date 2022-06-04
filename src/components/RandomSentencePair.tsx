@@ -2,16 +2,15 @@ import React, { FC, useState } from 'react';
 import { Words } from '../models/Words';
 import { GermanSentenceRenderer } from './GermanSentenceRenderer'
 import { EnglishSentenceRenderer } from './EnglishSentenceRenderer'
-import { Phone } from '../models/nouns/Phone'
-import { ThisIsA } from '../models/sentences/ThisIsA'
-import { GiveMe } from '../models/sentences/GiveMe'
 import { Corpus } from '../models/Corpus'
 
 export const RandomSentencePair: FC = () => {
 
   const corpus = new Corpus();
 
-  const [words, setWords] = useState<Words>(ThisIsA.create(corpus));
+  console.log("render");
+
+  const [words, setWords] = useState<Words>(() => corpus.randomSentence());
 
   const [hidden, setHidden] = useState(true);
   function toggleVisibility() {
@@ -19,12 +18,11 @@ export const RandomSentencePair: FC = () => {
   }
 
   function generateNext() {
-    setWords(GiveMe.create(corpus));
+    setWords(corpus.randomSentence());
     setHidden(true);
   }
 
   console.log(words.renderDE());
-
 
   return (
     <>

@@ -1,6 +1,7 @@
 import { Sentence } from './sentences/Sentence';
-import { GiveMe } from './sentences/GiveMe';
+import { IFind } from './sentences/IFind';
 import { ThisIsA } from './sentences/ThisIsA';
+import { IHelp } from './sentences/IHelp';
 import { Noun } from './nouns/Noun';
 import { Cat } from './nouns/Cat';
 import { Key } from './nouns/Key';
@@ -12,6 +13,12 @@ const nouns = [
     new Phone()
   ];
 
+const sentenceGenerators = [
+  IFind.create,
+  ThisIsA.create,
+  IHelp.create
+];
+
 
 export class Corpus {
 
@@ -19,10 +26,7 @@ export class Corpus {
     return nouns[Math.floor(Math.random() * nouns.length)];
   }
 
-  sentences() : any[] {
-    return [
-      GiveMe.create(this),
-      ThisIsA.create(this)
-    ];
+  randomSentence() : Sentence {
+    return sentenceGenerators[Math.floor(Math.random() * sentenceGenerators.length)](this);
   }
 }

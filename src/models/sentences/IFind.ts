@@ -3,23 +3,21 @@ import { Noun } from '../nouns/Noun';
 import { Sentence } from './Sentence';
 import { Corpus } from '../Corpus';
 
-
-
-export class ThisIsA implements Sentence {
+export class IFind implements Sentence {
   noun : Noun;
   constructor(noun: Noun) {
     this.noun = noun;
   }
 
   static create(corpus: Corpus) : Sentence {
-    return new ThisIsA(corpus.randomNoun());
+    return new IFind(corpus.randomNoun());
   }
 
   renderDE(): string {
-    const sentenceDE = sentence`Das ist ${this.noun.nominative().unspecific().renderDE()}`;
+    const sentenceDE = sentence`Ich finde ${this.noun.specific().accusative().renderDE()}`;
     return sentenceDE.write();
   }
   renderEN() : string {
-    return "This is " + this.noun.unspecific().renderEN();
+    return "I find " + this.noun.specific().renderEN();
   }
 }
