@@ -9,15 +9,18 @@ const nounsGenerator = [
   () => new Noun("das Bild,-er,-es", "picture"),
   () => new Noun("das Messer,-,-s", "knife"),
   () => new Noun("das Hemd,-en,-es", "shirt"),
+  () => new Noun("das Bier,-e,-e", "beer"),
   () => new Noun("der Tisch,-e,-es", "table"),
   () => new Noun("der Teller,-,-s", "plate"),
   () => new Noun("der Koffer,-,-s", "suitcase"),
   () => new Noun("der Kuchen,-,-s", "cake"),
   () => new Noun("der Schuh,-e,-es", "shoe"),
+  () => new Noun("der Wein,-e,-es", "wine"),
   () => new Noun("die Lampe,-n,-n", "lamp"),
   () => new Noun("die Tasse,-n,-", "cup"),
   () => new Noun("die Gabel,-n,-", "fork"),
   () => new Noun("die Socke,-n,-", "sock"),
+  () => new Noun("die Soße,-n,-", "sauce"),
 ];
 
 const sentenceGenerators = [
@@ -98,8 +101,11 @@ const attributes = [
   new Attribute("neu", "new"),
   new Attribute("schön", "nice"),
   new Attribute("schwarz", "black"),
+  new Attribute("rot", "red"),
+  new Attribute("hell", "bright"),
   new Attribute("billig", "cheap"),
   new Attribute("leicht", "light"),
+  new Attribute("gut", "good"),
 ];
 
 export class Corpus {
