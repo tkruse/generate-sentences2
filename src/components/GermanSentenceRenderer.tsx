@@ -11,8 +11,7 @@ export const GermanSentenceRenderer: FC<props> = ({ words, hidden }) => {
 
   return (
     <div>
-      <h3 hidden={hidden}>{words.renderDE()}</h3>
-      <h3 hidden={!hidden}>...</h3>
+      <h3 className="box is-fluid generated-text" hidden={hidden}>{hidden ? "..." : words.renderDE()}</h3>
     </div>
   );
 };

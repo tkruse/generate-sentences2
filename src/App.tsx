@@ -6,8 +6,9 @@ import { RandomSentencePair } from './components/RandomSentencePair'
 function App() {
 
   return (
-    <div className="App">
+    <div className="App section">
       <RandomSentencePair></RandomSentencePair>
+
     </div>
   );
 }

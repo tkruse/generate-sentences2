@@ -3,6 +3,8 @@ import { Words } from '../models/Words';
 import { GermanSentenceRenderer } from './GermanSentenceRenderer'
 import { EnglishSentenceRenderer } from './EnglishSentenceRenderer'
 import { Corpus } from '../models/Corpus'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faRotateRight } from '@fortawesome/free-solid-svg-icons'
 
 export const RandomSentencePair: FC = () => {
 
@@ -21,12 +23,18 @@ export const RandomSentencePair: FC = () => {
   }
 
   return (
-    <>
-      <EnglishSentenceRenderer words={words}></EnglishSentenceRenderer>
-      <GermanSentenceRenderer words={words} hidden={hidden}></GermanSentenceRenderer>
-
-      <button hidden={!hidden} onClick={toggleVisibility}>Show German</button>
-      <button hidden={hidden} onClick={generateNext}>Next Sentence</button>
-    </>
+    <div>
+      <div className="block">
+        <EnglishSentenceRenderer words={words}></EnglishSentenceRenderer>
+        <GermanSentenceRenderer words={words} hidden={hidden}></GermanSentenceRenderer>
+      </div>
+      <div >
+        { hidden ?
+            <button className="button is-info is-large" hidden={!hidden} onClick={toggleVisibility} aria-label="reveal"><FontAwesomeIcon icon={faEye} size="2x" /></button>
+          :
+            <button className="button is-primary is-large" hidden={hidden} onClick={generateNext} aria-label="next"><FontAwesomeIcon icon={faRotateRight} spin size="2x" /></button>
+          }
+      </div>
+    </div>
   );
 };

@@ -8,7 +8,7 @@ type props = {
 export const EnglishSentenceRenderer: FC<props> = ({ words }) => {
   return (
     <div>
-      <h3>{words.renderEN()}</h3>
+      <h3 className="box is-fluid generated-text">{words.renderEN()}</h3>
     </div>
   );
 };
