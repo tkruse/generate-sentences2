@@ -108,8 +108,8 @@ export class Noun implements Words {
       rNoun = rNoun.attributes(...this.allAttributes.map((x, _) => x.deWord));
     }
 
-    // TODO: colors: blue man, green neutral, red woman, black plural
-    var gendercolor;
+    // colors: blue man, green neutral, red woman, black plural
+    let gendercolor;
     switch (this.gender) {
       case "male":
         gendercolor = "blue";
@@ -125,7 +125,7 @@ export class Noun implements Words {
         break;
     }
 
-    return "<font color=\"" + gendercolor + "\">" + rNoun.write() + "</font>";
+    return '<font color="' + gendercolor + '">' + rNoun.write() + "</font>";
   }
 
   renderEN(): string {

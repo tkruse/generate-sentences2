@@ -9,8 +9,11 @@ type props = {
 export const GermanSentenceRenderer: FC<props> = ({ words, hidden }) => {
   return (
     <div>
-      <h3 dangerouslySetInnerHTML={{ __html: hidden ? "..." : words.renderDE()}} className="box is-fluid generated-text" hidden={hidden}>
-      </h3>
+      <h3
+        dangerouslySetInnerHTML={{ __html: hidden ? "..." : words.renderDE() }}
+        className="box is-fluid generated-text"
+        hidden={hidden}
+      ></h3>
     </div>
   );
 };

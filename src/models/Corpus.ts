@@ -4,7 +4,7 @@ import { Attribute } from "./Attribute";
 import { sentence } from "satzbau";
 
 const nouns = [
-  new Noun("das Haus,-en,-es", "house"),
+  new Noun("das Haus,die Häuser,des Hauses", "house"),
   new Noun("das Bett,-en,-es", "bed"),
   new Noun("das Bild,-er,-es", "picture"),
   new Noun("das Messer,-,-s", "knife"),
@@ -31,8 +31,8 @@ const sentenceGenerators = [
   function (noun: Noun) {
     return new Sentence(
       noun,
-      sentence`Du suchst ${noun.accusative().renderDE()}`,
-      `You look for ${noun.renderEN()}.`
+      sentence`Du hast ${noun.accusative().renderDE()}`,
+      `You have ${noun.renderEN()}.`
     );
   },
   function (noun: Noun) {
@@ -64,26 +64,31 @@ const sentenceGenerators = [
     );
   },
   function (noun: Noun) {
-    const article = noun.isPlural ? "are" : "is";
-    const pointer = noun.isPlural ? "These" : "This";
+    const articleEN = noun.isPlural ? "are" : "is";
+    const articleDE = noun.isPlural ? "sind" : "ist";
+    const pointerEN = noun.isPlural ? "These" : "This";
     return new Sentence(
       noun,
-      sentence`Das ist ${noun.nominative().renderDE()}`,
-      `${pointer} ${article} ${noun.renderEN()}.`
+      sentence`Das ${articleDE} ${noun.nominative().renderDE()}`,
+      `${pointerEN} ${articleEN} ${noun.renderEN()}.`
     );
   },
   function (noun: Noun) {
+    const articleEN = noun.isPlural ? "were" : "was";
+    const articleDE = noun.isPlural ? "waren" : "war";
     return new Sentence(
       noun,
-      sentence`Mein Geschenk war ${noun.nominative().renderDE()}`,
-      `My gift was ${noun.renderEN()}.`
+      sentence`Mein Geschenk ${articleDE} ${noun.nominative().renderDE()}`,
+      `My gift ${articleEN} ${noun.renderEN()}.`
     );
   },
   function (noun: Noun) {
+    const articleEN = noun.isPlural ? "are" : "is";
+    const articleDE = noun.isPlural ? "sind" : "ist";
     return new Sentence(
       noun,
-      sentence`Wo ist ${noun.nominative().renderDE()}`.ask(),
-      `Where is ${noun.renderEN()}?`
+      sentence`Wo ${articleDE} ${noun.nominative().renderDE()}`.ask(),
+      `Where ${articleEN} ${noun.renderEN()}?`
     );
   },
 ];
@@ -100,12 +105,7 @@ const attributes = [
 export class Corpus {
   randomNoun(): Noun {
     const next = nouns[Math.floor(Math.random() * nouns.length)];
-    // Adjectives buggy for plural
-    // if (Math.floor((Math.random() * 100) + 1) > 20) {
-    //   next.plural();
-    // } else {
-    //   next.singular();
-    // }
+
     const newAttributes: Attribute[] = [];
     for (let i = 0; i < Math.floor(Math.random() * 3); i++) {
       const randomAttribute =
@@ -123,6 +123,13 @@ export class Corpus {
       next.unspecific();
     } else {
       next.negated();
+    }
+
+    // Adjectives buggy for plural
+    if (Math.floor(Math.random() * 100 + 1) > 80) {
+      next.plural();
+    } else {
+      next.singular();
     }
 
     next.attributes(newAttributes);
