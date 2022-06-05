@@ -27,8 +27,6 @@ export class Noun implements Words {
   allAttributes: Attribute[];
   gender: Gender;
 
-  // TODO: colors: blue man, green neutral, red woman, black plural
-
   constructor(sbNounTemplate: any, enoun: string) {
     this.wnoun = noun(sbNounTemplate);
     this.enoun = enoun;
@@ -110,7 +108,24 @@ export class Noun implements Words {
       rNoun = rNoun.attributes(...this.allAttributes.map((x, _) => x.deWord));
     }
 
-    return rNoun.write() + (" (" + this.gender[0] + ")");
+    // TODO: colors: blue man, green neutral, red woman, black plural
+    var gendercolor;
+    switch (this.gender) {
+      case "male":
+        gendercolor = "blue";
+        break;
+      case "female":
+        gendercolor = "red";
+        break;
+      case "neutral":
+        gendercolor = "green";
+        break;
+      default:
+        gendercolor = "black";
+        break;
+    }
+
+    return "<font color=\"" + gendercolor + "\">" + rNoun.write() + "</font>";
   }
 
   renderEN(): string {
