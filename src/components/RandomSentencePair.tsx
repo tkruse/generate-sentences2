@@ -30,9 +30,13 @@ export const RandomSentencePair: FC = () => {
       </div>
       <div >
         { hidden ?
-            <button className="button is-info is-large" hidden={!hidden} onClick={toggleVisibility} aria-label="reveal"><FontAwesomeIcon icon={faEye} size="2x" /></button>
+            <button className="button is-info is-large" hidden={!hidden} onClick={toggleVisibility} aria-label="reveal">
+              <FontAwesomeIcon icon={faEye} size="2x" />
+            </button>
           :
-            <button className="button is-primary is-large" hidden={hidden} onClick={generateNext} aria-label="next"><FontAwesomeIcon icon={faRotateRight} spin size="2x" /></button>
+            <button className="button is-primary is-large" hidden={hidden} onClick={generateNext} aria-label="next">
+              <FontAwesomeIcon icon={faRotateRight} size="2x" />
+            </button>
           }
       </div>
     </div>

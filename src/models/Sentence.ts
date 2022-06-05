@@ -1,4 +1,3 @@
-import { sentence } from 'satzbau';
 import { Words } from './Words';
 import { Noun } from './Noun';
 

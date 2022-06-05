@@ -1,7 +1,6 @@
 import { Sentence } from './Sentence';
 import { Noun } from './Noun';
 import { Attribute } from './Attribute';
-import { GrammaticalCase } from './GrammaticalCase'
 import { sentence } from 'satzbau';
 
 
@@ -27,19 +26,19 @@ const sentenceGenerators = [
   function(noun: Noun) {
     return new Sentence(
       noun,
-      sentence`Ich finde ${noun.accusative().renderDE()}`,
+      sentence `Ich finde ${noun.accusative().renderDE()}`,
       `I find ${noun.renderEN()}.`
     )},
   function(noun: Noun) {
     return new Sentence(
       noun,
-      sentence`Du suchst ${noun.accusative().renderDE()}`,
+      sentence `Du suchst ${noun.accusative().renderDE()}`,
       `You look for ${noun.renderEN()}.`
     )},
   function(noun: Noun) {
     return new Sentence(
       noun,
-      sentence`Er kauft ${noun.accusative().renderDE()}`,
+      sentence `Er kauft ${noun.accusative().renderDE()}`,
       `He buys ${noun.renderEN()}.`
     )},
   function(noun: Noun) {
