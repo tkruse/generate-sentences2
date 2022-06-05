@@ -4,7 +4,10 @@ import { GermanSentenceRenderer } from "./GermanSentenceRenderer";
 import { EnglishSentenceRenderer } from "./EnglishSentenceRenderer";
 import { Corpus } from "../models/Corpus";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faRotateRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEnvelopeOpenText,
+  faRotateRight,
+} from "@fortawesome/free-solid-svg-icons";
 
 export const RandomSentencePair: FC = () => {
   const corpus = new Corpus();
@@ -38,7 +41,7 @@ export const RandomSentencePair: FC = () => {
             onClick={toggleVisibility}
             aria-label="reveal"
           >
-            <FontAwesomeIcon icon={faEye} size="2x" />
+            <FontAwesomeIcon icon={faEnvelopeOpenText} size="2x" inverse />
           </button>
         ) : (
           <button
