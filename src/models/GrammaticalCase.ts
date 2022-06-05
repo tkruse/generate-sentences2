@@ -1,5 +1,5 @@
 export type GrammaticalCase =
-	| 'nominative'
-	| 'accusative'
-	| 'dative'
-	| 'genitive';
+  | "nominative"
+  | "accusative"
+  | "dative"
+  | "genitive";

@@ -25,6 +25,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "lint": "eslint src --ext .ts --ignore-path .gitignore",
+    "lint:fix": "npm run lint -- --fix",
+    "format": "prettier --write \"{,!(node_modules)/**/}*.ts*\"",
     "test": "react-scripts test",
     "deploy": "gh-pages -d build"
   },
@@ -47,6 +50,11 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^4.0.0"
+    "eslint": "^8.17.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "gh-pages": "^4.0.0",
+    "prettier": "2.6.2"
   }
 }

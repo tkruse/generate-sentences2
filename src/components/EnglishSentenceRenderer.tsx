@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { Words } from '../models/Words';
+import React, { FC } from "react";
+import { Words } from "../models/Words";
 
 type props = {
   words: Words;

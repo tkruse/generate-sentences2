@@ -1,10 +1,8 @@
-import { Words } from './Words';
-import { Noun } from './Noun';
-
+import { Words } from "./Words";
+import { Noun } from "./Noun";
 
 export class Sentence implements Words {
-
-  noun : Noun;
+  noun: Noun;
   templateDE: any;
   templateEN: any;
 
@@ -19,7 +17,7 @@ export class Sentence implements Words {
     return this.templateDE.write();
   }
 
-  renderEN() : string {
+  renderEN(): string {
     return this.templateEN;
   }
 }

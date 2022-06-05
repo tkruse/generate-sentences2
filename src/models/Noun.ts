@@ -1,43 +1,42 @@
-import { Words } from './Words';
-import { Attribute } from './Attribute';
-import { noun, Noun as SBNoun } from 'satzbau';
-import { GrammaticalCase } from './GrammaticalCase'
-import { Gender } from './Gender'
+import { Words } from "./Words";
+import { Attribute } from "./Attribute";
+import { noun, Noun as SBNoun } from "satzbau";
+import { GrammaticalCase } from "./GrammaticalCase";
+import { Gender } from "./Gender";
 
 function parseGender(article: any): Gender {
-	switch (article) {
-		case 'die':
-			return 'female';
-		case 'das':
-			return 'neutral';
-		case 'der':
-			return 'male';
-		default:
-			return 'neutral';
-	}
+  switch (article) {
+    case "die":
+      return "female";
+    case "das":
+      return "neutral";
+    case "der":
+      return "male";
+    default:
+      return "neutral";
+  }
 }
 
 export class Noun implements Words {
-
   wnoun: SBNoun;
   enoun: string;
   isSpecific = false;
   isPlural = false;
-	isNegated = false;
+  isNegated = false;
   case: GrammaticalCase;
-	allAttributes: Attribute[];
-	gender: Gender;
-
+  allAttributes: Attribute[];
+  gender: Gender;
 
   // TODO: colors: blue man, green neutral, red woman, black plural
-
 
   constructor(sbNounTemplate: any, enoun: string) {
     this.wnoun = noun(sbNounTemplate);
     this.enoun = enoun;
-    this.case = 'nominative';
-		this.allAttributes = [];
-		this.gender = parseGender(sbNounTemplate.split(',')[0].trim().split(' ')[0].trim());
+    this.case = "nominative";
+    this.allAttributes = [];
+    this.gender = parseGender(
+      sbNounTemplate.split(",")[0].trim().split(" ")[0].trim()
+    );
   }
 
   specific(): Noun {
@@ -49,42 +48,41 @@ export class Noun implements Words {
     return this;
   }
 
-	plural(): Noun {
+  plural(): Noun {
     this.isPlural = true;
     return this;
   }
-	singular(): Noun {
+  singular(): Noun {
     this.isPlural = false;
     return this;
   }
-	accusative(): Noun {
-    this.case = 'accusative';
+  accusative(): Noun {
+    this.case = "accusative";
     return this;
   }
-	genitive(): Noun {
-    this.case = 'genitive';
+  genitive(): Noun {
+    this.case = "genitive";
     return this;
   }
-	dative(): Noun {
-    this.case = 'dative';
+  dative(): Noun {
+    this.case = "dative";
     return this;
   }
-	nominative(): Noun {
-    this.case = 'nominative';
+  nominative(): Noun {
+    this.case = "nominative";
     return this;
   }
-	negated(): Noun {
+  negated(): Noun {
     this.isNegated = true;
-		return this;
-	}
+    return this;
+  }
 
-
-	attributes(attributes: Attribute[]) {
-		this.allAttributes = attributes;
-	}
+  attributes(attributes: Attribute[]) {
+    this.allAttributes = attributes;
+  }
 
   renderDE(): string {
-    var rNoun = this.wnoun;
+    let rNoun = this.wnoun;
     if (this.isNegated) {
       rNoun = rNoun.negated();
     } else if (this.isSpecific) {
@@ -108,32 +106,26 @@ export class Noun implements Words {
     } else if (this.case === "genitive") {
       rNoun = rNoun.genitive();
     }
-		if (this.allAttributes && this.allAttributes.length > 0) {
-			rNoun = rNoun.attributes(...this.allAttributes.map((x, _) => x.deWord ));
-		}
-
-
+    if (this.allAttributes && this.allAttributes.length > 0) {
+      rNoun = rNoun.attributes(...this.allAttributes.map((x, _) => x.deWord));
+    }
 
     return rNoun.write() + (" (" + this.gender[0] + ")");
   }
 
-  renderEN() : string {
-		var attribute = "";
-		if (this.allAttributes && this.allAttributes.length > 0) {
-			attribute = this.allAttributes.map((x) => x.enWord).join(", ") + " ";
-		}
+  renderEN(): string {
+    let attribute = "";
+    if (this.allAttributes && this.allAttributes.length > 0) {
+      attribute = this.allAttributes.map((x) => x.enWord).join(", ") + " ";
+    }
 
-		var article = this.isPlural ? "" : "a";
-		if (this.isNegated) {
-			article = "no";
-		} else if (this.isSpecific) {
-			article = "the";
-		}
+    let article = this.isPlural ? "" : "a";
+    if (this.isNegated) {
+      article = "no";
+    } else if (this.isSpecific) {
+      article = "the";
+    }
 
-		return article + " "
-		  + attribute
-      + this.enoun
-      + (this.isPlural ? "s" : "");
+    return article + " " + attribute + this.enoun + (this.isPlural ? "s" : "");
   }
-
 }
