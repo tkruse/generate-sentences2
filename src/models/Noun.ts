@@ -3,6 +3,7 @@ import { Attribute } from "./Attribute";
 import { noun, Noun as SBNoun } from "satzbau";
 import { GrammaticalCase } from "./GrammaticalCase";
 import { Gender } from "./Gender";
+import { Person, Persons } from "./Person";
 
 function parseGender(article: any): Gender {
   switch (article) {
@@ -45,6 +46,7 @@ export class Noun implements Words {
   case: GrammaticalCase;
   allAttributes: Attribute[];
   gender: Gender;
+  possession?: Person;
 
   constructor(sbNounTemplate: any, enoun: string) {
     this.wnoun = noun(sbNounTemplate);
@@ -92,9 +94,79 @@ export class Noun implements Words {
     this.isNegated = true;
     return this;
   }
+  possessed(p: Person) {
+    this.unspecific();
+    this.possession = p;
+  }
 
   attributes(attributes: Attribute[]) {
     this.allAttributes = attributes;
+  }
+
+  posessionDE() {
+    let stem = "";
+    switch (this.possession) {
+      case Persons.ME:
+        stem = "mein";
+        break;
+      case Persons.YOU:
+        stem = "dein";
+        break;
+      case Persons.HE:
+        stem = "sein";
+        break;
+      case Persons.SHE:
+        stem = "ihr";
+        break;
+      case Persons.IT:
+        stem = "sein";
+        break;
+      case Persons.WE:
+        stem = "unser";
+        break;
+      case Persons.YALL:
+        stem = "eur";
+        break;
+      case Persons.THEY:
+        stem = "ihr";
+        break;
+    }
+    if (this.gender === "female" || this.hasCount > 1) {
+      stem = stem + "e";
+    }
+    if (this.case === "accusative") {
+      if (this.hasCount > 1) {
+        return stem;
+      }
+      switch (this.gender) {
+        case "male":
+          stem = stem + "en";
+          break;
+      }
+    }
+    if (this.case === "dative") {
+      if (this.hasCount > 1) {
+        return stem + "n";
+      }
+      switch (this.gender) {
+        case "male":
+        case "neutral":
+          stem = stem + "em";
+          break;
+        case "female":
+          stem = stem + "r";
+          break;
+      }
+    }
+    if (this.possession === Persons.YALL && this.hasCount === 1) {
+      if (this.case === "nominative" && this.gender !== "female") {
+        return "euer";
+      }
+      if (this.case === "accusative" && this.gender === "neutral") {
+        return "euer";
+      }
+    }
+    return stem;
   }
 
   renderDE(): string {
@@ -146,8 +218,16 @@ export class Noun implements Words {
           break;
       }
     }
-
-    return '<font color="' + gendercolor + '">' + rNoun.write() + "</font>";
+    let rendered = rNoun.write();
+    if (this.possession !== undefined) {
+      const possession = this.posessionDE();
+      let noun = rendered;
+      if (this.hasCount <= 1 && this.isSpecific === false) {
+        noun = rendered.substr(rendered.indexOf(" ") + 1);
+      }
+      rendered = possession + " " + noun;
+    }
+    return '<font color="' + gendercolor + '">' + rendered + "</font>";
   }
 
   renderEN(): string {
@@ -161,6 +241,35 @@ export class Noun implements Words {
       article = "no";
     } else if (this.isSpecific) {
       article = "the";
+    }
+
+    if (this.possession !== undefined) {
+      switch (this.possession) {
+        case Persons.ME:
+          article = "my";
+          break;
+        case Persons.YOU:
+          article = "your";
+          break;
+        case Persons.HE:
+          article = "his";
+          break;
+        case Persons.SHE:
+          article = "her";
+          break;
+        case Persons.IT:
+          article = "its";
+          break;
+        case Persons.WE:
+          article = "our";
+          break;
+        case Persons.YALL:
+          article = "y'alls";
+          break;
+        case Persons.THEY:
+          article = "their";
+          break;
+      }
     }
 
     let count = "";

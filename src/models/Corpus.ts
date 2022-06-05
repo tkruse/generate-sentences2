@@ -1,7 +1,9 @@
 import { Sentence } from "./Sentence";
 import { Noun } from "./Noun";
+// import { Pronoun } from "./Pronoun";
 import { Attribute } from "./Attribute";
 import { sentence } from "satzbau";
+import { Person, AllPersons } from "./Person";
 
 const nounsGenerator = [
   () => new Noun("das Haus,die Häuser,des Hauses", "house"),
@@ -22,6 +24,16 @@ const nounsGenerator = [
   () => new Noun("die Socke,-n,-", "sock"),
   () => new Noun("die Soße,-n,-", "sauce"),
 ];
+
+// const pronounsGenerator = [
+//   () => new Pronoun("ich", "mich", "mir", "I", "me"),
+//   () => new Pronoun("du", "dich", "dir", "you", "you"),
+//   () => new Pronoun("er", "sich", "ihm", "he", "him"),
+//   () => new Pronoun("sie", "sich", "ihr", "she", "her"),
+//   () => new Pronoun("wir", "uns", "uns", "we", "us"),
+//   () => new Pronoun("ihr", "euch", "euch", "you", "you"),
+//   () => new Pronoun("sie", "sich", "ihnen", "they", "them"),
+// ];
 
 const sentenceGenerators = [
   function (noun: Noun) {
@@ -62,8 +74,8 @@ const sentenceGenerators = [
   function (noun: Noun) {
     return new Sentence(
       noun,
-      sentence`Du stehst auf ${noun.dative().renderDE()}`,
-      `You stand on ${noun.renderEN()}.`
+      sentence`Er steht vor ${noun.dative().renderDE()}`,
+      `He stands in front of ${noun.renderEN()}.`
     );
   },
   function (noun: Noun) {
@@ -132,12 +144,14 @@ export class Corpus {
 
     const random = Math.floor(Math.random() * 100 + 1);
     // unspecific plural is bugged in satzbau https://github.com/TimoBechtel/satzbau/pull/1
-    if (random < 30 || isPlural) {
+    if (random < 25 || isPlural) {
       next.specific();
-    } else if (random < 60) {
+    } else if (random < 50) {
       next.unspecific();
-    } else {
+    } else if (random < 75) {
       next.negated();
+    } else {
+      next.possessed(this.randomPerson());
     }
 
     next.attributes(newAttributes);
@@ -149,5 +163,9 @@ export class Corpus {
     return sentenceGenerators[
       Math.floor(Math.random() * sentenceGenerators.length)
     ](noun);
+  }
+
+  randomPerson(): Person {
+    return AllPersons[Math.floor(Math.random() * AllPersons.length)];
   }
 }
