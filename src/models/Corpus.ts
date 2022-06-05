@@ -3,21 +3,21 @@ import { Noun } from "./Noun";
 import { Attribute } from "./Attribute";
 import { sentence } from "satzbau";
 
-const nouns = [
-  new Noun("das Haus,die Häuser,des Hauses", "house"),
-  new Noun("das Bett,-en,-es", "bed"),
-  new Noun("das Bild,-er,-es", "picture"),
-  new Noun("das Messer,-,-s", "knife"),
-  new Noun("das Hemd,-en,-es", "shirt"),
-  new Noun("der Tisch,-e,-es", "table"),
-  new Noun("der Teller,-,-s", "plate"),
-  new Noun("der Koffer,-,-s", "suitcase"),
-  new Noun("der Kuchen,-,-s", "cake"),
-  new Noun("der Schuh,-e,-es", "shoe"),
-  new Noun("die Lampe,-n,-n", "lamp"),
-  new Noun("die Tasse,-n,-", "cup"),
-  new Noun("die Gabel,-n,-", "fork"),
-  new Noun("die Socke,-n,-", "sock"),
+const nounsGenerator = [
+  () => new Noun("das Haus,die Häuser,des Hauses", "house"),
+  () => new Noun("das Bett,-en,-es", "bed"),
+  () => new Noun("das Bild,-er,-es", "picture"),
+  () => new Noun("das Messer,-,-s", "knife"),
+  () => new Noun("das Hemd,-en,-es", "shirt"),
+  () => new Noun("der Tisch,-e,-es", "table"),
+  () => new Noun("der Teller,-,-s", "plate"),
+  () => new Noun("der Koffer,-,-s", "suitcase"),
+  () => new Noun("der Kuchen,-,-s", "cake"),
+  () => new Noun("der Schuh,-e,-es", "shoe"),
+  () => new Noun("die Lampe,-n,-n", "lamp"),
+  () => new Noun("die Tasse,-n,-", "cup"),
+  () => new Noun("die Gabel,-n,-", "fork"),
+  () => new Noun("die Socke,-n,-", "sock"),
 ];
 
 const sentenceGenerators = [
@@ -64,9 +64,9 @@ const sentenceGenerators = [
     );
   },
   function (noun: Noun) {
-    const articleEN = noun.isPlural ? "are" : "is";
-    const articleDE = noun.isPlural ? "sind" : "ist";
-    const pointerEN = noun.isPlural ? "These" : "This";
+    const articleEN = noun.isPlural() ? "are" : "is";
+    const articleDE = noun.isPlural() ? "sind" : "ist";
+    const pointerEN = noun.isPlural() ? "These" : "This";
     return new Sentence(
       noun,
       sentence`Das ${articleDE} ${noun.nominative().renderDE()}`,
@@ -74,8 +74,8 @@ const sentenceGenerators = [
     );
   },
   function (noun: Noun) {
-    const articleEN = noun.isPlural ? "were" : "was";
-    const articleDE = noun.isPlural ? "waren" : "war";
+    const articleEN = noun.isPlural() ? "were" : "was";
+    const articleDE = noun.isPlural() ? "waren" : "war";
     return new Sentence(
       noun,
       sentence`Mein Geschenk ${articleDE} ${noun.nominative().renderDE()}`,
@@ -83,8 +83,8 @@ const sentenceGenerators = [
     );
   },
   function (noun: Noun) {
-    const articleEN = noun.isPlural ? "are" : "is";
-    const articleDE = noun.isPlural ? "sind" : "ist";
+    const articleEN = noun.isPlural() ? "are" : "is";
+    const articleDE = noun.isPlural() ? "sind" : "ist";
     return new Sentence(
       noun,
       sentence`Wo ${articleDE} ${noun.nominative().renderDE()}`.ask(),
@@ -104,7 +104,8 @@ const attributes = [
 
 export class Corpus {
   randomNoun(): Noun {
-    const next = nouns[Math.floor(Math.random() * nouns.length)];
+    const next =
+      nounsGenerator[Math.floor(Math.random() * nounsGenerator.length)]();
 
     const newAttributes: Attribute[] = [];
     for (let i = 0; i < Math.floor(Math.random() * 3); i++) {
@@ -115,21 +116,22 @@ export class Corpus {
       }
     }
 
-    const random = Math.floor(Math.random() * 100 + 1);
+    const isPlural = Math.floor(Math.random() * 100 + 1) > 80;
+    // Adjectives buggy for plural
+    if (isPlural) {
+      next.count(Math.floor(Math.random() * 4 + 1));
+    } else {
+      next.count(1);
+    }
 
-    if (random < 30) {
+    const random = Math.floor(Math.random() * 100 + 1);
+    // unspecific plural is bugged in satzbau https://github.com/TimoBechtel/satzbau/pull/1
+    if (random < 30 || isPlural) {
       next.specific();
     } else if (random < 60) {
       next.unspecific();
     } else {
       next.negated();
-    }
-
-    // Adjectives buggy for plural
-    if (Math.floor(Math.random() * 100 + 1) > 80) {
-      next.plural();
-    } else {
-      next.singular();
     }
 
     next.attributes(newAttributes);

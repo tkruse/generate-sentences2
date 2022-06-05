@@ -17,11 +17,30 @@ function parseGender(article: any): Gender {
   }
 }
 
+function numberEn(n: number): string {
+  const abs = Math.abs(n);
+  return (
+    (n < 0 ? "minus " : "") +
+    (simpleNumberMapEN.get(abs) || (abs + "").replace(".", ","))
+  );
+}
+
+const simpleNumberMapEN = new Map<number, string>();
+simpleNumberMapEN.set(2, "two");
+simpleNumberMapEN.set(3, "three");
+simpleNumberMapEN.set(4, "four");
+simpleNumberMapEN.set(5, "five");
+simpleNumberMapEN.set(6, "six");
+simpleNumberMapEN.set(7, "seven");
+simpleNumberMapEN.set(8, "eight");
+simpleNumberMapEN.set(9, "nine");
+simpleNumberMapEN.set(10, "ten");
+
 export class Noun implements Words {
   wnoun: SBNoun;
   enoun: string;
   isSpecific = false;
-  isPlural = false;
+  hasCount = 1;
   isNegated = false;
   case: GrammaticalCase;
   allAttributes: Attribute[];
@@ -46,13 +65,12 @@ export class Noun implements Words {
     return this;
   }
 
-  plural(): Noun {
-    this.isPlural = true;
+  count(count: number): Noun {
+    this.hasCount = count;
     return this;
   }
-  singular(): Noun {
-    this.isPlural = false;
-    return this;
+  isPlural(): boolean {
+    return this.hasCount > 1;
   }
   accusative(): Noun {
     this.case = "accusative";
@@ -89,8 +107,8 @@ export class Noun implements Words {
       rNoun = rNoun.unspecific();
     }
 
-    if (this.isPlural) {
-      rNoun = rNoun.plural();
+    if (this.isPlural()) {
+      rNoun = rNoun.count(this.hasCount).plural();
     } else {
       rNoun = rNoun.singular();
     }
@@ -110,19 +128,23 @@ export class Noun implements Words {
 
     // colors: blue man, green neutral, red woman, black plural
     let gendercolor;
-    switch (this.gender) {
-      case "male":
-        gendercolor = "blue";
-        break;
-      case "female":
-        gendercolor = "red";
-        break;
-      case "neutral":
-        gendercolor = "green";
-        break;
-      default:
-        gendercolor = "black";
-        break;
+    if (this.isPlural()) {
+      gendercolor = "black";
+    } else {
+      switch (this.gender) {
+        case "male":
+          gendercolor = "blue";
+          break;
+        case "female":
+          gendercolor = "red";
+          break;
+        case "neutral":
+          gendercolor = "green";
+          break;
+        default:
+          gendercolor = "black";
+          break;
+      }
     }
 
     return '<font color="' + gendercolor + '">' + rNoun.write() + "</font>";
@@ -134,13 +156,25 @@ export class Noun implements Words {
       attribute = this.allAttributes.map((x) => x.enWord).join(", ") + " ";
     }
 
-    let article = this.isPlural ? "" : "a";
+    let article = this.isPlural() ? "" : "a";
     if (this.isNegated) {
       article = "no";
     } else if (this.isSpecific) {
       article = "the";
     }
 
-    return article + " " + attribute + this.enoun + (this.isPlural ? "s" : "");
+    let count = "";
+    if (this.isPlural()) {
+      count = numberEn(this.hasCount) + " ";
+    }
+
+    return (
+      article +
+      " " +
+      count +
+      attribute +
+      this.enoun +
+      (this.isPlural() ? "s" : "")
+    );
   }
 }
