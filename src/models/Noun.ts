@@ -1,8 +1,21 @@
 import { Words } from './Words';
 import { Attribute } from './Attribute';
-import { Noun as SBNoun } from 'satzbau';
+import { noun, Noun as SBNoun } from 'satzbau';
 import { GrammaticalCase } from './GrammaticalCase'
+import { Gender } from './Gender'
 
+function parseGender(article: any): Gender {
+	switch (article) {
+		case 'die':
+			return 'female';
+		case 'das':
+			return 'neutral';
+		case 'der':
+			return 'male';
+		default:
+			return 'neutral';
+	}
+}
 
 export class Noun implements Words {
 
@@ -13,16 +26,18 @@ export class Noun implements Words {
 	isNegated = false;
   case: GrammaticalCase;
 	allAttributes: Attribute[];
+	gender: Gender;
 
 
   // TODO: colors: blue man, green neutral, red woman, black plural
 
 
-  constructor(wnoun: SBNoun, enoun: string) {
-    this.wnoun = wnoun;
+  constructor(sbNounTemplate: any, enoun: string) {
+    this.wnoun = noun(sbNounTemplate);
     this.enoun = enoun;
     this.case = 'nominative';
 		this.allAttributes = [];
+		this.gender = parseGender(sbNounTemplate.split(',')[0].trim().split(' ')[0].trim());
   }
 
   specific(): Noun {
@@ -94,11 +109,12 @@ export class Noun implements Words {
       rNoun = rNoun.genitive();
     }
 		if (this.allAttributes && this.allAttributes.length > 0) {
-			console.log(this.allAttributes);
-
 			rNoun = rNoun.attributes(...this.allAttributes.map((x, _) => x.deWord ));
 		}
-    return rNoun.write();
+
+
+
+    return rNoun.write() + (" (" + this.gender[0] + ")");
   }
 
   renderEN() : string {
