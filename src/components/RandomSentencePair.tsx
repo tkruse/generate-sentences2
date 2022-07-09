@@ -33,7 +33,14 @@ export const RandomSentencePair: FC = () => {
           hidden={hidden}
         ></GermanSentenceRenderer>
       </div>
-      <div>
+      <div
+        style={{
+          marginBottom: "40px",
+          position: "absolute",
+          bottom: "40px",
+          width: "-moz-available",
+        }}
+      >
         {hidden ? (
           <button
             className="button is-info is-large"
