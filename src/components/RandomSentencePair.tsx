@@ -35,10 +35,10 @@ export const RandomSentencePair: FC = () => {
       </div>
       <div
         style={{
-          marginBottom: "40px",
           position: "absolute",
-          bottom: "40px",
-          width: "-moz-available",
+          bottom: "80px",
+          left: "0%",
+          right: "0%",
         }}
       >
         {hidden ? (
