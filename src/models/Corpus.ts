@@ -5,42 +5,42 @@ import { Attribute } from "./Attribute";
 import { sentence } from "satzbau";
 import { Person, AllPersons } from "./Person";
 
-const nounsGenerator = [
-  // () => new Noun("das Haus,die Häuser,des Hauses", "house"),
-  () => new Noun("das Bett,-en,-es", "bed"),
-  // () => new Noun("das Bild,-er,-es", "picture"),
-  // () => new Noun("das Messer,-,-s", "knife"),
-  // () => new Noun("das Hemd,-en,-es", "shirt"),
-  // () => new Noun("das Bier,-e,-e", "beer"),
-  () => new Noun("der Tisch,-e,-es", "table"),
-  // () => new Noun("der Teller,-,-s", "plate"),
-  // () => new Noun("der Koffer,-,-s", "suitcase"),
-  // () => new Noun("der Kuchen,-,-s", "cake"),
-  // () => new Noun("der Schuh,-e,-es", "shoe"),
-  // () => new Noun("der Wein,-e,-es", "wine"),
-  () => new Noun("die Lampe,-n,-n", "lamp"),
-  // () => new Noun("die Tasse,-n,-", "cup"),
-  // () => new Noun("die Gabel,-n,-", "fork"),
-  // () => new Noun("die Socke,-n,-", "sock"),
-  // () => new Noun("die Soße,-n,-", "sauce"),
+const materialNounsGenerator = [
+  () => new Noun("das Haus,die Häuser,des Hauses"),
+  () => new Noun("das Bett,-en,-es"),
+  () => new Noun("das Bild,-er,-es"),
+  () => new Noun("das Messer,-,-s"),
+  () => new Noun("das Hemd,-en,-es"),
+  () => new Noun("das Bier,-e,-es"),
+  () => new Noun("der Tisch,-e,-es"),
+  () => new Noun("der Teller,-,-s"),
+  () => new Noun("der Koffer,-,-s"),
+  () => new Noun("der Kuchen,-,-s"),
+  () => new Noun("der Schuh,-e,-es"),
+  () => new Noun("der Wein,-e,-es"),
+  () => new Noun("die Lampe,-n,-n"),
+  () => new Noun("die Tasse,-n,-"),
+  () => new Noun("die Gabel,-n,-"),
+  () => new Noun("die Socke,-n,-"),
+  () => new Noun("die Soße,-n,-"),
 ];
 
 // const pronounsGenerator = [
-//   () => new Pronoun("ich", "mich", "mir", "I", "me"),
-//   () => new Pronoun("du", "dich", "dir", "you", "you"),
-//   () => new Pronoun("er", "sich", "ihm", "he", "him"),
-//   () => new Pronoun("sie", "sich", "ihr", "she", "her"),
-//   () => new Pronoun("wir", "uns", "uns", "we", "us"),
-//   () => new Pronoun("ihr", "euch", "euch", "you", "you"),
-//   () => new Pronoun("sie", "sich", "ihnen", "they", "them"),
+//   () => new Pronoun("ich", "mich", "mir"),
+//   () => new Pronoun("du", "dich", "dir"),
+//   () => new Pronoun("er", "sich", "ihm"),
+//   () => new Pronoun("sie", "sich", "ihr"),
+//   () => new Pronoun("wir", "uns", "uns"),
+//   () => new Pronoun("ihr", "euch", "euch"),
+//   () => new Pronoun("sie", "sich", "ihnen"),
 // ];
 
 const sentenceGenerators = [
   function (noun: Noun) {
     return new Sentence(
       noun,
-      sentence`Ich finde ${noun.accusative().renderDE()}`,
-      `I find ${noun.renderEN()}.`
+      sentence`Ich habe hier ${noun.accusative().renderDE()}`,
+      sentence`Ich habe hier ___`
     );
   },
   // function (noun: Noun) {
@@ -50,44 +50,61 @@ const sentenceGenerators = [
   //     `You have ${noun.renderEN()}.`
   //   );
   // },
-  // function (noun: Noun) {
-  //   return new Sentence(
-  //     noun,
-  //     sentence`Er kauft ${noun.accusative().renderDE()}`,
-  //     `He buys ${noun.renderEN()}.`
-  //   );
-  // },
   function (noun: Noun) {
     return new Sentence(
       noun,
-      sentence`Ich helfe ${noun.dative().renderDE()}`,
-      `I help ${noun.renderEN()}.`
+      sentence`Er kauft ${noun.accusative().renderDE()}`,
+      sentence`Er kauft ___`
     );
   },
-  // function (noun: Noun) {
-  //   return new Sentence(
-  //     noun,
-  //     sentence`Ich danke ${noun.dative().renderDE()}`,
-  //     `I thank ${noun.renderEN()}.`
-  //   );
-  // },
-  // function (noun: Noun) {
-  //   return new Sentence(
-  //     noun,
-  //     sentence`Er steht vor ${noun.dative().renderDE()}`,
-  //     `He stands in front of ${noun.renderEN()}.`
-  //   );
-  // },
   function (noun: Noun) {
-    const articleEN = noun.isPlural() ? "are" : "is";
-    const articleDE = noun.isPlural() ? "sind" : "ist";
-    const pointerEN = noun.isPlural() ? "These" : "This";
     return new Sentence(
       noun,
-      sentence`Das ${articleDE} ${noun.nominative().renderDE()}`,
-      `${pointerEN} ${articleEN} ${noun.renderEN()}.`
+      sentence`Das gehört zu ${noun.dative().renderDE()}`,
+      sentence`Das gehört zu ___`
     );
   },
+  function (noun: Noun) {
+    return new Sentence(
+      noun,
+      sentence`Es ist schöner mit ${noun.dative().renderDE()}`,
+      sentence`Es ist schöner mit ___`
+    );
+  },
+  function (noun: Noun) {
+    noun.affirmed();
+    return new Sentence(
+      noun,
+      sentence`Ein Bild mit ${noun.dative().unspecific().renderDE()}`,
+      sentence`Ein Bild mit ___`
+    );
+  },
+  function (noun: Noun) {
+    noun.affirmed();
+    return new Sentence(
+      noun,
+      sentence`Ich sehe den Schatten ${noun.genitive().renderDE()}`,
+      sentence`Ich sehe den Schatten ___`
+    );
+  },
+  function (noun: Noun) {
+    noun.affirmed();
+    return new Sentence(
+      noun,
+      sentence`Sie senken den Preis ${noun.genitive().renderDE()}`,
+      sentence`Sie senken den Preis ___`
+    );
+  },
+  // function (noun: Noun) {
+  //   const articleEN = noun.isPlural() ? "are" : "is";
+  //   const articleDE = noun.isPlural() ? "sind" : "ist";
+  //   const pointerEN = noun.isPlural() ? "These" : "This";
+  //   return new Sentence(
+  //     noun,
+  //     sentence`Das ${articleDE} ${noun.nominative().renderDE()}`,
+  //     `${pointerEN} ${articleEN} ${noun.renderEN()}.`
+  //   );
+  // },
   // function (noun: Noun) {
   //   const articleEN = noun.isPlural() ? "were" : "was";
   //   const articleDE = noun.isPlural() ? "waren" : "war";
@@ -109,24 +126,25 @@ const sentenceGenerators = [
 ];
 
 const attributes = [
-  new Attribute("klein", "small"),
-  new Attribute("neu", "new"),
-  // new Attribute("schön", "nice"),
-  // new Attribute("schwarz", "black"),
-  // new Attribute("rot", "red"),
-  // new Attribute("hell", "bright"),
-  // new Attribute("billig", "cheap"),
-  // new Attribute("leicht", "light"),
-  // new Attribute("gut", "good"),
+  new Attribute("klein"),
+  new Attribute("neu"),
+  new Attribute("schön"),
+  new Attribute("billig"),
+  new Attribute("leicht"),
+  new Attribute("gut"),
+  new Attribute("lustig"),
+  new Attribute("eckig"),
 ];
 
 export class Corpus {
   randomNoun(): Noun {
     const next =
-      nounsGenerator[Math.floor(Math.random() * nounsGenerator.length)]();
+      materialNounsGenerator[
+        Math.floor(Math.random() * materialNounsGenerator.length)
+      ]();
 
     const newAttributes: Attribute[] = [];
-    for (let i = 0; i < Math.floor(Math.random() * 2); i++) {
+    for (let i = 0; i < Math.floor(Math.random() * 4); i++) {
       const randomAttribute =
         attributes[Math.floor(Math.random() * attributes.length)];
       if (!newAttributes.includes(randomAttribute)) {

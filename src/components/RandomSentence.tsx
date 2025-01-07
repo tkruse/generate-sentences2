@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { Words } from "../models/Words";
 import { GermanSentenceRenderer } from "./GermanSentenceRenderer";
-import { EnglishSentenceRenderer } from "./EnglishSentenceRenderer";
+import { HiddenSentenceRenderer } from "./HiddenSentenceRenderer";
 import { Corpus } from "../models/Corpus";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,7 +9,7 @@ import {
   faRotateRight,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const RandomSentencePair: FC = () => {
+export const RandomSentence: FC = () => {
   const corpus = new Corpus();
 
   const [words, setWords] = useState<Words>(() => corpus.randomSentence());
@@ -27,7 +27,7 @@ export const RandomSentencePair: FC = () => {
   return (
     <div>
       <div className="block">
-        <EnglishSentenceRenderer words={words}></EnglishSentenceRenderer>
+        <HiddenSentenceRenderer words={words}></HiddenSentenceRenderer>
         <GermanSentenceRenderer
           words={words}
           hidden={hidden}

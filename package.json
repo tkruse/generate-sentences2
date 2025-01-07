@@ -1,8 +1,8 @@
 {
-  "name": "generate-sentences",
+  "name": "generate-sentences2",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://tkruse.github.io/generate-sentences",
+  "homepage": "http://tkruse.github.io/generate-sentences2",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-brands-svg-icons": "^6.1.1",

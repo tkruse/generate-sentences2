@@ -3,21 +3,25 @@ import { Noun } from "./Noun";
 
 export class Sentence implements Words {
   noun: Noun;
-  templateDE: any;
-  templateEN: any;
+  templateShown: any;
+  templateHidden: any;
 
-  constructor(noun: Noun, templateDE: any, templateEN: any) {
+  constructor(noun: Noun, templateDE: any, templateHidden: any) {
     this.noun = noun;
 
-    this.templateDE = templateDE;
-    this.templateEN = templateEN;
+    this.templateShown = templateDE;
+    this.templateHidden = templateHidden;
   }
 
   renderDE(): string {
-    return this.templateDE.write();
+    return this.templateShown.write();
   }
 
-  renderEN(): string {
-    return this.templateEN;
+  renderHidden(): string {
+    return this.templateHidden.write();
+  }
+
+  renderHints(): string {
+    return this.noun.renderHints();
   }
 }

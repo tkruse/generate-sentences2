@@ -8,38 +8,18 @@ import { Person, Persons } from "./Person";
 function parseGender(article: any): Gender {
   switch (article) {
     case "die":
-      return "female";
+      return "weiblich";
     case "das":
       return "neutral";
     case "der":
-      return "male";
+      return "männlich";
     default:
       return "neutral";
   }
 }
 
-function numberEn(n: number): string {
-  const abs = Math.abs(n);
-  return (
-    (n < 0 ? "minus " : "") +
-    (simpleNumberMapEN.get(abs) || (abs + "").replace(".", ","))
-  );
-}
-
-const simpleNumberMapEN = new Map<number, string>();
-simpleNumberMapEN.set(2, "two");
-simpleNumberMapEN.set(3, "three");
-simpleNumberMapEN.set(4, "four");
-simpleNumberMapEN.set(5, "five");
-simpleNumberMapEN.set(6, "six");
-simpleNumberMapEN.set(7, "seven");
-simpleNumberMapEN.set(8, "eight");
-simpleNumberMapEN.set(9, "nine");
-simpleNumberMapEN.set(10, "ten");
-
 export class Noun implements Words {
   wnoun: SBNoun;
-  enoun: string;
   isSpecific = false;
   hasCount = 1;
   isNegated = false;
@@ -48,9 +28,8 @@ export class Noun implements Words {
   gender: Gender;
   possession?: Person;
 
-  constructor(sbNounTemplate: any, enoun: string) {
+  constructor(sbNounTemplate: any) {
     this.wnoun = noun(sbNounTemplate);
-    this.enoun = enoun;
     this.case = "nominative";
     this.allAttributes = [];
     this.gender = parseGender(
@@ -94,6 +73,10 @@ export class Noun implements Words {
     this.isNegated = true;
     return this;
   }
+  affirmed(): Noun {
+    this.isNegated = false;
+    return this;
+  }
   possessed(p: Person) {
     this.unspecific();
     this.possession = p;
@@ -131,7 +114,7 @@ export class Noun implements Words {
         stem = "ihr";
         break;
     }
-    if (this.gender === "female" || this.hasCount > 1) {
+    if (this.gender === "weiblich" || this.hasCount > 1) {
       stem = stem + "e";
     }
     if (this.case === "accusative") {
@@ -139,8 +122,21 @@ export class Noun implements Words {
         return stem;
       }
       switch (this.gender) {
-        case "male":
+        case "männlich":
           stem = stem + "en";
+          break;
+      }
+    }
+    if (this.case === "genitive") {
+      if (this.hasCount > 1) {
+        return stem + "es";
+      }
+      switch (this.gender) {
+        case "männlich":
+          stem = stem + "es";
+          break;
+        case "neutral":
+          stem = stem + "es";
           break;
       }
     }
@@ -149,17 +145,17 @@ export class Noun implements Words {
         return stem + "n";
       }
       switch (this.gender) {
-        case "male":
+        case "männlich":
         case "neutral":
           stem = stem + "em";
           break;
-        case "female":
+        case "weiblich":
           stem = stem + "r";
           break;
       }
     }
     if (this.possession === Persons.YALL && this.hasCount === 1) {
-      if (this.case === "nominative" && this.gender !== "female") {
+      if (this.case === "nominative" && this.gender !== "weiblich") {
         return "euer";
       }
       if (this.case === "accusative" && this.gender === "neutral") {
@@ -167,6 +163,34 @@ export class Noun implements Words {
       }
     }
     return stem;
+  }
+
+  renderHidden(): string {
+    return "___";
+  }
+
+  renderHints(): string {
+    return [
+      this.isSpecific ? "spezifisch" : "",
+      this.isNegated ? "negiert" : "",
+      this.possession ? this.renderPossessionHint(this.possession) : "",
+      this.hasCount > 1 ? this.hasCount : "",
+      this.allAttributes
+        ? this.allAttributes.map((x, _) => x.deWord).join(", ")
+        : "",
+      this.wnoun.unspecific().singular().nominative().write(),
+    ]
+      .filter(Boolean)
+      .join(", ");
+  }
+
+  private renderPossessionHint(possession: Person): string {
+    let result = possession.caseId + ". Person";
+    result += possession.singular ? " Singular" : " Plural";
+    if (possession.singular && possession.caseId == 3) {
+      result += ", " + possession.gender;
+    }
+    return "possesiv(" + result + ")";
   }
 
   renderDE(): string {
@@ -204,10 +228,10 @@ export class Noun implements Words {
       gendercolor = "black";
     } else {
       switch (this.gender) {
-        case "male":
+        case "männlich":
           gendercolor = "blue";
           break;
-        case "female":
+        case "weiblich":
           gendercolor = "red";
           break;
         case "neutral":
@@ -228,62 +252,5 @@ export class Noun implements Words {
       rendered = possession + " " + noun;
     }
     return '<font color="' + gendercolor + '">' + rendered + "</font>";
-  }
-
-  renderEN(): string {
-    let attribute = "";
-    if (this.allAttributes && this.allAttributes.length > 0) {
-      attribute = this.allAttributes.map((x) => x.enWord).join(", ") + " ";
-    }
-
-    let article = this.isPlural() ? "" : "a";
-    if (this.isNegated) {
-      article = "no";
-    } else if (this.isSpecific) {
-      article = "the";
-    }
-
-    if (this.possession !== undefined) {
-      switch (this.possession) {
-        case Persons.ME:
-          article = "my";
-          break;
-        case Persons.YOU:
-          article = "your";
-          break;
-        case Persons.HE:
-          article = "his";
-          break;
-        case Persons.SHE:
-          article = "her";
-          break;
-        case Persons.IT:
-          article = "its";
-          break;
-        case Persons.WE:
-          article = "our";
-          break;
-        case Persons.YALL:
-          article = "y'alls";
-          break;
-        case Persons.THEY:
-          article = "their";
-          break;
-      }
-    }
-
-    let count = "";
-    if (this.isPlural()) {
-      count = numberEn(this.hasCount) + " ";
-    }
-
-    return (
-      article +
-      " " +
-      count +
-      attribute +
-      this.enoun +
-      (this.isPlural() ? "s" : "")
-    );
   }
 }

@@ -15,8 +15,8 @@ export class Person {
 export const Persons = {
   ME: new Person(1, "neutral", true),
   YOU: new Person(2, "neutral", true),
-  HE: new Person(3, "male", true),
-  SHE: new Person(3, "female", true),
+  HE: new Person(3, "männlich", true),
+  SHE: new Person(3, "weiblich", true),
   IT: new Person(3, "neutral", true),
   WE: new Person(1, "neutral", false),
   YALL: new Person(2, "neutral", false),

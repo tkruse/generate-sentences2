@@ -1,4 +1,5 @@
 export interface Words {
   renderDE: () => string;
-  renderEN: () => string;
+  renderHidden: () => string;
+  renderHints: () => string;
 }
