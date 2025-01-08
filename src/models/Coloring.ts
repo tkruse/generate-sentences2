@@ -5,21 +5,21 @@ export function renderColorizedByGender(
   gender: Gender,
   rendered: string,
 ): string {
-  let color = "";
+  let colorClass = "";
 
   switch (gender) {
     case "männlich":
-      color = "blue";
+      colorClass = "has-text-link";
       break;
     case "weiblich":
-      color = "red";
+      colorClass = "has-text-danger";
       break;
     case "neutral":
-      color = "green";
+      colorClass = "has-text-success";
       break;
     default:
-      color = "black";
+      colorClass = "has-text-dark";
   }
 
-  return `<span style="color:${color}">${rendered}</span>`;
+  return `<span class="${colorClass}">${rendered}</span>`;
 }
