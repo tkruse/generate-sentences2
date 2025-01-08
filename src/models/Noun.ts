@@ -173,12 +173,19 @@ export class Noun implements Words {
     return [
       this.isSpecific ? "spezifisch" : "",
       this.isNegated ? "negiert" : "",
-      this.possession ? this.renderPossessionHint(this.possession) : "",
       this.hasCount > 1 ? this.hasCount : "",
+      this.wnoun
+        .unspecific()
+        .singular()
+        .nominative()
+        .write()
+        .split(" ")
+        .slice(1)
+        .join(" "),
+      this.possession ? this.renderPossessionHint(this.possession) : "",
       this.allAttributes
         ? this.allAttributes.map((x, _) => x.deWord).join(", ")
         : "",
-      this.wnoun.unspecific().singular().nominative().write(),
     ]
       .filter(Boolean)
       .join(", ");
@@ -186,7 +193,7 @@ export class Noun implements Words {
 
   private renderPossessionHint(possession: Person): string {
     let result = possession.caseId + ". Person";
-    result += possession.singular ? " Singular" : " Plural";
+    result += " " + (possession.singular ? "Singular" : "Plural");
     if (possession.singular && possession.caseId == 3) {
       result += ", " + possession.gender;
     }

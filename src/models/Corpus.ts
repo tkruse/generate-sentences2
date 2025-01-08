@@ -8,14 +8,14 @@ import { Person, AllPersons } from "./Person";
 const materialNounsGenerator = [
   () => new Noun("das Haus,die Häuser,des Hauses"),
   () => new Noun("das Bett,-en,-es"),
-  () => new Noun("das Bild,-er,-es"),
+  () => new Noun("das Buch,die Bücher,des Buches"),
   () => new Noun("das Messer,-,-s"),
   () => new Noun("das Hemd,-en,-es"),
   () => new Noun("das Bier,-e,-es"),
-  () => new Noun("der Tisch,-e,-es"),
-  () => new Noun("der Teller,-,-s"),
+  () => new Noun("der Zug,die Züge,des Zuges"),
+  () => new Noun("der Bus,die Busse,des Busses"),
   () => new Noun("der Koffer,-,-s"),
-  () => new Noun("der Kuchen,-,-s"),
+  () => new Noun("der Apfel,die Äpfel,des Apfels"),
   () => new Noun("der Schuh,-e,-es"),
   () => new Noun("der Wein,-e,-es"),
   () => new Noun("die Lampe,-n,-n"),
@@ -67,8 +67,8 @@ const sentenceGenerators = [
   function (noun: Noun) {
     return new Sentence(
       noun,
-      sentence`Es ist schöner mit ${noun.dative().renderDE()}`,
-      sentence`Es ist schöner mit ___`,
+      sentence`Der Name von ${noun.dative().renderDE()}`,
+      sentence`Der Name von ___`,
     );
   },
   function (noun: Noun) {
@@ -155,7 +155,7 @@ export class Corpus {
     const isPlural = Math.floor(Math.random() * 100 + 1) > 80;
     // Adjectives buggy for plural
     if (isPlural) {
-      next.count(Math.floor(Math.random() * 4 + 1));
+      next.count(Math.floor(Math.random() * 3 + 1));
     } else {
       next.count(1);
     }

@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faCopyright } from "@fortawesome/free-solid-svg-icons";
 import "bulma/css/bulma.min.css";
+import { Footer } from "react-bulma-components";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -14,7 +15,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <App />
-    <footer className="footer">
+
+    <Footer>
       <a
         href="http://opensource.org/licenses/mit-license.php"
         aria-label="Copyright"
@@ -22,12 +24,12 @@ root.render(
         <FontAwesomeIcon icon={faCopyright} />
       </a>
       <a
-        href="https://github.com/tkruse/generate-sentences"
+        href="https://github.com/tkruse/generate-sentences2"
         aria-label="Github"
       >
         <FontAwesomeIcon icon={faGithub} />
       </a>
-    </footer>
+    </Footer>
   </React.StrictMode>,
 );
 

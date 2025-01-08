@@ -3,11 +3,7 @@ import "./App.css";
 import { RandomSentence } from "./components/RandomSentence";
 
 function App() {
-  return (
-    <div className="App section">
-      <RandomSentence></RandomSentence>
-    </div>
-  );
+  return <RandomSentence></RandomSentence>;
 }
 
 export default App;

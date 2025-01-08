@@ -8,6 +8,8 @@ import {
   faEnvelopeOpenText,
   faRotateRight,
 } from "@fortawesome/free-solid-svg-icons";
+import { Reminder } from "./Reminder";
+import { Block, Button, Icon, Section } from "react-bulma-components";
 
 export const RandomSentence: FC = () => {
   const corpus = new Corpus();
@@ -26,41 +28,60 @@ export const RandomSentence: FC = () => {
 
   return (
     <div>
-      <div className="block">
-        <HiddenSentenceRenderer words={words}></HiddenSentenceRenderer>
-        <GermanSentenceRenderer
-          words={words}
-          hidden={hidden}
-        ></GermanSentenceRenderer>
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          bottom: "80px",
-          left: "0%",
-          right: "0%",
-        }}
+      <Section
+        className={
+          "is-flex is-flex-direction-column is-justify-content-space-between"
+        }
+        style={{ minHeight: "100vh" }}
       >
-        {hidden ? (
-          <button
-            className="button is-info is-large"
-            hidden={!hidden}
-            onClick={toggleVisibility}
-            aria-label="reveal"
-          >
-            <FontAwesomeIcon icon={faEnvelopeOpenText} size="2x" inverse />
-          </button>
-        ) : (
-          <button
-            className="button is-primary is-large"
+        <Block>
+          <HiddenSentenceRenderer words={words}></HiddenSentenceRenderer>
+          <GermanSentenceRenderer
+            words={words}
             hidden={hidden}
-            onClick={generateNext}
-            aria-label="next"
-          >
-            <FontAwesomeIcon icon={faRotateRight} size="2x" />
-          </button>
-        )}
-      </div>
+          ></GermanSentenceRenderer>
+        </Block>
+        <div
+          className="columns is-mobile is-vcentered"
+          style={{ minHeight: "30vh" }}
+        >
+          <div className="column">
+            <Reminder></Reminder>
+          </div>
+          <div className="column is-justify-content-center">
+            {hidden ? (
+              <Button
+                color={"info"}
+                size={"large"}
+                hidden={!hidden}
+                onClick={toggleVisibility}
+                aria-label="reveal"
+              >
+                <Icon>
+                  <FontAwesomeIcon
+                    icon={faEnvelopeOpenText}
+                    size="2x"
+                    inverse
+                  />
+                </Icon>
+              </Button>
+            ) : (
+              <Button
+                color={"primary"}
+                size={"large"}
+                hidden={hidden}
+                onClick={generateNext}
+                aria-label="next"
+              >
+                <Icon>
+                  <FontAwesomeIcon icon={faRotateRight} size="2x" />
+                </Icon>
+              </Button>
+            )}
+          </div>
+          <div className="column"></div>
+        </div>
+      </Section>
     </div>
   );
 };
