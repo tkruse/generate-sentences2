@@ -32,7 +32,7 @@ export const RandomSentence: FC = () => {
         className={
           "is-flex is-flex-direction-column is-justify-content-space-between"
         }
-        style={{ minHeight: "100vh" }}
+        style={{ minHeight: "95vh" }}
       >
         <Block>
           <HiddenSentenceRenderer words={words}></HiddenSentenceRenderer>

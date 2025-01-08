@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { Dropdown, Table } from "react-bulma-components";
+import { renderColorizedByGender } from "../models/Coloring";
 
 type props = {};
 
@@ -19,7 +20,13 @@ export const Reminder: FC<props> = ({}) => {
           <tbody>
             <tr>
               <td>
-                <b>Maskulinum</b>
+                <b>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: renderColorizedByGender("männlich", "Maskulinum"),
+                    }}
+                  ></span>
+                </b>
               </td>
               <td>den</td>
               <td>dem</td>
@@ -27,7 +34,13 @@ export const Reminder: FC<props> = ({}) => {
             </tr>
             <tr>
               <td>
-                <b>Femininum</b>
+                <b>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: renderColorizedByGender("weiblich", "Femininum"),
+                    }}
+                  ></span>
+                </b>
               </td>
               <td>die</td>
               <td>der</td>
@@ -35,7 +48,13 @@ export const Reminder: FC<props> = ({}) => {
             </tr>
             <tr>
               <td>
-                <b>Neutrum</b>
+                <b>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: renderColorizedByGender("neutral", "Neutrum"),
+                    }}
+                  ></span>
+                </b>
               </td>
               <td>das</td>
               <td>dem</td>
@@ -63,7 +82,13 @@ export const Reminder: FC<props> = ({}) => {
           <tbody>
             <tr>
               <td>
-                <b>Maskulinum</b>
+                <b>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: renderColorizedByGender("männlich", "Maskulinum"),
+                    }}
+                  ></span>
+                </b>
               </td>
               <td>-en</td>
               <td>-em</td>
@@ -71,7 +96,13 @@ export const Reminder: FC<props> = ({}) => {
             </tr>
             <tr>
               <td>
-                <b>Femininum</b>
+                <b>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: renderColorizedByGender("weiblich", "Femininum"),
+                    }}
+                  ></span>
+                </b>
               </td>
               <td>-e</td>
               <td>-er</td>
@@ -79,7 +110,13 @@ export const Reminder: FC<props> = ({}) => {
             </tr>
             <tr>
               <td>
-                <b>Neutrum</b>
+                <b>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: renderColorizedByGender("neutral", "Neutrum"),
+                    }}
+                  ></span>
+                </b>
               </td>
               <td>-es / - *</td>
               <td>-em</td>

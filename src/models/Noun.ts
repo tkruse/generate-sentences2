@@ -4,6 +4,7 @@ import { noun, Noun as SBNoun } from "satzbau";
 import { GrammaticalCase } from "./GrammaticalCase";
 import { Gender } from "./Gender";
 import { Person, Persons } from "./Person";
+import { renderColorizedByGender } from "./Coloring";
 
 function parseGender(article: any): Gender {
   switch (article) {
@@ -229,26 +230,6 @@ export class Noun implements Words {
       rNoun = rNoun.attributes(...this.allAttributes.map((x, _) => x.deWord));
     }
 
-    // colors: blue man, green neutral, red woman, black plural
-    let gendercolor;
-    if (this.isPlural()) {
-      gendercolor = "black";
-    } else {
-      switch (this.gender) {
-        case "männlich":
-          gendercolor = "blue";
-          break;
-        case "weiblich":
-          gendercolor = "red";
-          break;
-        case "neutral":
-          gendercolor = "green";
-          break;
-        default:
-          gendercolor = "black";
-          break;
-      }
-    }
     let rendered = rNoun.write();
     if (this.possession !== undefined) {
       const possession = this.posessionDE();
@@ -258,6 +239,7 @@ export class Noun implements Words {
       }
       rendered = possession + " " + noun;
     }
-    return '<font color="' + gendercolor + '">' + rendered + "</font>";
+
+    return renderColorizedByGender(this.gender, rendered);
   }
 }
