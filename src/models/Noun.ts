@@ -33,7 +33,7 @@ export class Noun implements Words {
     this.case = "nominative";
     this.allAttributes = [];
     this.gender = parseGender(
-      sbNounTemplate.split(",")[0].trim().split(" ")[0].trim()
+      sbNounTemplate.split(",")[0].trim().split(" ")[0].trim(),
     );
   }
 

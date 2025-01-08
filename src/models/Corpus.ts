@@ -40,7 +40,7 @@ const sentenceGenerators = [
     return new Sentence(
       noun,
       sentence`Ich habe hier ${noun.accusative().renderDE()}`,
-      sentence`Ich habe hier ___`
+      sentence`Ich habe hier ___`,
     );
   },
   // function (noun: Noun) {
@@ -54,21 +54,21 @@ const sentenceGenerators = [
     return new Sentence(
       noun,
       sentence`Er kauft ${noun.accusative().renderDE()}`,
-      sentence`Er kauft ___`
+      sentence`Er kauft ___`,
     );
   },
   function (noun: Noun) {
     return new Sentence(
       noun,
       sentence`Das gehört zu ${noun.dative().renderDE()}`,
-      sentence`Das gehört zu ___`
+      sentence`Das gehört zu ___`,
     );
   },
   function (noun: Noun) {
     return new Sentence(
       noun,
       sentence`Es ist schöner mit ${noun.dative().renderDE()}`,
-      sentence`Es ist schöner mit ___`
+      sentence`Es ist schöner mit ___`,
     );
   },
   function (noun: Noun) {
@@ -76,7 +76,7 @@ const sentenceGenerators = [
     return new Sentence(
       noun,
       sentence`Ein Bild mit ${noun.dative().unspecific().renderDE()}`,
-      sentence`Ein Bild mit ___`
+      sentence`Ein Bild mit ___`,
     );
   },
   function (noun: Noun) {
@@ -84,7 +84,7 @@ const sentenceGenerators = [
     return new Sentence(
       noun,
       sentence`Ich sehe den Schatten ${noun.genitive().renderDE()}`,
-      sentence`Ich sehe den Schatten ___`
+      sentence`Ich sehe den Schatten ___`,
     );
   },
   function (noun: Noun) {
@@ -92,7 +92,7 @@ const sentenceGenerators = [
     return new Sentence(
       noun,
       sentence`Sie senken den Preis ${noun.genitive().renderDE()}`,
-      sentence`Sie senken den Preis ___`
+      sentence`Sie senken den Preis ___`,
     );
   },
   // function (noun: Noun) {

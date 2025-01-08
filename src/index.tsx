@@ -9,7 +9,7 @@ import { faCopyright } from "@fortawesome/free-solid-svg-icons";
 import "bulma/css/bulma.min.css";
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById("root") as HTMLElement,
 );
 root.render(
   <React.StrictMode>
@@ -28,7 +28,7 @@ root.render(
         <FontAwesomeIcon icon={faGithub} />
       </a>
     </footer>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function
