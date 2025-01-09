@@ -78,9 +78,10 @@ export class Noun implements Words {
     this.isNegated = false;
     return this;
   }
-  possessed(p: Person) {
+  possessed(p: Person): Noun {
     this.unspecific();
     this.possession = p;
+    return this;
   }
 
   attributes(attributes: Attribute[]) {
@@ -115,10 +116,14 @@ export class Noun implements Words {
         stem = "ihr";
         break;
     }
-    if (this.gender === "weiblich" || this.hasCount > 1) {
-      stem = stem + "e";
-    }
-    if (this.case === "accusative") {
+    if (this.case === "nominative") {
+      if (this.gender === "weiblich" || this.hasCount > 1) {
+        stem = stem + "e";
+      }
+    } else if (this.case === "accusative") {
+      if (this.gender === "weiblich" || this.hasCount > 1) {
+        stem = stem + "e";
+      }
       if (this.hasCount > 1) {
         return stem;
       }
@@ -127,8 +132,7 @@ export class Noun implements Words {
           stem = stem + "en";
           break;
       }
-    }
-    if (this.case === "genitive") {
+    } else if (this.case === "genitive") {
       if (this.hasCount > 1) {
         return stem + "es";
       }
@@ -139,9 +143,14 @@ export class Noun implements Words {
         case "neutral":
           stem = stem + "es";
           break;
+        case "weiblich":
+          stem = stem + "er";
+          break;
       }
-    }
-    if (this.case === "dative") {
+    } else if (this.case === "dative") {
+      if (this.gender === "weiblich" || this.hasCount > 1) {
+        stem = stem + "e";
+      }
       if (this.hasCount > 1) {
         return stem + "n";
       }
@@ -201,7 +210,7 @@ export class Noun implements Words {
     return "possesiv(" + result + ")";
   }
 
-  renderDE(): string {
+  renderDE(colorize: boolean = true): string {
     let rNoun = this.wnoun;
     if (this.isNegated) {
       rNoun = rNoun.negated();
@@ -240,6 +249,6 @@ export class Noun implements Words {
       rendered = possession + " " + noun;
     }
 
-    return renderColorizedByGender(this.gender, rendered);
+    return colorize ? renderColorizedByGender(this.gender, rendered) : rendered;
   }
 }

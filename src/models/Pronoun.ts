@@ -6,7 +6,7 @@ export class Pronoun {
   constructor(
     nominativ: string,
     reflexiveAkkusativ: string,
-    reflexiveDatic: string
+    reflexiveDatic: string,
   ) {
     this.nominativ = nominativ;
     this.reflexiveAkkusativ = reflexiveAkkusativ;
