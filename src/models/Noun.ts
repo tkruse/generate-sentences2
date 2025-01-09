@@ -176,7 +176,7 @@ export class Noun implements Words {
       );
       let noun = rendered;
       if (this.hasCount <= 1 && this.isSpecific === false) {
-        noun = rendered.substr(rendered.indexOf(" ") + 1);
+        noun = rendered.slice(rendered.indexOf(" ") + 1);
       }
       rendered = possessionRendered + " " + noun;
     }
