@@ -1,3 +1,4 @@
+// @ts-nocheck // satzbau templates confuse TS
 import { Sentence } from "./Sentence";
 import { Noun } from "./Noun";
 
@@ -8,93 +9,51 @@ import { materialNounsGenerator } from "./corpus/Nouns";
 import { attributes } from "./corpus/Adjectives";
 
 const sentenceGenerators = [
-  function (noun: Noun) {
+  function (nounMain: Noun) {
     return new Sentence(
-      noun,
-      sentence`Ich habe hier ${noun.accusative().renderDE()}`,
-      sentence`Ich habe hier ___`,
+      nounMain.accusative(),
+      sentence`Ich habe hier ${({ noun }) => noun}`,
     );
   },
-  // function (noun: Noun) {
-  //   return new Sentence(
-  //     noun,
-  //     sentence`Du hast ${noun.accusative().renderDE()}`,
-  //     `You have ${noun.renderEN()}.`
-  //   );
-  // },
-  function (noun: Noun) {
+  function (nounMain: Noun) {
     return new Sentence(
-      noun,
-      sentence`Er kauft ${noun.accusative().renderDE()}`,
-      sentence`Er kauft ___`,
+      nounMain.accusative(),
+      sentence`Er kauft ${({ noun }) => noun}`,
     );
   },
-  function (noun: Noun) {
+  function (nounMain: Noun) {
     return new Sentence(
-      noun,
-      sentence`Das gehört zu ${noun.dative().renderDE()}`,
-      sentence`Das gehört zu ___`,
+      nounMain.dative(),
+      sentence`Das gehört zu ${({ noun }) => noun}`,
     );
   },
-  function (noun: Noun) {
+  function (nounMain: Noun) {
     return new Sentence(
-      noun,
-      sentence`Der Name von ${noun.dative().renderDE()}`,
-      sentence`Der Name von ___`,
+      nounMain.dative(),
+      sentence`Der Name von ${({ noun }) => noun}`,
     );
   },
-  function (noun: Noun) {
-    noun.affirmed();
+  function (nounMain: Noun) {
+    nounMain.affirmed();
     return new Sentence(
-      noun,
-      sentence`Ein Bild mit ${noun.dative().unspecific().renderDE()}`,
-      sentence`Ein Bild mit ___`,
+      nounMain.dative(),
+      sentence`Ein Bild mit ${({ noun }) => noun}`,
     );
   },
-  function (noun: Noun) {
-    noun.affirmed();
+  function (nounMain: Noun) {
+    nounMain.affirmed();
     return new Sentence(
-      noun,
-      sentence`Ich sehe den Schatten ${noun.genitive().renderDE()}`,
-      sentence`Ich sehe den Schatten ___`,
+      nounMain.genitive(),
+      sentence`Ich sehe den Schatten ${({ noun }) => noun}`,
     );
   },
-  function (noun: Noun) {
-    noun.affirmed();
+  function (nounMain: Noun) {
+    nounMain.affirmed();
     return new Sentence(
-      noun,
-      sentence`Sie senken den Preis ${noun.genitive().renderDE()}`,
-      sentence`Sie senken den Preis ___`,
+      nounMain.genitive(),
+      sentence`Sie senken den Preis ${({ noun }) => noun}`,
     );
   },
-  // function (noun: Noun) {
-  //   const articleEN = noun.isPlural() ? "are" : "is";
-  //   const articleDE = noun.isPlural() ? "sind" : "ist";
-  //   const pointerEN = noun.isPlural() ? "These" : "This";
-  //   return new Sentence(
-  //     noun,
-  //     sentence`Das ${articleDE} ${noun.nominative().renderDE()}`,
-  //     `${pointerEN} ${articleEN} ${noun.renderEN()}.`
-  //   );
-  // },
-  // function (noun: Noun) {
-  //   const articleEN = noun.isPlural() ? "were" : "was";
-  //   const articleDE = noun.isPlural() ? "waren" : "war";
-  //   return new Sentence(
-  //     noun,
-  //     sentence`Mein Geschenk ${articleDE} ${noun.nominative().renderDE()}`,
-  //     `My gift ${articleEN} ${noun.renderEN()}.`
-  //   );
-  // },
-  // function (noun: Noun) {
-  //   const articleEN = noun.isPlural() ? "are" : "is";
-  //   const articleDE = noun.isPlural() ? "sind" : "ist";
-  //   return new Sentence(
-  //     noun,
-  //     sentence`Wo ${articleDE} ${noun.nominative().renderDE()}`.ask(),
-  //     `Where ${articleEN} ${noun.renderEN()}?`
-  //   );
-  // },
 ];
 
 export class Corpus {

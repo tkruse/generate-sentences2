@@ -1,24 +1,24 @@
 import { Words } from "./Words";
 import { Noun } from "./Noun";
+import { Text } from "satzbau";
 
 export class Sentence implements Words {
   noun: Noun;
-  templateShown: any;
-  templateHidden: any;
+  template: Text;
 
-  constructor(noun: Noun, templateDE: any, templateHidden: any) {
+  constructor(noun: Noun, template: Text) {
     this.noun = noun;
-
-    this.templateShown = templateDE;
-    this.templateHidden = templateHidden;
+    this.template = template;
   }
 
   renderDE(): string {
-    return this.templateShown.write();
+    // @ts-ignore // satzbau templates confuse TS
+    return this.template.write({ noun: this.noun.renderDE(false) });
   }
 
   renderHidden(): string {
-    return this.templateHidden.write();
+    // @ts-ignore // satzbau templates confuse TS
+    return this.template.write({ noun: "___" });
   }
 
   renderHints(): string {
