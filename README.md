@@ -1,6 +1,6 @@
 # Generate sentences
 
-This project in draft state aims to provide users with random generated sentences in two languages, quizzing the users to correctly translate grammar.
+This project in draft state aims to provide users with random generated sentences, quizzing the users to correctly translate grammar.
 Thanks to github-pages, it can be deployed freely publicly.
 
 For German language generation, this uses https://github.com/TimoBechtel/satzbau

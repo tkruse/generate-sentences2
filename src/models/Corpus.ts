@@ -1,39 +1,11 @@
 import { Sentence } from "./Sentence";
 import { Noun } from "./Noun";
-// import { Pronoun } from "./Pronoun";
+
 import { Attribute } from "./Attribute";
 import { sentence } from "satzbau";
 import { Person, AllPersons } from "./Person";
-
-const materialNounsGenerator = [
-  () => new Noun("das Haus,die Häuser,des Hauses"),
-  () => new Noun("das Bett,-en,-es"),
-  () => new Noun("das Buch,die Bücher,des Buches"),
-  () => new Noun("das Messer,-,-s"),
-  () => new Noun("das Hemd,-en,-es"),
-  () => new Noun("das Bier,-e,-es"),
-  () => new Noun("der Zug,die Züge,des Zuges"),
-  () => new Noun("der Bus,die Busse,des Busses"),
-  () => new Noun("der Koffer,-,-s"),
-  () => new Noun("der Apfel,die Äpfel,des Apfels"),
-  () => new Noun("der Schuh,-e,-es"),
-  () => new Noun("der Wein,-e,-es"),
-  () => new Noun("die Lampe,-n,-n"),
-  () => new Noun("die Tasse,-n,-"),
-  () => new Noun("die Gabel,-n,-"),
-  () => new Noun("die Socke,-n,-"),
-  () => new Noun("die Soße,-n,-"),
-];
-
-// const pronounsGenerator = [
-//   () => new Pronoun("ich", "mich", "mir"),
-//   () => new Pronoun("du", "dich", "dir"),
-//   () => new Pronoun("er", "sich", "ihm"),
-//   () => new Pronoun("sie", "sich", "ihr"),
-//   () => new Pronoun("wir", "uns", "uns"),
-//   () => new Pronoun("ihr", "euch", "euch"),
-//   () => new Pronoun("sie", "sich", "ihnen"),
-// ];
+import { materialNounsGenerator } from "./corpus/Nouns";
+import { attributes } from "./corpus/Adjectives";
 
 const sentenceGenerators = [
   function (noun: Noun) {
@@ -123,17 +95,6 @@ const sentenceGenerators = [
   //     `Where ${articleEN} ${noun.renderEN()}?`
   //   );
   // },
-];
-
-const attributes = [
-  new Attribute("klein"),
-  new Attribute("neu"),
-  new Attribute("schön"),
-  new Attribute("billig"),
-  new Attribute("leicht"),
-  new Attribute("gut"),
-  new Attribute("lustig"),
-  new Attribute("eckig"),
 ];
 
 export class Corpus {
