@@ -18,7 +18,7 @@ export class Sentence implements Words {
 
   renderHidden(): string {
     // @ts-ignore // satzbau templates confuse TS
-    return this.template.write({ noun: "___" });
+    return this.template.write({ noun: this.noun.renderHidden() });
   }
 
   renderHints(): string {

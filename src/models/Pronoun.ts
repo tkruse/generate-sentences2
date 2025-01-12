@@ -1,20 +1,27 @@
-import { Person } from "./Person";
-
 export class Pronoun {
   nominativ: string;
   reflexiveAkkusativ: string;
   reflexiveDativ: string;
-  person: Person;
 
   constructor(
     nominativ: string,
     reflexiveAkkusativ: string,
     reflexiveDativ: string,
-    person: Person,
   ) {
     this.nominativ = nominativ;
     this.reflexiveAkkusativ = reflexiveAkkusativ;
     this.reflexiveDativ = reflexiveDativ;
-    this.person = person;
+  }
+
+  nominative(): string {
+    return this.nominativ;
+  }
+
+  reflexiveAkkusative(): string {
+    return this.reflexiveAkkusativ;
+  }
+
+  reflexiveDative(): string {
+    return this.reflexiveDativ;
   }
 }
