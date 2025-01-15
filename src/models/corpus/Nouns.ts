@@ -35,21 +35,24 @@ export const attributes = [
 
 /* eslint-disable */
 export enum NounState {
-  SPECIFIC = "specific",
-  NEGATED = "negated",
-  POSSESSED = "possessed",
+  UNSPECIFIC = "unspezifisch",
+  SPECIFIC = "spezifisch",
+  POSSESSED = "possessiv",
 }
 
 export const getRandomMaterialNoun = (
   attributeMaxCount: number = Math.floor(Math.random() * 4),
-  allowPlural: boolean = true,
+  minimum: number = 0,
+  maximum: number = 3,
   allowedStates: NounState[] = Object.values(NounState),
 ): Noun => {
   const randomIndex = Math.floor(Math.random() * materialNouns.length);
   const next = materialNouns[randomIndex]();
 
   const newAttributes: Attribute[] = [];
-  for (let i = 0; i < Math.min(Math.max(attributeMaxCount, 0), 3); i++) {
+  const attributeQuantity = Math.floor(Math.random() * attributeMaxCount);
+
+  for (let i = 0; i < attributeQuantity; i++) {
     const randomAttribute =
       attributes[Math.floor(Math.random() * attributes.length)];
     if (!newAttributes.includes(randomAttribute)) {
@@ -58,30 +61,39 @@ export const getRandomMaterialNoun = (
   }
   next.attributes(newAttributes);
 
-  const isPlural = allowPlural && Math.floor(Math.random() * 100 + 1) > 80;
-  // Adjectives buggy for plural
-  if (isPlural) {
-    next.count(Math.floor(Math.random() * 3 + 1));
-  } else {
-    next.count(1);
+  const quantity =
+    Math.floor(Math.random() * (maximum + 1 - minimum)) + minimum;
+
+  next.count(quantity);
+  const isPlural = quantity > 1;
+
+  if (quantity == 0) {
+    next.negated();
   }
 
-  // unspecific plural is bugged in satzbau https://github.com/TimoBechtel/satzbau/pull/1
-  if (isPlural) {
-    next.specific();
-  } else if (allowedStates.length > 0) {
-    const randomState =
-      allowedStates[Math.floor(Math.random() * allowedStates.length)];
-    switch (randomState) {
-      case NounState.SPECIFIC:
-        next.specific();
-        break;
-      case NounState.NEGATED:
-        next.negated();
-        break;
-      case NounState.POSSESSED:
-        next.possessed(randomPerson());
-        break;
+  if (quantity > 0) {
+    let actualAllowedStates = new Set(allowedStates);
+    if (isPlural) {
+      // unspecific plural is bugged in satzbau https://github.com/TimoBechtel/satzbau/pull/1
+      actualAllowedStates.delete(NounState.UNSPECIFIC);
+      if (actualAllowedStates.size === 0) {
+        actualAllowedStates.add(NounState.SPECIFIC);
+      }
+    }
+
+    if (actualAllowedStates.size > 0) {
+      const randomState =
+        Array.from(actualAllowedStates)[
+          Math.floor(Math.random() * actualAllowedStates.size)
+        ];
+      switch (randomState) {
+        case NounState.SPECIFIC:
+          next.specific();
+          break;
+        case NounState.POSSESSED:
+          next.possessed(randomPerson());
+          break;
+      }
     }
   }
 
