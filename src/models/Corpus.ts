@@ -3,7 +3,7 @@ import { Sentence } from "./Sentence";
 import { Noun } from "./Noun";
 
 import { sentence } from "satzbau";
-import { getRandomMaterialNoun } from "./corpus/Nouns";
+import { getRandomMaterialNoun, NounState } from "./corpus/Nouns";
 
 const sentenceGenerators = [
   function (nounMain: Noun) {
@@ -51,14 +51,29 @@ const sentenceGenerators = [
 ];
 
 export class Corpus {
-  randomNoun(): Noun {
-    const next = getRandomMaterialNoun();
-
+  randomNoun(options: {
+    attributeMaxCount: number;
+    minimum: number;
+    maximum: number;
+    allowedStates: NounState[];
+  }): Noun {
+    const { attributeMaxCount, minimum, maximum, allowedStates } = options;
+    const next = getRandomMaterialNoun(
+      attributeMaxCount,
+      minimum,
+      maximum,
+      allowedStates,
+    );
     return next;
   }
 
-  randomSentence(): Sentence {
-    const noun = this.randomNoun();
+  randomSentence(options: {
+    attributeMaxCount: number;
+    minimum: number;
+    maximum: number;
+    allowedStates: NounState[];
+  }): Sentence {
+    const noun = this.randomNoun(options);
     return sentenceGenerators[
       Math.floor(Math.random() * sentenceGenerators.length)
     ](noun);
