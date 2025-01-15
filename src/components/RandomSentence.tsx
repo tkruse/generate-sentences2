@@ -12,6 +12,7 @@ import { Reminder } from "./Reminder";
 import { Block, Button, Icon, Section } from "react-bulma-components";
 import { Options } from "./Options";
 import { NounState } from "../models/corpus/Nouns";
+import { GrammaticalCase } from "../models/GrammaticalCase";
 
 export const RandomSentence: FC = () => {
   const corpus = new Corpus();
@@ -23,6 +24,7 @@ export const RandomSentence: FC = () => {
     minimum: 0,
     maximum: 3,
     allowedStates: Object.values(NounState),
+    allowedGrammaticalCases: Object.values(GrammaticalCase),
   });
 
   const [words, setWords] = useState<Words>(() =>

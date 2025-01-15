@@ -18,8 +18,9 @@ const materialNouns = [
   () => new Noun("die Lampe,-n,-n"),
   () => new Noun("die Tasse,-n,-"),
   () => new Noun("die Gabel,-n,-"),
-  () => new Noun("die Socke,-n,-"),
-  () => new Noun("die Soße,-n,-"),
+  () => new Noun("die Uhr,die Uhren,der Uhren"),
+  () => new Noun("die Heizung,die Heizungen,der Heizungen"),
+  () => new Noun("die Nuss,die Nüsse,der Nüsse"),
 ];
 
 export const attributes = [

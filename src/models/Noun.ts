@@ -3,9 +3,8 @@ import { Attribute } from "./Attribute";
 import { noun, Noun as SBNoun } from "satzbau";
 import { GrammaticalCase } from "./GrammaticalCase";
 import { Gender } from "./Gender";
-import { Person } from "./Person";
+import { Person, posessionDE } from "./Person";
 import { renderColorizedByGender } from "./Coloring";
-import { posessionDE } from "./Person";
 
 function parseGender(article: any): Gender {
   switch (article) {
@@ -32,7 +31,7 @@ export class Noun implements Words {
 
   constructor(sbNounTemplate: any) {
     this.wnoun = noun(sbNounTemplate);
-    this.case = "nominative";
+    this.case = GrammaticalCase.Nominative;
     this.allAttributes = [];
     this.gender = parseGender(
       sbNounTemplate.split(",")[0].trim().split(" ")[0].trim(),
@@ -56,19 +55,19 @@ export class Noun implements Words {
     return this.hasCount > 1;
   }
   accusative(): Noun {
-    this.case = "accusative";
+    this.case = GrammaticalCase.Accusative;
     return this;
   }
   genitive(): Noun {
-    this.case = "genitive";
+    this.case = GrammaticalCase.Genitive;
     return this;
   }
   dative(): Noun {
-    this.case = "dative";
+    this.case = GrammaticalCase.Dative;
     return this;
   }
   nominative(): Noun {
-    this.case = "nominative";
+    this.case = GrammaticalCase.Nominative;
     return this;
   }
   getCase(): GrammaticalCase {
@@ -153,13 +152,13 @@ export class Noun implements Words {
       rNoun = rNoun.singular();
     }
 
-    if (this.case === "nominative") {
+    if (this.case === GrammaticalCase.Nominative) {
       rNoun = rNoun.nominative();
-    } else if (this.case === "accusative") {
+    } else if (this.case === GrammaticalCase.Accusative) {
       rNoun = rNoun.accusative();
-    } else if (this.case === "dative") {
+    } else if (this.case === GrammaticalCase.Dative) {
       rNoun = rNoun.dative();
-    } else if (this.case === "genitive") {
+    } else if (this.case === GrammaticalCase.Genitive) {
       rNoun = rNoun.genitive();
     }
     if (this.allAttributes && this.allAttributes.length > 0) {

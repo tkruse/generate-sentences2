@@ -55,7 +55,7 @@ export function posessionDE(
   owner: Person,
   gender: Gender,
   count: number = 1,
-  grammarCase: GrammaticalCase = "nominative",
+  grammarCase: GrammaticalCase = GrammaticalCase.Nominative,
 ): string {
   let result = "";
   switch (owner) {
@@ -84,11 +84,11 @@ export function posessionDE(
       result = "ihr";
       break;
   }
-  if (grammarCase === "nominative") {
+  if (grammarCase === GrammaticalCase.Nominative) {
     if (gender === "weiblich" || count > 1) {
       result = result + "e";
     }
-  } else if (grammarCase === "accusative") {
+  } else if (grammarCase === GrammaticalCase.Accusative) {
     if (gender === "weiblich" || count > 1) {
       result = result + "e";
     }
@@ -100,7 +100,7 @@ export function posessionDE(
         result = result + "en";
         break;
     }
-  } else if (grammarCase === "genitive") {
+  } else if (grammarCase === GrammaticalCase.Genitive) {
     if (count > 1) {
       return result + "er";
     }
@@ -115,7 +115,7 @@ export function posessionDE(
         result = result + "er";
         break;
     }
-  } else if (grammarCase === "dative") {
+  } else if (grammarCase === GrammaticalCase.Dative) {
     if (gender === "weiblich" || count > 1) {
       result = result + "e";
     }
@@ -133,10 +133,10 @@ export function posessionDE(
     }
   }
   if (owner === Persons.YALL && count === 1) {
-    if (grammarCase === "nominative" && gender !== "weiblich") {
+    if (grammarCase === GrammaticalCase.Nominative && gender !== "weiblich") {
       return "euer";
     }
-    if (grammarCase === "accusative" && gender === "neutral") {
+    if (grammarCase === GrammaticalCase.Accusative && gender === "neutral") {
       return "euer";
     }
   }

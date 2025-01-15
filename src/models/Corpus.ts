@@ -4,12 +4,31 @@ import { Noun } from "./Noun";
 
 import { sentence } from "satzbau";
 import { getRandomMaterialNoun, NounState } from "./corpus/Nouns";
+import { GrammaticalCase } from "./GrammaticalCase";
 
 const sentenceGenerators = [
   function (nounMain: Noun) {
     return new Sentence(
+      nounMain,
+      sentence`So schwer wie ${({ noun }) => noun}`,
+    );
+  },
+  function (nounMain: Noun) {
+    return new Sentence(
+      nounMain,
+      sentence`Das fühlt sich an wie ${({ noun }) => noun}`,
+    );
+  },
+  function (nounMain: Noun) {
+    return new Sentence(
       nounMain.accusative(),
       sentence`Ich habe hier ${({ noun }) => noun}`,
+    );
+  },
+  function (nounMain: Noun) {
+    return new Sentence(
+      nounMain.accusative(),
+      sentence`Ein Buch über ${({ noun }) => noun}`,
     );
   },
   function (nounMain: Noun) {
@@ -72,10 +91,20 @@ export class Corpus {
     minimum: number;
     maximum: number;
     allowedStates: NounState[];
+    allowedGrammaticalCases: GrammaticalCase[];
   }): Sentence {
-    const noun = this.randomNoun(options);
-    return sentenceGenerators[
-      Math.floor(Math.random() * sentenceGenerators.length)
-    ](noun);
+    const { allowedGrammaticalCases = [GrammaticalCase.Nominative] } = options;
+    let s: Sentence;
+    do {
+      const noun = this.randomNoun(options);
+      s =
+        sentenceGenerators[
+          Math.floor(Math.random() * sentenceGenerators.length)
+        ](noun);
+    } while (
+      allowedGrammaticalCases.length > 0 &&
+      !allowedGrammaticalCases.includes(s.noun.getCase())
+    );
+    return s;
   }
 }

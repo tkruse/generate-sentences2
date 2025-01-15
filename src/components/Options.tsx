@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { Dropdown, Form } from "react-bulma-components";
 import { NounState } from "../models/corpus/Nouns";
+import { GrammaticalCase } from "../models/GrammaticalCase";
 
 type Props = {
   onChange: (config: {
@@ -8,6 +9,7 @@ type Props = {
     minimum: number;
     maximum: number;
     allowedStates: NounState[];
+    allowedGrammaticalCases: GrammaticalCase[];
   }) => void;
 };
 
@@ -20,14 +22,56 @@ export const Options: FC<Props> = ({ onChange }) => {
   const [allowedStates, setAllowedStates] = useState<NounState[]>(
     Object.values(NounState),
   );
+  const [allowedGrammaticalCases, setAllowedGrammaticalCases] = useState<
+    GrammaticalCase[]
+  >(Object.values(GrammaticalCase));
 
   useEffect(() => {
-    onChange({ attributeMaxCount, minimum, maximum, allowedStates });
-  }, [attributeMaxCount, minimum, maximum, allowedStates]);
+    onChange({
+      attributeMaxCount,
+      minimum,
+      maximum,
+      allowedStates,
+      allowedGrammaticalCases,
+    });
+  }, [
+    attributeMaxCount,
+    minimum,
+    maximum,
+    allowedStates,
+    allowedGrammaticalCases,
+  ]);
 
   return (
     <Dropdown label="Options" closeOnSelect={false} up={true}>
       <Dropdown.Item value="test">
+        <Form.Field>
+          <Form.Label>Fälle</Form.Label>
+          <Form.Field>
+            <div className="checkboxes">
+              {Object.values(GrammaticalCase).map((state) => (
+                <Form.Checkbox
+                  key={state}
+                  checked={allowedGrammaticalCases.includes(state)}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setAllowedGrammaticalCases([
+                        ...allowedGrammaticalCases,
+                        state,
+                      ]);
+                    } else if (allowedGrammaticalCases.length > 1) {
+                      setAllowedGrammaticalCases(
+                        allowedGrammaticalCases.filter((s) => s !== state),
+                      );
+                    }
+                  }}
+                >
+                  {state}
+                </Form.Checkbox>
+              ))}
+            </div>
+          </Form.Field>
+        </Form.Field>
         <Form.Field>
           <Form.Checkbox
             checked={attributeMaxCount > 0}
@@ -88,7 +132,7 @@ export const Options: FC<Props> = ({ onChange }) => {
         <Form.Field>
           <Form.Label>Pronomen</Form.Label>
           <Form.Field>
-            <Form.Control>
+            <div className="checkboxes">
               {Object.values(NounState).map((state) => (
                 <Form.Checkbox
                   key={state}
@@ -106,7 +150,7 @@ export const Options: FC<Props> = ({ onChange }) => {
                   {state}
                 </Form.Checkbox>
               ))}
-            </Form.Control>
+            </div>
           </Form.Field>
         </Form.Field>
       </Dropdown.Item>
