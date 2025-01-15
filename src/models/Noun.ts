@@ -102,6 +102,7 @@ export class Noun implements Words {
     return [
       this.isSpecific ? "spezifisch" : "",
       this.isNegated ? "negiert" : "",
+      this.possession ? this.renderPossessionHint(this.possession) : "",
       this.hasCount > 1 ? this.hasCount : "",
       this.wnoun
         .unspecific()
@@ -111,7 +112,6 @@ export class Noun implements Words {
         .split(" ")
         .slice(1)
         .join(" "),
-      this.possession ? this.renderPossessionHint(this.possession) : "",
       this.allAttributes
         ? this.allAttributes.map((x, _) => x.deWord).join(", ")
         : "",
