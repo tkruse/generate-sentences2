@@ -45,9 +45,11 @@ export class Noun implements Words {
   }
   unspecific(): Noun {
     this.isSpecific = false;
+    this.isDemonstrative = false;
     return this;
   }
   demonstrative(): Noun {
+    this.isSpecific = true;
     this.isDemonstrative = true;
     return this;
   }
@@ -104,9 +106,8 @@ export class Noun implements Words {
 
   renderHints(): string {
     return [
-      this.isSpecific ? "bestimmt" : "",
       this.isNegated ? "negiert" : "",
-      this.isDemonstrative ? "demonstrativ" : "",
+      this.isDemonstrative ? "demonstrativ" : this.isSpecific ? "bestimmt" : "",
       this.possession ? this.renderPossessionHint(this.possession) : "",
       this.hasCount > 1 ? this.hasCount : "",
       this.wnoun
@@ -142,6 +143,63 @@ export class Noun implements Words {
     return "possesiv(" + result + ")";
   }
 
+  private demonstrativeArticle(): string {
+    if (this.case === GrammaticalCase.Nominative) {
+      if (this.isPlural()) {
+        return "diese";
+      }
+      if (this.gender === "männlich") {
+        return "dieser";
+      }
+      if (this.gender === "weiblich") {
+        return "diese";
+      }
+      if (this.gender === "neutral") {
+        return "dieses";
+      }
+    } else if (this.case === GrammaticalCase.Accusative) {
+      if (this.isPlural()) {
+        return "diese";
+      }
+      if (this.gender === "männlich") {
+        return "diesen";
+      }
+      if (this.gender === "weiblich") {
+        return "diese";
+      }
+      if (this.gender === "neutral") {
+        return "dieses";
+      }
+    } else if (this.case === GrammaticalCase.Dative) {
+      if (this.isPlural()) {
+        return "diesen";
+      }
+      if (this.gender === "männlich") {
+        return "diesem";
+      }
+      if (this.gender === "weiblich") {
+        return "dieser";
+      }
+      if (this.gender === "neutral") {
+        return "diesem";
+      }
+    } else if (this.case === GrammaticalCase.Genitive) {
+      if (this.isPlural()) {
+        return "dieser";
+      }
+      if (this.gender === "männlich") {
+        return "dieses";
+      }
+      if (this.gender === "weiblich") {
+        return "dieser";
+      }
+      if (this.gender === "neutral") {
+        return "dieses";
+      }
+    }
+    return "error";
+  }
+
   renderDE(colorize: boolean = true): string {
     let rNoun = this.wnoun;
     if (this.isNegated) {
@@ -172,18 +230,24 @@ export class Noun implements Words {
     }
 
     let rendered = rNoun.write();
+    let articleReplacement = undefined;
+
     if (this.possession !== undefined) {
-      const possessionRendered = posessionDE(
+      articleReplacement = posessionDE(
         this.possession,
         this.gender,
         this.hasCount,
         this.case,
       );
+    } else if (this.isDemonstrative) {
+      articleReplacement = this.demonstrativeArticle();
+    }
+    if (articleReplacement) {
       let noun = rendered;
-      if (this.hasCount <= 1 && this.isSpecific === false) {
+      if (this.isSpecific || this.hasCount <= 1) {
         noun = rendered.slice(rendered.indexOf(" ") + 1);
       }
-      rendered = possessionRendered + " " + noun;
+      rendered = articleReplacement + " " + noun;
     }
 
     return colorize ? renderColorizedByGender(this.gender, rendered) : rendered;

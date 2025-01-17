@@ -15,7 +15,7 @@ const materialNouns = [
   () => new Noun("der Koffer,-,-s"),
   () => new Noun("der Apfel,die Äpfel,des Apfels"),
   () => new Noun("der Schuh,-e,-es"),
-  () => new Noun("der Wein,-e,-es"),
+  () => new Noun("der Stein,-e,-es"),
   () => new Noun("die Lampe,-n,-n"),
   () => new Noun("die Tasse,-n,-"),
   () => new Noun("die Gabel,-n,-"),
@@ -25,7 +25,7 @@ const materialNouns = [
 ];
 
 export const materialAttributes = [
-  new Attribute("klein"),
+  new Attribute("interessant"),
   new Attribute("neu"),
   new Attribute("schön"),
   new Attribute("billig"),
@@ -64,6 +64,7 @@ export const personAttributes = [
 export enum NounState {
   UNSPECIFIC = "unbestimmt",
   SPECIFIC = "bestimmt",
+  DEMONSTRATIVE = "demonstrativ",
   POSSESSED = "possessiv",
 }
 
@@ -144,6 +145,9 @@ export const randomizeNoun = (
       switch (randomState) {
         case NounState.SPECIFIC:
           next.specific();
+          break;
+        case NounState.DEMONSTRATIVE:
+          next.demonstrative();
           break;
         case NounState.POSSESSED:
           next.possessed(randomPerson());
