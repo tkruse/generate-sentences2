@@ -1,6 +1,7 @@
 import { Noun } from "../Noun";
 import { Attribute } from "../Attribute";
 import { randomPerson } from "../Person";
+import { GrammaticalCase } from "../GrammaticalCase";
 
 const materialNouns = [
   () => new Noun("das Haus,die Häuser,des Hauses"),
@@ -23,7 +24,7 @@ const materialNouns = [
   () => new Noun("die Nuss,die Nüsse,der Nüsse"),
 ];
 
-export const attributes = [
+export const materialAttributes = [
   new Attribute("klein"),
   new Attribute("neu"),
   new Attribute("schön"),
@@ -34,21 +35,74 @@ export const attributes = [
   new Attribute("eckig"),
 ];
 
+const personNouns = [
+  () => new Noun("das Kind,die Kinder,des Kindes"),
+  () => new Noun("das Tier,die Tiere,des Tieres"),
+  () => new Noun("das Baby,die Babys,des Babys"),
+  () => new Noun("das Gespenst,die Gespenster,des Gespentes"),
+  () => new Noun("der Vater,die Väter,des Vaters"),
+  () => new Noun("der Sohn,die Söhne,des Sohnes"),
+  () => new Noun("der Enkel,die Enkel,des Enkels"),
+  () => new Noun("der Postbote,die Postboten,des Postbotens"),
+  () => new Noun("die Mutter,die Mütter,der Mutter"),
+  () => new Noun("die Tochter,die Töchter,der Tochter"),
+  () => new Noun("die Enkelin,die Enkelinnen,der Enkelin"),
+  () => new Noun("die Ärztin, die Ärztinnen,der Ärztin"),
+];
+
+export const personAttributes = [
+  new Attribute("schlau"),
+  new Attribute("schön"),
+  new Attribute("schüchtern"),
+  new Attribute("groß"),
+  new Attribute("gesund"),
+  new Attribute("lebhaft"),
+  new Attribute("laut"),
+];
+
 /* eslint-disable */
 export enum NounState {
-  UNSPECIFIC = "unspezifisch",
-  SPECIFIC = "spezifisch",
+  UNSPECIFIC = "unbestimmt",
+  SPECIFIC = "bestimmt",
   POSSESSED = "possessiv",
 }
 
-export const getRandomMaterialNoun = (
-  attributeMaxCount: number = Math.floor(Math.random() * 4),
-  minimum: number = 0,
-  maximum: number = 3,
-  allowedStates: NounState[] = Object.values(NounState),
-): Noun => {
+export const getRandomMaterialNoun = (options: {
+  attributeMaxCount: number;
+  minimum: number;
+  maximum: number;
+  allowedStates: NounState[];
+  allowedGrammaticalCases: GrammaticalCase[];
+}): Noun => {
   const randomIndex = Math.floor(Math.random() * materialNouns.length);
   const next = materialNouns[randomIndex]();
+  return randomizeNoun(next, materialAttributes, options);
+};
+
+export const getRandomPersonNoun = (options: {
+  attributeMaxCount: number;
+  minimum: number;
+  maximum: number;
+  allowedStates: NounState[];
+  allowedGrammaticalCases: GrammaticalCase[];
+}): Noun => {
+  const randomIndex = Math.floor(Math.random() * personNouns.length);
+  const next = personNouns[randomIndex]();
+  return randomizeNoun(next, personAttributes, options);
+};
+
+export const randomizeNoun = (
+  next: Noun,
+  attributes: Attribute[],
+  options: {
+    attributeMaxCount: number;
+    minimum: number;
+    maximum: number;
+    allowedStates: NounState[];
+    allowedGrammaticalCases: GrammaticalCase[];
+  },
+): Noun => {
+  const { attributeMaxCount, minimum, maximum, allowedStates } = options;
 
   const newAttributes: Attribute[] = [];
   const attributeQuantity = Math.floor(Math.random() * attributeMaxCount);

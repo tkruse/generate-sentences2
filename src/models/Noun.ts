@@ -21,6 +21,7 @@ function parseGender(article: any): Gender {
 
 export class Noun implements Words {
   wnoun: SBNoun;
+  isDemonstrative = false;
   isSpecific = false;
   hasCount = 1;
   isNegated = false;
@@ -44,6 +45,10 @@ export class Noun implements Words {
   }
   unspecific(): Noun {
     this.isSpecific = false;
+    return this;
+  }
+  demonstrative(): Noun {
+    this.isDemonstrative = true;
     return this;
   }
 
@@ -99,8 +104,9 @@ export class Noun implements Words {
 
   renderHints(): string {
     return [
-      this.isSpecific ? "spezifisch" : "",
+      this.isSpecific ? "bestimmt" : "",
       this.isNegated ? "negiert" : "",
+      this.isDemonstrative ? "demonstrativ" : "",
       this.possession ? this.renderPossessionHint(this.possession) : "",
       this.hasCount > 1 ? this.hasCount : "",
       this.wnoun
