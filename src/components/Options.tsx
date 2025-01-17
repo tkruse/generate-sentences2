@@ -14,11 +14,9 @@ type Props = {
 };
 
 export const Options: FC<Props> = ({ onChange }) => {
-  const [attributeMaxCount, setAttributeMaxCount] = useState(
-    Math.floor(Math.random() * 4),
-  );
+  const [attributeMaxCount, setAttributeMaxCount] = useState(3);
   const [minimum, setMinimum] = useState(0);
-  const [maximum, setMaximum] = useState(3);
+  const [maximum, setMaximum] = useState(5);
   const [allowedStates, setAllowedStates] = useState<NounState[]>(
     Object.values(NounState),
   );
@@ -101,13 +99,13 @@ export const Options: FC<Props> = ({ onChange }) => {
                 if (e.target.checked) {
                   if (minimum === 0 && maximum == 0) {
                     setMaximum(1);
-                  } else if (minimum === 5 && maximum === 5) {
+                  } else if (minimum > 1 && maximum > 1) {
                     setMinimum(1);
                   }
                 } else {
                   if (minimum === 0 && maximum == 1) {
                     setMaximum(0);
-                  } else if (minimum === 1 && maximum === 5) {
+                  } else if (minimum === 1 && maximum > 1) {
                     setMinimum(5);
                   }
                 }
