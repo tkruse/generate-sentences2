@@ -1,7 +1,7 @@
 // @ts-nocheck // satzbau templates confuse TS
 import { Sentence } from "./Sentence";
 import { Noun } from "./Noun";
-import { noun, sentence } from "satzbau";
+import { sentence } from "satzbau";
 
 describe("Sentence", () => {
   test("renderDE should call template.write", () => {

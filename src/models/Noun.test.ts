@@ -4,260 +4,171 @@ import { Persons } from "./Person";
 describe("Noun", () => {
   test("renderNounNeutral", () => {
     const noun = () => new Noun("das Bett,-en,-es");
-    expect(noun().renderDE(false)).toBe("ein Bett");
-    expect(noun().accusative().renderDE(false)).toBe("ein Bett");
-    expect(noun().dative().renderDE(false)).toBe("einem Bett");
-    expect(noun().genitive().renderDE(false)).toBe("eines Bettes");
-    expect(noun().specific().accusative().renderDE(false)).toBe("das Bett");
-    expect(noun().specific().dative().renderDE(false)).toBe("dem Bett");
-    expect(noun().specific().genitive().renderDE(false)).toBe("des Bettes");
-    expect(noun().negated().accusative().renderDE(false)).toBe("kein Bett");
-    expect(noun().negated().dative().renderDE(false)).toBe("keinem Bett");
-    expect(noun().negated().genitive().renderDE(false)).toBe("keines Bettes");
+    const checkCases = (modifier: (n: Noun) => Noun, expected: string[]) => {
+      const [nom, acc, dat, gen] = expected;
+      expect(modifier(noun()).renderDE(false)).toBe(nom);
+      expect(modifier(noun()).accusative().renderDE(false)).toBe(acc);
+      expect(modifier(noun()).dative().renderDE(false)).toBe(dat);
+      expect(modifier(noun()).genitive().renderDE(false)).toBe(gen);
+    };
 
-    expect(noun().possessed(Persons.ME).nominative().renderDE(false)).toBe(
-      "mein Bett",
+    checkCases(
+      (n) => n,
+      ["ein Bett", "ein Bett", "einem Bett", "eines Bettes"],
     );
-    expect(noun().possessed(Persons.ME).accusative().renderDE(false)).toBe(
-      "mein Bett",
+
+    checkCases(
+      (n) => n.specific(),
+      ["das Bett", "das Bett", "dem Bett", "des Bettes"],
     );
-    expect(noun().possessed(Persons.ME).dative().renderDE(false)).toBe(
-      "meinem Bett",
+
+    checkCases(
+      (n) => n.negated(),
+      ["kein Bett", "kein Bett", "keinem Bett", "keines Bettes"],
     );
-    expect(noun().possessed(Persons.ME).genitive().renderDE(false)).toBe(
-      "meines Bettes",
+
+    checkCases(
+      (n) => n.possessed(Persons.ME),
+      ["mein Bett", "mein Bett", "meinem Bett", "meines Bettes"],
     );
-    expect(noun().possessed(Persons.YOU).nominative().renderDE(false)).toBe(
-      "dein Bett",
+
+    checkCases(
+      (n) => n.possessed(Persons.YOU),
+      ["dein Bett", "dein Bett", "deinem Bett", "deines Bettes"],
     );
-    expect(noun().possessed(Persons.YOU).accusative().renderDE(false)).toBe(
-      "dein Bett",
+
+    checkCases(
+      (n) => n.possessed(Persons.SHE),
+      ["ihr Bett", "ihr Bett", "ihrem Bett", "ihres Bettes"],
     );
-    expect(noun().possessed(Persons.YOU).dative().renderDE(false)).toBe(
-      "deinem Bett",
+
+    checkCases(
+      (n) => n.possessed(Persons.WE),
+      ["unser Bett", "unser Bett", "unserem Bett", "unseres Bettes"],
     );
-    expect(noun().possessed(Persons.YOU).genitive().renderDE(false)).toBe(
-      "deines Bettes",
+
+    checkCases(
+      (n) => n.possessed(Persons.YALL),
+      ["euer Bett", "euer Bett", "eurem Bett", "eures Bettes"],
     );
-    expect(noun().possessed(Persons.SHE).nominative().renderDE(false)).toBe(
-      "ihr Bett",
-    );
-    expect(noun().possessed(Persons.SHE).accusative().renderDE(false)).toBe(
-      "ihr Bett",
-    );
-    expect(noun().possessed(Persons.SHE).dative().renderDE(false)).toBe(
-      "ihrem Bett",
-    );
-    expect(noun().possessed(Persons.SHE).genitive().renderDE(false)).toBe(
-      "ihres Bettes",
-    );
-    expect(noun().possessed(Persons.WE).nominative().renderDE(false)).toBe(
-      "unser Bett",
-    );
-    expect(noun().possessed(Persons.WE).accusative().renderDE(false)).toBe(
-      "unser Bett",
-    );
-    expect(noun().possessed(Persons.WE).dative().renderDE(false)).toBe(
-      "unserem Bett",
-    );
-    expect(noun().possessed(Persons.WE).genitive().renderDE(false)).toBe(
-      "unseres Bettes",
-    );
-    expect(noun().possessed(Persons.YALL).nominative().renderDE(false)).toBe(
-      "euer Bett",
-    );
-    expect(noun().possessed(Persons.YALL).accusative().renderDE(false)).toBe(
-      "euer Bett",
-    );
-    expect(noun().possessed(Persons.YALL).dative().renderDE(false)).toBe(
-      "eurem Bett",
-    );
-    expect(noun().possessed(Persons.YALL).genitive().renderDE(false)).toBe(
-      "eures Bettes",
-    );
-    expect(noun().possessed(Persons.THEY).nominative().renderDE(false)).toBe(
-      "ihr Bett",
-    );
-    expect(noun().possessed(Persons.THEY).accusative().renderDE(false)).toBe(
-      "ihr Bett",
-    );
-    expect(noun().possessed(Persons.THEY).dative().renderDE(false)).toBe(
-      "ihrem Bett",
-    );
-    expect(noun().possessed(Persons.THEY).genitive().renderDE(false)).toBe(
-      "ihres Bettes",
+
+    checkCases(
+      (n) => n.possessed(Persons.THEY),
+      ["ihr Bett", "ihr Bett", "ihrem Bett", "ihres Bettes"],
     );
   });
-
   test("renderNounFemale", () => {
     const noun = () => new Noun("die Gabel,-n,-");
-    expect(noun().renderDE(false)).toBe("eine Gabel");
-    expect(noun().accusative().renderDE(false)).toBe("eine Gabel");
-    expect(noun().dative().renderDE(false)).toBe("einer Gabel");
-    expect(noun().genitive().renderDE(false)).toBe("einer Gabel");
-    expect(noun().specific().accusative().renderDE(false)).toBe("die Gabel");
-    expect(noun().specific().dative().renderDE(false)).toBe("der Gabel");
-    expect(noun().specific().genitive().renderDE(false)).toBe("der Gabel");
-    expect(noun().negated().accusative().renderDE(false)).toBe("keine Gabel");
-    expect(noun().negated().dative().renderDE(false)).toBe("keiner Gabel");
-    expect(noun().negated().genitive().renderDE(false)).toBe("keiner Gabel");
-    expect(noun().possessed(Persons.ME).nominative().renderDE(false)).toBe(
-      "meine Gabel",
+    const checkCases = (
+      modifier: (n: Noun) => Noun,
+      [nom, acc, dat, gen]: string[],
+    ) => {
+      expect(modifier(noun()).nominative().renderDE(false)).toBe(nom);
+      expect(modifier(noun()).accusative().renderDE(false)).toBe(acc);
+      expect(modifier(noun()).dative().renderDE(false)).toBe(dat);
+      expect(modifier(noun()).genitive().renderDE(false)).toBe(gen);
+    };
+
+    checkCases(
+      (n) => n,
+      ["eine Gabel", "eine Gabel", "einer Gabel", "einer Gabel"],
     );
-    expect(noun().possessed(Persons.ME).accusative().renderDE(false)).toBe(
-      "meine Gabel",
+
+    checkCases(
+      (n) => n.specific(),
+      ["die Gabel", "die Gabel", "der Gabel", "der Gabel"],
     );
-    expect(noun().possessed(Persons.ME).dative().renderDE(false)).toBe(
-      "meiner Gabel",
+
+    checkCases(
+      (n) => n.negated(),
+      ["keine Gabel", "keine Gabel", "keiner Gabel", "keiner Gabel"],
     );
-    expect(noun().possessed(Persons.ME).genitive().renderDE(false)).toBe(
-      "meiner Gabel",
+
+    checkCases(
+      (n) => n.possessed(Persons.ME),
+      ["meine Gabel", "meine Gabel", "meiner Gabel", "meiner Gabel"],
     );
-    expect(noun().possessed(Persons.YOU).nominative().renderDE(false)).toBe(
-      "deine Gabel",
+
+    checkCases(
+      (n) => n.possessed(Persons.YOU),
+      ["deine Gabel", "deine Gabel", "deiner Gabel", "deiner Gabel"],
     );
-    expect(noun().possessed(Persons.YOU).accusative().renderDE(false)).toBe(
-      "deine Gabel",
+
+    checkCases(
+      (n) => n.possessed(Persons.SHE),
+      ["ihre Gabel", "ihre Gabel", "ihrer Gabel", "ihrer Gabel"],
     );
-    expect(noun().possessed(Persons.YOU).dative().renderDE(false)).toBe(
-      "deiner Gabel",
+
+    checkCases(
+      (n) => n.possessed(Persons.WE),
+      ["unsere Gabel", "unsere Gabel", "unserer Gabel", "unserer Gabel"],
     );
-    expect(noun().possessed(Persons.YOU).genitive().renderDE(false)).toBe(
-      "deiner Gabel",
+
+    checkCases(
+      (n) => n.possessed(Persons.YALL),
+      ["eure Gabel", "eure Gabel", "eurer Gabel", "eurer Gabel"],
     );
-    expect(noun().possessed(Persons.SHE).nominative().renderDE(false)).toBe(
-      "ihre Gabel",
-    );
-    expect(noun().possessed(Persons.SHE).accusative().renderDE(false)).toBe(
-      "ihre Gabel",
-    );
-    expect(noun().possessed(Persons.SHE).dative().renderDE(false)).toBe(
-      "ihrer Gabel",
-    );
-    expect(noun().possessed(Persons.SHE).genitive().renderDE(false)).toBe(
-      "ihrer Gabel",
-    );
-    expect(noun().possessed(Persons.WE).nominative().renderDE(false)).toBe(
-      "unsere Gabel",
-    );
-    expect(noun().possessed(Persons.WE).accusative().renderDE(false)).toBe(
-      "unsere Gabel",
-    );
-    expect(noun().possessed(Persons.WE).dative().renderDE(false)).toBe(
-      "unserer Gabel",
-    );
-    expect(noun().possessed(Persons.WE).genitive().renderDE(false)).toBe(
-      "unserer Gabel",
-    );
-    expect(noun().possessed(Persons.YALL).nominative().renderDE(false)).toBe(
-      "eure Gabel",
-    );
-    expect(noun().possessed(Persons.YALL).accusative().renderDE(false)).toBe(
-      "eure Gabel",
-    );
-    expect(noun().possessed(Persons.YALL).dative().renderDE(false)).toBe(
-      "eurer Gabel",
-    );
-    expect(noun().possessed(Persons.YALL).genitive().renderDE(false)).toBe(
-      "eurer Gabel",
-    );
-    expect(noun().possessed(Persons.THEY).nominative().renderDE(false)).toBe(
-      "ihre Gabel",
-    );
-    expect(noun().possessed(Persons.THEY).accusative().renderDE(false)).toBe(
-      "ihre Gabel",
-    );
-    expect(noun().possessed(Persons.THEY).dative().renderDE(false)).toBe(
-      "ihrer Gabel",
-    );
-    expect(noun().possessed(Persons.THEY).genitive().renderDE(false)).toBe(
-      "ihrer Gabel",
+
+    checkCases(
+      (n) => n.possessed(Persons.THEY),
+      ["ihre Gabel", "ihre Gabel", "ihrer Gabel", "ihrer Gabel"],
     );
   });
-
   test("renderNounMale", () => {
     const noun = () => new Noun("der Schuh,-e,-es");
-    expect(noun().renderDE(false)).toBe("ein Schuh");
-    expect(noun().accusative().renderDE(false)).toBe("einen Schuh");
-    expect(noun().dative().renderDE(false)).toBe("einem Schuh");
-    expect(noun().genitive().renderDE(false)).toBe("eines Schuhes");
-    expect(noun().specific().accusative().renderDE(false)).toBe("den Schuh");
-    expect(noun().specific().dative().renderDE(false)).toBe("dem Schuh");
-    expect(noun().specific().genitive().renderDE(false)).toBe("des Schuhes");
-    expect(noun().negated().accusative().renderDE(false)).toBe("keinen Schuh");
-    expect(noun().negated().dative().renderDE(false)).toBe("keinem Schuh");
-    expect(noun().negated().genitive().renderDE(false)).toBe("keines Schuhes");
-    expect(noun().possessed(Persons.ME).nominative().renderDE(false)).toBe(
-      "mein Schuh",
+    const checkCases = (
+      modifier: (n: Noun) => Noun,
+      [nom, acc, dat, gen]: string[],
+    ) => {
+      expect(modifier(noun()).renderDE(false)).toBe(nom);
+      expect(modifier(noun()).accusative().renderDE(false)).toBe(acc);
+      expect(modifier(noun()).dative().renderDE(false)).toBe(dat);
+      expect(modifier(noun()).genitive().renderDE(false)).toBe(gen);
+    };
+
+    checkCases(
+      (n) => n,
+      ["ein Schuh", "einen Schuh", "einem Schuh", "eines Schuhes"],
     );
-    expect(noun().possessed(Persons.ME).accusative().renderDE(false)).toBe(
-      "meinen Schuh",
+
+    checkCases(
+      (n) => n.specific(),
+      ["der Schuh", "den Schuh", "dem Schuh", "des Schuhes"],
     );
-    expect(noun().possessed(Persons.ME).dative().renderDE(false)).toBe(
-      "meinem Schuh",
+
+    checkCases(
+      (n) => n.negated(),
+      ["kein Schuh", "keinen Schuh", "keinem Schuh", "keines Schuhes"],
     );
-    expect(noun().possessed(Persons.ME).genitive().renderDE(false)).toBe(
-      "meines Schuhes",
+
+    checkCases(
+      (n) => n.possessed(Persons.ME),
+      ["mein Schuh", "meinen Schuh", "meinem Schuh", "meines Schuhes"],
     );
-    expect(noun().possessed(Persons.YOU).nominative().renderDE(false)).toBe(
-      "dein Schuh",
+
+    checkCases(
+      (n) => n.possessed(Persons.YOU),
+      ["dein Schuh", "deinen Schuh", "deinem Schuh", "deines Schuhes"],
     );
-    expect(noun().possessed(Persons.YOU).accusative().renderDE(false)).toBe(
-      "deinen Schuh",
+
+    checkCases(
+      (n) => n.possessed(Persons.SHE),
+      ["ihr Schuh", "ihren Schuh", "ihrem Schuh", "ihres Schuhes"],
     );
-    expect(noun().possessed(Persons.YOU).dative().renderDE(false)).toBe(
-      "deinem Schuh",
+
+    checkCases(
+      (n) => n.possessed(Persons.WE),
+      ["unser Schuh", "unseren Schuh", "unserem Schuh", "unseres Schuhes"],
     );
-    expect(noun().possessed(Persons.YOU).genitive().renderDE(false)).toBe(
-      "deines Schuhes",
+
+    checkCases(
+      (n) => n.possessed(Persons.YALL),
+      ["euer Schuh", "euren Schuh", "eurem Schuh", "eures Schuhes"],
     );
-    expect(noun().possessed(Persons.SHE).nominative().renderDE(false)).toBe(
-      "ihr Schuh",
-    );
-    expect(noun().possessed(Persons.SHE).accusative().renderDE(false)).toBe(
-      "ihren Schuh",
-    );
-    expect(noun().possessed(Persons.SHE).dative().renderDE(false)).toBe(
-      "ihrem Schuh",
-    );
-    expect(noun().possessed(Persons.SHE).genitive().renderDE(false)).toBe(
-      "ihres Schuhes",
-    );
-    expect(noun().possessed(Persons.WE).nominative().renderDE(false)).toBe(
-      "unser Schuh",
-    );
-    expect(noun().possessed(Persons.WE).accusative().renderDE(false)).toBe(
-      "unseren Schuh",
-    );
-    expect(noun().possessed(Persons.WE).dative().renderDE(false)).toBe(
-      "unserem Schuh",
-    );
-    expect(noun().possessed(Persons.WE).genitive().renderDE(false)).toBe(
-      "unseres Schuhes",
-    );
-    expect(noun().possessed(Persons.YALL).nominative().renderDE(false)).toBe(
-      "euer Schuh",
-    );
-    expect(noun().possessed(Persons.YALL).accusative().renderDE(false)).toBe(
-      "euren Schuh",
-    );
-    expect(noun().possessed(Persons.YALL).dative().renderDE(false)).toBe(
-      "eurem Schuh",
-    );
-    expect(noun().possessed(Persons.YALL).genitive().renderDE(false)).toBe(
-      "eures Schuhes",
-    );
-    expect(noun().possessed(Persons.THEY).nominative().renderDE(false)).toBe(
-      "ihr Schuh",
-    );
-    expect(noun().possessed(Persons.THEY).accusative().renderDE(false)).toBe(
-      "ihren Schuh",
-    );
-    expect(noun().possessed(Persons.THEY).dative().renderDE(false)).toBe(
-      "ihrem Schuh",
-    );
-    expect(noun().possessed(Persons.THEY).genitive().renderDE(false)).toBe(
-      "ihres Schuhes",
+
+    checkCases(
+      (n) => n.possessed(Persons.THEY),
+      ["ihr Schuh", "ihren Schuh", "ihrem Schuh", "ihres Schuhes"],
     );
   });
 });
