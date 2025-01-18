@@ -17,7 +17,7 @@ const checkConjugations = (verb: Verb, tense: Tense, expected: string[]) => {
 
 describe("Verb", () => {
   test("kaufen conjugation with persons", () => {
-    const verb3 = new Verb("kaufen", "kaufe", "kaufte", "gekauft");
+    const verb3 = Verb.regularVerb("kaufen");
 
     checkConjugations(verb3, Tense.PRESENT, [
       "kaufe",
@@ -43,7 +43,7 @@ describe("Verb", () => {
   });
 
   test("gehen conjugation with persons", () => {
-    const verb1 = new Verb("gehen", "geht", "ging", "gegangen");
+    const verb1 = Verb.irregularVerb("gehen", "ging", "gegangen");
 
     checkConjugations(verb1, Tense.PRESENT, [
       "gehe",
@@ -69,7 +69,7 @@ describe("Verb", () => {
   });
 
   test("essen conjugation with persons", () => {
-    const verb2 = new Verb("essen", "isst", "aß", "gegessen", "iss");
+    const verb2 = Verb.irregularVerb("essen", "aß", "gegessen", "iss");
 
     checkConjugations(verb2, Tense.PRESENT, [
       "esse",
@@ -95,7 +95,12 @@ describe("Verb", () => {
   });
 
   test("helfen conjugation with persons", () => {
-    const verb3 = new Verb("helfen", "hilft", "half", "geholfen", "hilf");
+    const verb3 = Verb.irregularVerb(
+      "helfen",
+      "half",
+      "geholfen",
+      "hilf",
+    );
 
     checkConjugations(verb3, Tense.PRESENT, [
       "helfe",
@@ -121,7 +126,7 @@ describe("Verb", () => {
   });
 
   test("kneifen conjugation with persons", () => {
-    const verb4 = new Verb("kneifen", "kneift", "kniff", "gekniffen");
+    const verb4 = Verb.irregularVerb("kneifen", "kniff", "gekniffen");
 
     checkConjugations(verb4, Tense.PRESENT, [
       "kneife",
@@ -147,7 +152,7 @@ describe("Verb", () => {
   });
 
   test("liegen conjugation with persons", () => {
-    const verb5 = new Verb("liegen", "liegt", "lag", "gelegen");
+    const verb5 = Verb.irregularVerb("liegen", "lag", "gelegen");
 
     checkConjugations(verb5, Tense.PRESENT, [
       "liege",
@@ -173,7 +178,7 @@ describe("Verb", () => {
   });
 
   test("lügen conjugation with persons", () => {
-    const verb6 = new Verb("lügen", "lügt", "log", "gelogen");
+    const verb6 = Verb.irregularVerb("lügen", "log", "gelogen");
 
     checkConjugations(verb6, Tense.PRESENT, [
       "lüge",
@@ -199,9 +204,8 @@ describe("Verb", () => {
   });
 
   test("schlafen conjugation with persons", () => {
-    const verb7 = new Verb(
+    const verb7 = Verb.irregularVerb(
       "schlafen",
-      "schläft",
       "schlief",
       "geschlafen",
       "schläf",
@@ -231,7 +235,11 @@ describe("Verb", () => {
   });
 
   test("schneiden conjugation with persons", () => {
-    const verb8 = new Verb("schneiden", "schneidet", "schnitt", "geschnitten");
+    const verb8 = Verb.irregularVerb(
+      "schneiden",
+      "schnitt",
+      "geschnitten",
+    );
 
     checkConjugations(verb8, Tense.PRESENT, [
       "schneide",
@@ -255,4 +263,110 @@ describe("Verb", () => {
       "schnitten",
     ]);
   });
+
+  test("wollen conjugation with persons", () => {
+      const verb9 = Verb.modalVerb("wollen", "wollte", "gewollt", "will", "woll");
+
+      checkConjugations(verb9, Tense.PRESENT, [
+        "will",
+        "willst",
+        "will",
+        "will",
+        "will",
+        "wollen",
+        "wollt",
+        "wollen",
+      ]);
+
+      checkConjugations(verb9, Tense.PAST, [
+        "wollte",
+        "wolltest",
+        "wollte",
+        "wollte",
+        "wollte",
+        "wollten",
+        "wolltet",
+        "wollten",
+      ]);
+    });
+
+test("dürfen conjugation with persons", () => {
+    const verb10 = Verb.modalVerb("dürfen", "durfte", "gedurft", "darf", "dürf");
+
+    checkConjugations(verb10, Tense.PRESENT, [
+      "darf",
+      "darfst",
+      "darf",
+      "darf",
+      "darf",
+      "dürfen",
+      "dürft",
+      "dürfen",
+    ]);
+
+    checkConjugations(verb10, Tense.PAST, [
+      "durfte",
+      "durftest",
+      "durfte",
+      "durfte",
+      "durfte",
+      "durften",
+      "durftet",
+      "durften",
+    ]);
+  });
+
+  test("können conjugation with persons", () => {
+    const verb11 = Verb.modalVerb("können", "konnte", "gekonnt", "kann", "könn");
+
+    checkConjugations(verb11, Tense.PRESENT, [
+      "kann",
+      "kannst",
+      "kann",
+      "kann",
+      "kann",
+      "können",
+      "könnt",
+      "können",
+    ]);
+
+    checkConjugations(verb11, Tense.PAST, [
+      "konnte",
+      "konntest",
+      "konnte",
+      "konnte",
+      "konnte",
+      "konnten",
+      "konntet",
+      "konnten",
+    ]);
+  });
+
+  test("müssen conjugation with persons", () => {
+    const verb12 = Verb.modalVerb("müssen", "musste", "gemusst", "muss", "müss");
+
+    checkConjugations(verb12, Tense.PRESENT, [
+      "muss",
+      "musst",
+      "muss",
+      "muss",
+      "muss",
+      "müssen",
+      "müsst",
+      "müssen",
+    ]);
+
+    checkConjugations(verb12, Tense.PAST, [
+      "musste",
+      "musstest",
+      "musste",
+      "musste",
+      "musste",
+      "mussten",
+      "musstet",
+      "mussten",
+    ]);
+  });
+
+
 });
