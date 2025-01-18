@@ -32,6 +32,7 @@
     "lint": "eslint src --ext .ts --ignore-path .gitignore",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier --write \"{,!(node_modules)/**/}*.ts*\"",
+    "typecheck": "tsc --noEmit",
     "test": "react-scripts test",
     "deploy": "gh-pages -d build"
   },
@@ -55,6 +56,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0",
     "eslint": "^8.57.1",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^9.1.0",

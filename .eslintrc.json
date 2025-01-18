@@ -23,6 +23,8 @@
     ],
     "rules": {
       "require-jsdoc": "off",
-      "prettier/prettier": ["error"]
+      "prettier/prettier": ["error"],
+      "@typescript-eslint/strict-enum-value-checking": "error",
+      "@typescript-eslint/enum-utils": "error"
     }
 }
