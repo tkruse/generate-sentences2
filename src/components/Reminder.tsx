@@ -6,7 +6,7 @@ type props = {};
 
 export const Reminder: FC<props> = ({}) => {
   return (
-    <Dropdown label="Grammatik" up={true}>
+    <Dropdown label="Grammatik">
       <Dropdown.Item
         value="Test"
         style={{

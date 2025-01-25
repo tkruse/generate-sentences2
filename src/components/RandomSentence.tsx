@@ -14,7 +14,7 @@ import {
 
 import { Reminder } from "./Reminder";
 import { Statistics } from "./Statistics";
-import { Block, Button, Icon, Section } from "react-bulma-components";
+import { Block, Button, Icon, Level, Container } from "react-bulma-components";
 import { Options } from "./Options";
 import { NounState } from "../models/corpus/Nouns";
 import { GrammaticalCase } from "../models/GrammaticalCase";
@@ -48,11 +48,22 @@ export const RandomSentence: FC = () => {
 
   return (
     <div>
-      <Section
+      <Level style={{ textAlign: "center" }} className="is-mobile">
+        <Level.Item>
+          <Reminder></Reminder>
+        </Level.Item>
+        <Level.Item>
+          <Options onChange={setOptions}></Options>
+        </Level.Item>
+        <Level.Item>
+          <Statistics></Statistics>
+        </Level.Item>
+      </Level>
+      <Container
         className={
           "is-flex is-flex-direction-column is-justify-content-space-between"
         }
-        style={{ minHeight: "95vh" }}
+        style={{ minHeight: "80vh" }}
       >
         <Block>
           <HiddenSentenceRenderer words={words}></HiddenSentenceRenderer>
@@ -65,17 +76,6 @@ export const RandomSentence: FC = () => {
           className="columns is-mobile is-vcentered"
           style={{ minHeight: "30vh" }}
         >
-          <div className="column">
-            <Block>
-              <Reminder></Reminder>
-            </Block>
-            <Block>
-              <Options onChange={setOptions}></Options>
-            </Block>
-            <Block>
-              <Statistics></Statistics>
-            </Block>
-          </div>
           <div className="column" style={{ textAlign: "center" }}>
             {hidden ? (
               <Button
@@ -134,9 +134,8 @@ export const RandomSentence: FC = () => {
               </div>
             )}
           </div>
-          <div className="column"></div>
         </div>
-      </Section>
+      </Container>
     </div>
   );
 };

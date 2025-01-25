@@ -16,7 +16,7 @@ export const Statistics: FC<props> = ({}) => {
   };
 
   return (
-    <Dropdown label="Statistik" closeOnSelect={false} up={true}>
+    <Dropdown label="Statistik" closeOnSelect={false} right={true}>
       <Dropdown.Item
         value="Test"
         style={{
