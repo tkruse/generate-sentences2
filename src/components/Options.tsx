@@ -41,7 +41,7 @@ export const Options: FC<Props> = ({ onChange }) => {
   ]);
 
   return (
-    <Dropdown label="Options" closeOnSelect={false} up={true}>
+    <Dropdown label="Optionen" closeOnSelect={false} up={true}>
       <Dropdown.Item value="test">
         <Form.Field>
           <Form.Label>Fälle</Form.Label>

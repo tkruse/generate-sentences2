@@ -101,47 +101,47 @@ export class Verb implements Words {
   }
 
   static modalVerb(
-      infinitive: string,
-      past: string,
-      perfect: string,
-      singularStem: string,
-      pluralStem: string
-    ): Verb {
-      const conjugations = new Map<Person, [string, string]>();
-      conjugations.set(Persons.ME, [
-        singularStem,
-        Verb.conjugatePast(Persons.ME, past),
-      ]);
-      conjugations.set(Persons.YOU, [
-        Verb.appendEnding(singularStem, "st"),
-        Verb.conjugatePast(Persons.YOU, past),
-      ]);
-      conjugations.set(Persons.HE, [
-        singularStem,
-        Verb.conjugatePast(Persons.HE, past),
-      ]);
-      conjugations.set(Persons.SHE, [
-        singularStem,
-        Verb.conjugatePast(Persons.SHE, past),
-      ]);
-      conjugations.set(Persons.IT, [
-        singularStem,
-        Verb.conjugatePast(Persons.IT, past),
-      ]);
-      conjugations.set(Persons.WE, [
-        Verb.conjugatePresent(Persons.WE, infinitive, pluralStem),
-        Verb.conjugatePast(Persons.WE, past),
-      ]);
-      conjugations.set(Persons.YALL, [
-        Verb.conjugatePresent(Persons.YALL, infinitive, pluralStem),
-        Verb.conjugatePast(Persons.YALL, past),
-      ]);
-      conjugations.set(Persons.THEY, [
-        Verb.conjugatePresent(Persons.THEY, infinitive, pluralStem),
-        Verb.conjugatePast(Persons.THEY, past),
-      ]);
-      return new Verb(infinitive, conjugations, perfect);
-    }
+    infinitive: string,
+    past: string,
+    perfect: string,
+    singularStem: string,
+    pluralStem: string,
+  ): Verb {
+    const conjugations = new Map<Person, [string, string]>();
+    conjugations.set(Persons.ME, [
+      singularStem,
+      Verb.conjugatePast(Persons.ME, past),
+    ]);
+    conjugations.set(Persons.YOU, [
+      Verb.appendEnding(singularStem, "st"),
+      Verb.conjugatePast(Persons.YOU, past),
+    ]);
+    conjugations.set(Persons.HE, [
+      singularStem,
+      Verb.conjugatePast(Persons.HE, past),
+    ]);
+    conjugations.set(Persons.SHE, [
+      singularStem,
+      Verb.conjugatePast(Persons.SHE, past),
+    ]);
+    conjugations.set(Persons.IT, [
+      singularStem,
+      Verb.conjugatePast(Persons.IT, past),
+    ]);
+    conjugations.set(Persons.WE, [
+      Verb.conjugatePresent(Persons.WE, infinitive, pluralStem),
+      Verb.conjugatePast(Persons.WE, past),
+    ]);
+    conjugations.set(Persons.YALL, [
+      Verb.conjugatePresent(Persons.YALL, infinitive, pluralStem),
+      Verb.conjugatePast(Persons.YALL, past),
+    ]);
+    conjugations.set(Persons.THEY, [
+      Verb.conjugatePresent(Persons.THEY, infinitive, pluralStem),
+      Verb.conjugatePast(Persons.THEY, past),
+    ]);
+    return new Verb(infinitive, conjugations, perfect);
+  }
 
   setPerson(person: Person): Verb {
     this.person = person;

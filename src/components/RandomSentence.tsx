@@ -1,14 +1,16 @@
 import React, { FC, useState } from "react";
-import { Words } from "../models/Words";
+import { Sentence } from "../models/Sentence";
 import { GermanSentenceRenderer } from "./GermanSentenceRenderer";
 import { HiddenSentenceRenderer } from "./HiddenSentenceRenderer";
 import { Corpus } from "../models/Corpus";
+import { StorageService } from "../storage/StorageService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelopeOpenText,
   faRotateRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { Reminder } from "./Reminder";
+import { Statistics } from "./Statistics";
 import { Block, Button, Icon, Section } from "react-bulma-components";
 import { Options } from "./Options";
 import { NounState } from "../models/corpus/Nouns";
@@ -27,7 +29,7 @@ export const RandomSentence: FC = () => {
     allowedGrammaticalCases: Object.values(GrammaticalCase),
   });
 
-  const [words, setWords] = useState<Words>(() =>
+  const [words, setWords] = useState<Sentence>(() =>
     corpus.randomSentence(options),
   );
 
@@ -36,6 +38,7 @@ export const RandomSentence: FC = () => {
   }
 
   function generateNext() {
+    StorageService.appendRepetition({ noun: words.noun });
     setWords(corpus.randomSentence(options));
     setHidden(true);
   }
@@ -65,6 +68,9 @@ export const RandomSentence: FC = () => {
             </Block>
             <Block>
               <Options onChange={setOptions}></Options>
+            </Block>
+            <Block>
+              <Statistics></Statistics>
             </Block>
           </div>
           <div className="column is-justify-content-center">
