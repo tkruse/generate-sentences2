@@ -58,7 +58,7 @@ export class Noun implements Words {
     this.hasCount = count;
     return this;
   }
-  isPlural(): boolean {
+  public isPlural(): boolean {
     return this.hasCount > 1;
   }
   accusative(): Noun {

@@ -6,9 +6,12 @@ import { Corpus } from "../models/Corpus";
 import { StorageService } from "../storage/StorageService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faCircleXmark,
   faEnvelopeOpenText,
   faRotateRight,
+  faCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
+
 import { Reminder } from "./Reminder";
 import { Statistics } from "./Statistics";
 import { Block, Button, Icon, Section } from "react-bulma-components";
@@ -37,8 +40,8 @@ export const RandomSentence: FC = () => {
     setHidden(!hidden);
   }
 
-  function generateNext() {
-    StorageService.appendRepetition({ noun: words.noun });
+  function storeResultAndGenerateNext(score: number) {
+    StorageService.appendRepetition({ score: score, noun: words.noun });
     setWords(corpus.randomSentence(options));
     setHidden(true);
   }
@@ -73,7 +76,7 @@ export const RandomSentence: FC = () => {
               <Statistics></Statistics>
             </Block>
           </div>
-          <div className="column is-justify-content-center">
+          <div className="column" style={{ textAlign: "center" }}>
             {hidden ? (
               <Button
                 color={"info"}
@@ -91,17 +94,44 @@ export const RandomSentence: FC = () => {
                 </Icon>
               </Button>
             ) : (
-              <Button
-                color={"primary"}
-                size={"large"}
-                hidden={hidden}
-                onClick={generateNext}
-                aria-label="next"
+              <div
+                className="buttons is-centered"
+                style={{ textAlign: "center" }}
               >
-                <Icon>
-                  <FontAwesomeIcon icon={faRotateRight} size="2x" />
-                </Icon>
-              </Button>
+                <Button
+                  color={"danger"}
+                  size={"large"}
+                  hidden={hidden}
+                  onClick={() => storeResultAndGenerateNext(0)}
+                  aria-label="next"
+                >
+                  <Icon>
+                    <FontAwesomeIcon icon={faCircleXmark} size="2x" />
+                  </Icon>
+                </Button>
+                <Button
+                  color={"warning"}
+                  size={"large"}
+                  hidden={hidden}
+                  onClick={() => storeResultAndGenerateNext(0.5)}
+                  aria-label="next"
+                >
+                  <Icon>
+                    <FontAwesomeIcon icon={faRotateRight} size="2x" />
+                  </Icon>
+                </Button>
+                <Button
+                  color={"primary"}
+                  size={"large"}
+                  hidden={hidden}
+                  onClick={() => storeResultAndGenerateNext(1)}
+                  aria-label="next"
+                >
+                  <Icon>
+                    <FontAwesomeIcon icon={faCircleCheck} size="2x" />
+                  </Icon>
+                </Button>
+              </div>
             )}
           </div>
           <div className="column"></div>

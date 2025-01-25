@@ -31,13 +31,11 @@ export const StorageService = {
   getStats(): UserStats {
     const stored = localStorage.getItem("userStats");
     if (!stored) {
-      return { repPerDay: new Map() };
+      return new UserStats();
     }
     const parsed = JSON.parse(stored);
     // Convert array back to Map
-    return {
-      repPerDay: new Map(parsed.repPerDay),
-    };
+    return new UserStats(new Map(parsed.repPerDay));
   },
 
   clearStats(): void {
