@@ -39,18 +39,18 @@ export const Statistics: FC<props> = ({}) => {
             <tr>
               <th>Gesamt</th>
               <th>Total</th>
-              <th>
-                <Icon>
+              <th style={{ textAlign: "center" }}>
+                <Icon color={"primary"}>
                   <FontAwesomeIcon icon={faFaceGrinStars} size="2x" />
                 </Icon>
               </th>
-              <th>
-                <Icon>
+              <th style={{ textAlign: "center" }}>
+                <Icon color={"warning"}>
                   <FontAwesomeIcon icon={faFaceMeh} size="2x" />
                 </Icon>
               </th>
-              <th>
-                <Icon>
+              <th style={{ textAlign: "center" }}>
+                <Icon color={"danger"}>
                   <FontAwesomeIcon icon={faFaceTired} size="2x" />
                 </Icon>
               </th>
@@ -79,18 +79,18 @@ export const Statistics: FC<props> = ({}) => {
             <tr>
               <th>Heute</th>
               <th>Total</th>
-              <th>
-                <Icon>
+              <th style={{ textAlign: "center" }}>
+                <Icon color={"primary"}>
                   <FontAwesomeIcon icon={faFaceGrinStars} size="2x" />
                 </Icon>
               </th>
-              <th>
-                <Icon>
+              <th style={{ textAlign: "center" }}>
+                <Icon color={"warning"}>
                   <FontAwesomeIcon icon={faFaceMeh} size="2x" />
                 </Icon>
               </th>
-              <th>
-                <Icon>
+              <th style={{ textAlign: "center" }}>
+                <Icon color={"danger"}>
                   <FontAwesomeIcon icon={faFaceTired} size="2x" />
                 </Icon>
               </th>
