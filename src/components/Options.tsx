@@ -12,17 +12,30 @@ type Props = {
     allowedGrammaticalCases: GrammaticalCase[];
   }) => void;
 };
+type Options = {
+  attributeMaxCount: number;
+  minimum: number;
+  maximum: number;
+  allowedStates: NounState[];
+  allowedGrammaticalCases: GrammaticalCase[];
+};
 
-export const Options: FC<Props> = ({ onChange }) => {
-  const [attributeMaxCount, setAttributeMaxCount] = useState(3);
-  const [minimum, setMinimum] = useState(0);
-  const [maximum, setMaximum] = useState(5);
+type ExtendedProps = Props & {
+  options: Options;
+};
+
+export const Options: FC<ExtendedProps> = ({ onChange, options }) => {
+  const [attributeMaxCount, setAttributeMaxCount] = useState(
+    options.attributeMaxCount,
+  );
+  const [minimum, setMinimum] = useState(options.minimum);
+  const [maximum, setMaximum] = useState(options.maximum);
   const [allowedStates, setAllowedStates] = useState<NounState[]>(
-    Object.values(NounState),
+    options.allowedStates,
   );
   const [allowedGrammaticalCases, setAllowedGrammaticalCases] = useState<
     GrammaticalCase[]
-  >(Object.values(GrammaticalCase));
+  >(options.allowedGrammaticalCases);
 
   useEffect(() => {
     onChange({

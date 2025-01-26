@@ -1,5 +1,7 @@
 import { UserStats } from "./UserStats";
 import { Repetition } from "./Repetition";
+import { NounState } from "../models/corpus/Nouns";
+import { GrammaticalCase } from "../models/GrammaticalCase";
 
 export const StorageService = {
   appendRepetition(repetition: Repetition): void {
@@ -40,5 +42,41 @@ export const StorageService = {
 
   clearStats(): void {
     localStorage.removeItem("userStats");
+  },
+
+  saveOptions(options: {
+    attributeMaxCount: number;
+    minimum: number;
+    maximum: number;
+    allowedStates: NounState[];
+    allowedGrammaticalCases: GrammaticalCase[];
+  }): void {
+    console.log("saving " + JSON.stringify(options));
+    localStorage.setItem("options", JSON.stringify(options));
+  },
+
+  getOptions(): {
+    attributeMaxCount: number;
+    minimum: number;
+    maximum: number;
+    allowedStates: NounState[];
+    allowedGrammaticalCases: GrammaticalCase[];
+  } {
+    const stored = localStorage.getItem("options");
+    console.log("loaded " + stored);
+    if (!stored) {
+      return {
+        attributeMaxCount: 2,
+        minimum: 0,
+        maximum: 3,
+        allowedStates: Object.values(NounState),
+        allowedGrammaticalCases: Object.values(GrammaticalCase),
+      };
+    }
+    return JSON.parse(stored);
+  },
+
+  clearOptions(): void {
+    localStorage.removeItem("options");
   },
 };

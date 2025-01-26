@@ -11,27 +11,28 @@ import {
   faFaceMeh,
   faFaceGrinStars,
 } from "@fortawesome/free-solid-svg-icons";
-
+import { NounState } from "../models/corpus/Nouns";
+import { GrammaticalCase } from "../models/GrammaticalCase";
 import { Reminder } from "./Reminder";
 import { Statistics } from "./Statistics";
 import { Block, Button, Icon, Level, Container } from "react-bulma-components";
 import { Options } from "./Options";
-import { NounState } from "../models/corpus/Nouns";
-import { GrammaticalCase } from "../models/GrammaticalCase";
 
 export const RandomSentence: FC = () => {
   const corpus = new Corpus();
 
   const [hidden, setHidden] = useState(true);
-
-  const [options, setOptions] = useState({
-    attributeMaxCount: Math.floor(Math.random() * 4),
-    minimum: 0,
-    maximum: 3,
-    allowedStates: Object.values(NounState),
-    allowedGrammaticalCases: Object.values(GrammaticalCase),
-  });
-
+  const [options, setOptions] = useState(StorageService.getOptions());
+  const handleOptionsChange = (newOptions: {
+    attributeMaxCount: number;
+    minimum: number;
+    maximum: number;
+    allowedStates: NounState[];
+    allowedGrammaticalCases: GrammaticalCase[];
+  }) => {
+    StorageService.saveOptions(newOptions);
+    setOptions(newOptions);
+  };
   const [words, setWords] = useState<Sentence>(() =>
     corpus.randomSentence(options),
   );
@@ -53,7 +54,7 @@ export const RandomSentence: FC = () => {
           <Reminder></Reminder>
         </Level.Item>
         <Level.Item>
-          <Options onChange={setOptions}></Options>
+          <Options options={options} onChange={handleOptionsChange}></Options>
         </Level.Item>
         <Level.Item>
           <Statistics></Statistics>
