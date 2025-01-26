@@ -98,7 +98,7 @@ export const NounFilters = {
     (noun: Noun) => noun.case === GrammaticalCase.Nominative,
   ),
   ACCUSATIVE: new NounFilter(
-    "Accusativ",
+    "Akkusativ",
     (noun: Noun) => noun.case === GrammaticalCase.Accusative,
   ),
   DATIVE: new NounFilter(
@@ -127,5 +127,13 @@ export const NounFilters = {
   POSSESSIVE: new NounFilter(
     "Possessiv",
     (noun: Noun) => noun.possession !== undefined,
+  ),
+  WITH_ARTICLE: new NounFilter(
+    "mit Artikel",
+    (noun: Noun) => noun.allAttributes.length > 0,
+  ),
+  WITHOUT_ARTICLE: new NounFilter(
+    "ohne Artikel",
+    (noun: Noun) => noun.allAttributes.length === 0,
   ),
 } as const;
