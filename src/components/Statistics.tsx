@@ -1,8 +1,14 @@
 import React, { FC, useState } from "react";
-import { Button, Dropdown, Table } from "react-bulma-components";
+import { Button, Dropdown, Table, Icon } from "react-bulma-components";
 import { UserStats, NounFilters } from "../storage/UserStats";
 import { StorageService } from "../storage/StorageService";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { StatsRechart } from "./StatsRechart";
+import {
+  faFaceTired,
+  faFaceMeh,
+  faFaceGrinStars,
+} from "@fortawesome/free-solid-svg-icons";
 
 type props = {};
 
@@ -33,39 +39,36 @@ export const Statistics: FC<props> = ({}) => {
             <tr>
               <th>Gesamt</th>
               <th>Total</th>
-              <th>Gut</th>
-              <th>Mittel</th>
-              <th>Falsch</th>
+              <th>
+                <Icon>
+                  <FontAwesomeIcon icon={faFaceGrinStars} size="2x" />
+                </Icon>
+              </th>
+              <th>
+                <Icon>
+                  <FontAwesomeIcon icon={faFaceMeh} size="2x" />
+                </Icon>
+              </th>
+              <th>
+                <Icon>
+                  <FontAwesomeIcon icon={faFaceTired} size="2x" />
+                </Icon>
+              </th>
             </tr>
           </thead>
           <tbody>
             {Object.values(NounFilters).map((filter) => (
               <tr key={filter.label}>
                 <td>{filter.label}</td>
-                <td>{stats.summary(undefined, filter.filter).total}</td>
+                <td>{stats.summary(undefined, filter.filter).getTotal()}</td>
                 <td>
-                  {(
-                    (stats.summary(undefined, filter.filter).strong /
-                      stats.summary(undefined, filter.filter).total) *
-                    100
-                  ).toFixed(1)}
-                  %
+                  {stats.summary(undefined, filter.filter).getStrongPercent()}%
                 </td>
                 <td>
-                  {(
-                    (stats.summary(undefined, filter.filter).weak /
-                      stats.summary(undefined, filter.filter).total) *
-                    100
-                  ).toFixed(1)}
-                  %
+                  {stats.summary(undefined, filter.filter).getWeakPercent()}%
                 </td>
                 <td>
-                  {(
-                    (stats.summary(undefined, filter.filter).wrong /
-                      stats.summary(undefined, filter.filter).total) *
-                    100
-                  ).toFixed(1)}
-                  %
+                  {stats.summary(undefined, filter.filter).getWrongPercent()}%
                 </td>
               </tr>
             ))}
@@ -76,39 +79,36 @@ export const Statistics: FC<props> = ({}) => {
             <tr>
               <th>Heute</th>
               <th>Total</th>
-              <th>Gut</th>
-              <th>Mittel</th>
-              <th>Falsch</th>
+              <th>
+                <Icon>
+                  <FontAwesomeIcon icon={faFaceGrinStars} size="2x" />
+                </Icon>
+              </th>
+              <th>
+                <Icon>
+                  <FontAwesomeIcon icon={faFaceMeh} size="2x" />
+                </Icon>
+              </th>
+              <th>
+                <Icon>
+                  <FontAwesomeIcon icon={faFaceTired} size="2x" />
+                </Icon>
+              </th>
             </tr>
           </thead>
           <tbody>
             {Object.values(NounFilters).map((filter) => (
               <tr key={filter.label}>
                 <td>{filter.label}</td>
-                <td>{stats.summary(new Date(), filter.filter).total}</td>
+                <td>{stats.summary(new Date(), filter.filter).getTotal()}</td>
                 <td>
-                  {(
-                    (stats.summary(new Date(), filter.filter).strong /
-                      stats.summary(new Date(), filter.filter).total) *
-                    100
-                  ).toFixed(1)}
-                  %
+                  {stats.summary(new Date(), filter.filter).getStrongPercent()}%
                 </td>
                 <td>
-                  {(
-                    (stats.summary(new Date(), filter.filter).weak /
-                      stats.summary(new Date(), filter.filter).total) *
-                    100
-                  ).toFixed(1)}
-                  %
+                  {stats.summary(new Date(), filter.filter).getWeakPercent()}%
                 </td>
                 <td>
-                  {(
-                    (stats.summary(new Date(), filter.filter).wrong /
-                      stats.summary(new Date(), filter.filter).total) *
-                    100
-                  ).toFixed(1)}
-                  %
+                  {stats.summary(new Date(), filter.filter).getWrongPercent()}%
                 </td>
               </tr>
             ))}

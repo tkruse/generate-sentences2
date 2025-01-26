@@ -6,10 +6,10 @@ import { Corpus } from "../models/Corpus";
 import { StorageService } from "../storage/StorageService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCircleXmark,
   faEnvelopeOpenText,
-  faRotateRight,
-  faCircleCheck,
+  faFaceTired,
+  faFaceMeh,
+  faFaceGrinStars,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { Reminder } from "./Reminder";
@@ -106,7 +106,7 @@ export const RandomSentence: FC = () => {
                   aria-label="next"
                 >
                   <Icon>
-                    <FontAwesomeIcon icon={faCircleXmark} size="2x" />
+                    <FontAwesomeIcon icon={faFaceTired} size="2x" />
                   </Icon>
                 </Button>
                 <Button
@@ -117,7 +117,7 @@ export const RandomSentence: FC = () => {
                   aria-label="next"
                 >
                   <Icon>
-                    <FontAwesomeIcon icon={faRotateRight} size="2x" />
+                    <FontAwesomeIcon icon={faFaceMeh} size="2x" />
                   </Icon>
                 </Button>
                 <Button
@@ -128,7 +128,7 @@ export const RandomSentence: FC = () => {
                   aria-label="next"
                 >
                   <Icon>
-                    <FontAwesomeIcon icon={faCircleCheck} size="2x" />
+                    <FontAwesomeIcon icon={faFaceGrinStars} size="2x" />
                   </Icon>
                 </Button>
               </div>

@@ -10,10 +10,10 @@ export class UserStats {
   }
 
   summary(
-    date: Date = new Date(),
+    date: Date | undefined,
     nounFilter?: (noun: Noun) => boolean,
   ): Record<string, any> {
-    const dateString = date.toISOString().split("T")[0];
+    const dateString = date ? date.toISOString().split("T")[0] : "alle";
     let repetitions = [];
     if (!date) {
       repetitions = Array.from(this.repPerDay.values()).flat();
@@ -21,32 +21,66 @@ export class UserStats {
       repetitions = this.repPerDay.get(dateString) ?? [];
     }
     if (!repetitions) {
-      return {
-        date: dateString,
-        wrong: 0,
-        weak: 0,
-        strong: 0,
-        total: 0,
-      };
+      return new Analysis(dateString, 0, 0, 0);
     }
     const nounFilterFn = nounFilter ?? (() => true);
     const filteredRepetitions = repetitions.filter((rep) =>
       nounFilterFn(rep.noun),
     );
-    const total = filteredRepetitions.length;
     const wrong = filteredRepetitions.filter((rep) => rep.score < 0.3).length;
     const weak = filteredRepetitions.filter(
       (rep) => rep.score >= 0.3 && rep.score <= 0.7,
     ).length;
     const strong = filteredRepetitions.filter((rep) => rep.score > 0.7).length;
 
-    return {
-      date: dateString,
-      wrong,
-      weak,
-      strong,
-      total,
-    };
+    return new Analysis(dateString, wrong, weak, strong);
+  }
+}
+
+export class Analysis {
+  constructor(
+    private readonly date: string,
+    private readonly wrong: number,
+    private readonly weak: number,
+    private readonly strong: number,
+  ) {}
+
+  getDate(): string {
+    return this.date;
+  }
+
+  getWrong(): number {
+    return this.wrong;
+  }
+
+  getWeak(): number {
+    return this.weak;
+  }
+
+  getStrong(): number {
+    return this.strong;
+  }
+
+  getTotal(): number {
+    return this.wrong + this.weak + this.strong;
+  }
+
+  getWrongPercent(): string {
+    return (
+      this.getTotal() === 0 ? 0 : (this.wrong / this.getTotal()) * 100
+    ).toFixed(1);
+  }
+
+  getWeakPercent(): string {
+    return (
+      this.getTotal() === 0 ? 0 : (this.weak / this.getTotal()) * 100
+    ).toFixed(1);
+  }
+
+  getStrongPercent(): string {
+    return (
+      this.getTotal() === 0 ? 0 : (this.strong / this.getTotal()) * 100
+    ).toFixed(1);
   }
 }
 
