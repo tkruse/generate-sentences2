@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from "recharts";
 import { UserStats } from "../storage/UserStats";
 
 type props = {
@@ -24,7 +24,7 @@ export const StatsRechart: FC<props> = ({ stats }: props) => {
 
   return (
     <ResponsiveContainer width="100%" height={300}>
-      <AreaChart
+      <BarChart
         data={data}
         margin={{
           top: 10,
@@ -35,14 +35,14 @@ export const StatsRechart: FC<props> = ({ stats }: props) => {
       >
         <XAxis dataKey="date" />
         <YAxis />
-        <Area
+        <Bar
           type="monotone"
           stackId="1"
           dataKey="wrong"
           stroke="hsl(348, 100%, 61%)"
           fill="hsl(348, 100%, 61%)"
         />
-        <Area
+        <Bar
           type="monotone"
           stackId="1"
           dataKey="weak"
@@ -50,14 +50,14 @@ export const StatsRechart: FC<props> = ({ stats }: props) => {
           fill="hsl(48, 100%, 67%)"
         />
 
-        <Area
+        <Bar
           type="monotone"
           stackId="1"
           dataKey="strong"
           stroke="hsl(141, 71%, 48%)"
           fill="hsl(141, 71%, 48%)"
         />
-      </AreaChart>
+      </BarChart>
     </ResponsiveContainer>
   );
 };
