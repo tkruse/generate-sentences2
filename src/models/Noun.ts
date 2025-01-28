@@ -106,8 +106,8 @@ export class Noun implements Words {
 
   renderHints(): string {
     return [
-      this.isNegated ? "negiert" : "",
-      this.isDemonstrative ? "demonstrativ" : this.isSpecific ? "bestimmt" : "",
+      this.isNegated ? "kein*" : "",
+      this.isDemonstrative ? "diese*" : this.isSpecific ? "der/d*" : "",
       this.possession ? this.renderPossessionHint(this.possession) : "",
       this.hasCount > 1 ? this.hasCount : "",
       this.wnoun
@@ -140,7 +140,7 @@ export class Noun implements Words {
       result += " " + (possession.singular ? "Singular" : "Plural");
     }
 
-    return "possesiv(" + result + ")";
+    return "mein*(" + result + ")";
   }
 
   private demonstrativeArticle(): string {
