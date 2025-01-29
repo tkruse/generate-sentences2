@@ -12,20 +12,32 @@ import { GrammaticalCase } from "./GrammaticalCase";
 const sentenceGenerators = [
   function (options: any) {
     return new Sentence(
-      getRandomPersonNoun(options),
+      getRandomPersonNoun(options).affirmed(),
       sentence`Das klingt wie ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomPersonNoun(options).dative(),
+      getRandomPersonNoun(options),
+      sentence`In dem Zimmer wohnt ${({ noun }) => noun}`,
+    );
+  },
+  function (options: any) {
+    return new Sentence(
+      getRandomPersonNoun(options).affirmed().dative(),
       sentence`Ein Frühstück mit ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomPersonNoun(options).dative(),
+      getRandomPersonNoun(options).affirmed().dative(),
       sentence`Ein Foto von ${({ noun }) => noun}`,
+    );
+  },
+  function (options: any) {
+    return new Sentence(
+      getRandomPersonNoun(options).dative(),
+      sentence`Wir schenken das ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
@@ -37,30 +49,36 @@ const sentenceGenerators = [
   function (options: any) {
     return new Sentence(
       getRandomPersonNoun(options).accusative(),
+      sentence`Wir vermissen ${({ noun }) => noun}`,
+    );
+  },
+  function (options: any) {
+    return new Sentence(
+      getRandomPersonNoun(options).affirmed().accusative(),
       sentence`Ein Geschenk für ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomPersonNoun(options).genitive(),
+      getRandomPersonNoun(options).affirmed().genitive(),
       sentence`Die Augen ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomPersonNoun(options).genitive(),
+      getRandomPersonNoun(options).affirmed().genitive(),
       sentence`Das Zimmer ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomMaterialNoun(options),
+      getRandomMaterialNoun(options).affirmed(),
       sentence`So schwer wie ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomMaterialNoun(options),
+      getRandomMaterialNoun(options).affirmed(),
       sentence`Das fühlt sich an wie ${({ noun }) => noun}`,
     );
   },
@@ -72,7 +90,7 @@ const sentenceGenerators = [
   },
   function (options: any) {
     return new Sentence(
-      getRandomMaterialNoun(options).accusative(),
+      getRandomMaterialNoun(options).affirmed().accusative(),
       sentence`Ein Buch über ${({ noun }) => noun}`,
     );
   },
@@ -84,13 +102,19 @@ const sentenceGenerators = [
   },
   function (options: any) {
     return new Sentence(
-      getRandomMaterialNoun(options).dative(),
+      getRandomMaterialNoun(options).accusative(),
+      sentence`Dort findet man ${({ noun }) => noun}`,
+    );
+  },
+  function (options: any) {
+    return new Sentence(
+      getRandomMaterialNoun(options).affirmed().dative(),
       sentence`Das gehört zu ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomMaterialNoun(options).dative(),
+      getRandomMaterialNoun(options).affirmed().dative(),
       sentence`Der Name von ${({ noun }) => noun}`,
     );
   },
