@@ -107,7 +107,7 @@ export class Noun implements Words {
   renderHints(): string {
     return [
       this.isNegated ? "kein*" : "",
-      this.isDemonstrative ? "diese*" : this.isSpecific ? "der/d*" : "",
+      this.isDemonstrative ? "diese*" : this.isSpecific ? "de*/die/das" : "",
       this.possession ? this.renderPossessionHint(this.possession) : "",
       this.hasCount > 1 ? this.hasCount : "",
       this.wnoun
