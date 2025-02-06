@@ -10,12 +10,13 @@ const materialNouns = [
   () => new Noun("das Messer,-,-s"),
   () => new Noun("das Hemd,-en,-es"),
   () => new Noun("das Bier,-e,-es"),
-  () => new Noun("das Bild,-er,-es"),
+  () => new Noun("das Glas,die Gläser,des Glases"),
   () => new Noun("das Auto,-s,-s"),
   () => new Noun("der Zug,die Züge,des Zuges"),
   () => new Noun("der Bus,die Busse,des Busses"),
   () => new Noun("der Koffer,-,-s"),
   () => new Noun("der Apfel,die Äpfel,des Apfels"),
+  () => new Noun("der Ast,die Äste,des Astes"),
   () => new Noun("der Schuh,-e,-es"),
   () => new Noun("der Stein,-e,-es"),
   () => new Noun("der Zettel,-,-s"),
@@ -48,7 +49,8 @@ const personNouns = [
   () => new Noun("das Lama,die Lamas,des Lamas"),
   () => new Noun("das Gespenst,die Gespenster,des Gespenstes"),
   () => new Noun("der Sohn,die Söhne,des Sohnes"),
-  () => new Noun("der Enkel,die Enkel,des Enkels"),
+  () => new Noun("der Enkel,-,-s"),
+  () => new Noun("der Esel,-,-s"),
   () => new Noun("der Lehrer,die Lehrer,des Lehrers"),
   () => new Noun("der Soldat,die Soldaten,des Soldaten"),
   () => new Noun("der Postbote,die Postboten,des Postboten"),
@@ -67,6 +69,26 @@ export const personAttributes = [
   new Attribute("gesund"),
   new Attribute("lebhaft"),
   new Attribute("laut"),
+];
+
+const processNouns = [
+  () => new Noun("das Fest,-e,-es"),
+  () => new Noun("das Spiel,-e,-es"),
+  () => new Noun("das Essen,-,-s"),
+  () => new Noun("die Pause,-n,-"),
+  () => new Noun("die Arbeit,-en,-"),
+  () => new Noun("die Stunde,-n,-"),
+  () => new Noun("die Prüfung,-en,-"),
+  () => new Noun("der Urlaub,-e,-s"),
+  () => new Noun("der Sturm,die Stürme,-es"),
+  () => new Noun("der Umzug,die Umzüge,-es"),
+];
+
+const processAttributes = [
+  new Attribute("lang"),
+  new Attribute("interessant"),
+  new Attribute("schön"),
+  new Attribute("einfach"),
 ];
 
 /* eslint-disable */
@@ -99,6 +121,18 @@ export const getRandomPersonNoun = (options: {
   const randomIndex = Math.floor(Math.random() * personNouns.length);
   const next = personNouns[randomIndex]();
   return randomizeNoun(next, personAttributes, options);
+};
+
+export const getRandomProcessNoun = (options: {
+  attributeMaxCount: number;
+  minimum: number;
+  maximum: number;
+  allowedStates: NounState[];
+  allowedGrammaticalCases: GrammaticalCase[];
+}): Noun => {
+  const randomIndex = Math.floor(Math.random() * processNouns.length);
+  const next = processNouns[randomIndex]();
+  return randomizeNoun(next, processAttributes, options);
 };
 
 export const randomizeNoun = (

@@ -5,11 +5,13 @@ import { sentence } from "satzbau";
 import {
   getRandomMaterialNoun,
   getRandomPersonNoun,
+  getRandomProcessNoun,
   NounState,
 } from "./corpus/Nouns";
 import { GrammaticalCase } from "./GrammaticalCase";
 
 const sentenceGenerators = [
+  // Person
   function (options: any) {
     return new Sentence(
       getRandomPersonNoun(options).affirmed(),
@@ -70,6 +72,7 @@ const sentenceGenerators = [
       sentence`Das Zimmer ${({ noun }) => noun}`,
     );
   },
+  // Material
   function (options: any) {
     return new Sentence(
       getRandomMaterialNoun(options).affirmed(),
@@ -134,6 +137,55 @@ const sentenceGenerators = [
     return new Sentence(
       getRandomMaterialNoun(options).genitive(),
       sentence`Sie senken den Preis ${({ noun }) => noun}`,
+    );
+  },
+  // Process
+  function (options: any) {
+    return new Sentence(
+      getRandomProcessNoun(options).affirmed(),
+      sentence`Zur gleichen Zeit wie ${({ noun }) => noun}`,
+    );
+  },
+  function (options: any) {
+    return new Sentence(
+      getRandomProcessNoun(options).affirmed().accusative(),
+      sentence`Ich habe ${({ noun }) => noun}`,
+    );
+  },
+  function (options: any) {
+    return new Sentence(
+      getRandomProcessNoun(options).accusative(),
+      sentence`Ich brauche ${({ noun }) => noun}`,
+    );
+  },
+  function (options: any) {
+    return new Sentence(
+      getRandomProcessNoun(options).accusative(),
+      sentence`Sie unterbrechen ${({ noun }) => noun}`,
+    );
+  },
+  function (options: any) {
+    return new Sentence(
+      getRandomProcessNoun(options).affirmed().dative(),
+      sentence`Das kommt nach ${({ noun }) => noun}`,
+    );
+  },
+  function (options: any) {
+    return new Sentence(
+      getRandomProcessNoun(options).affirmed().dative(),
+      sentence`Er erzählt von ${({ noun }) => noun}`,
+    );
+  },
+  function (options: any) {
+    return new Sentence(
+      getRandomProcessNoun(options).affirmed().genitive(),
+      sentence`Ich mache es während ${({ noun }) => noun}`,
+    );
+  },
+  function (options: any) {
+    return new Sentence(
+      getRandomProcessNoun(options).affirmed().genitive(),
+      sentence`Die Dauer ${({ noun }) => noun}`,
     );
   },
 ];
