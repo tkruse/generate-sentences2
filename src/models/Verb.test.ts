@@ -121,6 +121,32 @@ describe("Verb", () => {
     ]);
   });
 
+  test("haben conjugation with persons", () => {
+    const verb3 = getVerb("haben");
+
+    checkConjugations(verb3, Tense.PRESENT, [
+      "habe",
+      "hast",
+      "hat",
+      "hat",
+      "hat",
+      "haben",
+      "habt",
+      "haben",
+    ]);
+
+    checkConjugations(verb3, Tense.PAST, [
+      "hatte",
+      "hattest",
+      "hatte",
+      "hatte",
+      "hatte",
+      "hatten",
+      "hattet",
+      "hatten",
+    ]);
+  });
+
   test("kneifen conjugation with persons", () => {
     const verb4 = getVerb("kneifen");
 
@@ -196,6 +222,31 @@ describe("Verb", () => {
       "logen",
       "logt",
       "logen",
+    ]);
+  });
+
+  test("tun conjugation with persons", () => {
+    const verb7 = getVerb("tun");
+    checkConjugations(verb7, Tense.PRESENT, [
+      "tue",
+      "tust",
+      "tut",
+      "tut",
+      "tut",
+      "tun",
+      "tut",
+      "tun",
+    ]);
+
+    checkConjugations(verb7, Tense.PAST, [
+      "tat",
+      "tatest",
+      "tat",
+      "tat",
+      "tat",
+      "taten",
+      "tatet",
+      "taten",
     ]);
   });
 
@@ -303,6 +354,32 @@ describe("Verb", () => {
     ]);
   });
 
+  test("bedürfen conjugation with persons", () => {
+    const verb10 = getVerb("be+dürfen");
+
+    checkConjugations(verb10, Tense.PRESENT, [
+      "bedarf",
+      "bedarfst",
+      "bedarf",
+      "bedarf",
+      "bedarf",
+      "bedürfen",
+      "bedürft",
+      "bedürfen",
+    ]);
+
+    checkConjugations(verb10, Tense.PAST, [
+      "bedurfte",
+      "bedurftest",
+      "bedurfte",
+      "bedurfte",
+      "bedurfte",
+      "bedurften",
+      "bedurftet",
+      "bedurften",
+    ]);
+  });
+
   test("können conjugation with persons", () => {
     const verb11 = getVerb("können");
 
@@ -352,6 +429,32 @@ describe("Verb", () => {
       "mussten",
       "musstet",
       "mussten",
+    ]);
+  });
+
+  test("müssen conjugation with persons", () => {
+    const verb12 = getVerb("sollen");
+
+    checkConjugations(verb12, Tense.PRESENT, [
+      "soll",
+      "sollst",
+      "soll",
+      "soll",
+      "soll",
+      "sollen",
+      "sollt",
+      "sollen",
+    ]);
+
+    checkConjugations(verb12, Tense.PAST, [
+      "sollte",
+      "solltest",
+      "sollte",
+      "sollte",
+      "sollte",
+      "sollten",
+      "solltet",
+      "sollten",
     ]);
   });
 });
