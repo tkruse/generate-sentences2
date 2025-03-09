@@ -119,7 +119,7 @@ export const Options: FC<ExtendedProps> = ({ onChange, options }) => {
                   if (minimum === 0 && maximum == 1) {
                     setMaximum(0);
                   } else if (minimum === 1 && maximum > 1) {
-                    setMinimum(5);
+                    setMinimum(2);
                   }
                 }
               }}
