@@ -1,4 +1,5 @@
 import { Verb, VerbBase } from "../Verb";
+import { Person, Persons } from "../Person";
 
 interface VerbBuilder {
   withUndetachablePrefix(prefix: string): void;
@@ -79,7 +80,7 @@ class IrregularVerbBuilder implements VerbBuilder {
     this.detachablePrefix = prefix;
   }
 
-  build() {
+  build(): Verb {
     const verbBase = new VerbBase(
       this.infinitive,
       this.undetachablePrefix,
@@ -91,6 +92,30 @@ class IrregularVerbBuilder implements VerbBuilder {
       this.perfect,
       this.altStemBase,
     );
+  }
+}
+
+class SeinVerbBuilder implements VerbBuilder {
+  private undetachablePrefix?: string;
+  private detachablePrefix?: string;
+  withUndetachablePrefix(prefix: string) {
+    this.undetachablePrefix = prefix;
+  }
+  withDetachablePrefix(prefix: string) {
+    this.detachablePrefix = prefix;
+  }
+  build() {
+    const conjugations = new Map<Person, [string, string]>();
+    conjugations.set(Persons.ME, ["bin", "war"]);
+    conjugations.set(Persons.YOU, ["bist", "warst"]);
+    conjugations.set(Persons.HE, ["ist", "war"]);
+    conjugations.set(Persons.SHE, ["ist", "war"]);
+    conjugations.set(Persons.IT, ["ist", "war"]);
+    conjugations.set(Persons.WE, ["sind", "waren"]);
+    conjugations.set(Persons.YALL, ["seid", "wart"]);
+    conjugations.set(Persons.THEY, ["sind", "waren"]);
+
+    return new Verb(VerbBase.create("sein"), conjugations, "gewesen");
   }
 }
 
@@ -112,7 +137,8 @@ const irregularVerbs: { [key: string]: VerbBuilder } = {
     "schläf",
   ),
   schneiden: new IrregularVerbBuilder("schneiden", "schnitt", "geschnitten"),
-  sein: new IrregularVerbBuilder("sein", "war", "gewesen", "sei"),
+  sehen: new IrregularVerbBuilder("sehen", "sah", "gesehen", "sieh"),
+  sein: new SeinVerbBuilder(),
   sollen: new ModalVerbBuilder("sollen", "sollte", "gesollt", "soll", "soll"),
   sprechen: new IrregularVerbBuilder(
     "sprechen",
@@ -128,8 +154,10 @@ const irregularVerbs: { [key: string]: VerbBuilder } = {
 
 /**
  * Returns a verb object for the given infinitiveAndPrefixes.
- * @param infinitiveAndPrefixes detachablePrefixes are separated with -, undetachablePrefixes are separated with +
  * E.g. "ver+kaufen", "nach-schlagen", "an-ver+trauen", "daher-reden"
+ * sometimes verb exist in both variants, e.g. um+fahren and um-fahren
+ * @param {string} infinitiveAndPrefixes detachablePrefixes separated with -, undetachablePrefixes separated with +
+ * @return {Verb} a verb object
  */
 export const getVerb = (infinitiveAndPrefixes: string): Verb => {
   // split input into detachable prefixes and rest, then use slice to build a list of prefixes and the rest

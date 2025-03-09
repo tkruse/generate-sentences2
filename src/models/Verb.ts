@@ -77,7 +77,11 @@ export class Verb implements Words {
         ? VerbBase.create(verbBaseOrString)
         : verbBaseOrString;
     const infinitive = verbBase.infinitive();
-    const stem = verbBase.base.slice(0, -2);
+    // most infinitive end with "en", but some end with just "n", e.g. kümmern
+    const stem = verbBase.base.endsWith("en")
+      ? verbBase.base.slice(0, -2)
+      : verbBase.base.slice(0, -1);
+
     const past = `${stem}te`;
     const conjugations = new Map<Person, [string, string]>();
     conjugations.set(Persons.ME, [

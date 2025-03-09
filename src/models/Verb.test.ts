@@ -43,6 +43,31 @@ describe("Verb", () => {
     ]);
   });
 
+  // wohnen
+  test("wohnen conjugation with persons", () => {
+    const verb4 = getVerb("wohnen");
+    checkConjugations(verb4, Tense.PRESENT, [
+      "wohne",
+      "wohnst",
+      "wohnt",
+      "wohnt",
+      "wohnt",
+      "wohnen",
+      "wohnt",
+      "wohnen",
+    ]);
+    checkConjugations(verb4, Tense.PAST, [
+      "wohnte",
+      "wohntest",
+      "wohnte",
+      "wohnte",
+      "wohnte",
+      "wohnten",
+      "wohntet",
+      "wohnten",
+    ]);
+  });
+
   test("gehen conjugation with persons", () => {
     const verb1 = getVerb("gehen");
 
@@ -92,6 +117,30 @@ describe("Verb", () => {
       "aßen",
       "aßt",
       "aßen",
+    ]);
+  });
+
+  test("dauern conjugation with persons", () => {
+    const verb5 = getVerb("dauern");
+    checkConjugations(verb5, Tense.PRESENT, [
+      "dauere",
+      "dauerst",
+      "dauert",
+      "dauert",
+      "dauert",
+      "dauern",
+      "dauert",
+      "dauern",
+    ]);
+    checkConjugations(verb5, Tense.PAST, [
+      "dauerte",
+      "dauertest",
+      "dauerte",
+      "dauerte",
+      "dauerte",
+      "dauerten",
+      "dauertet",
+      "dauerten",
     ]);
   });
 
@@ -455,6 +504,58 @@ describe("Verb", () => {
       "sollten",
       "solltet",
       "sollten",
+    ]);
+  });
+
+  test("sein conjugation with persons", () => {
+    const verb13 = getVerb("sein");
+
+    checkConjugations(verb13, Tense.PRESENT, [
+      "bin",
+      "bist",
+      "ist",
+      "ist",
+      "ist",
+      "sind",
+      "seid",
+      "sind",
+    ]);
+
+    checkConjugations(verb13, Tense.PAST, [
+      "war",
+      "warst",
+      "war",
+      "war",
+      "war",
+      "waren",
+      "wart",
+      "waren",
+    ]);
+  });
+
+  test("sehen conjugation with persons", () => {
+    const verb13 = getVerb("sehen");
+
+    checkConjugations(verb13, Tense.PRESENT, [
+      "sehe",
+      "siehst",
+      "sieht",
+      "sieht",
+      "sieht",
+      "sehen",
+      "seht",
+      "sehen",
+    ]);
+
+    checkConjugations(verb13, Tense.PAST, [
+      "sah",
+      "sahst",
+      "sah",
+      "sah",
+      "sah",
+      "sahen",
+      "saht",
+      "sahen",
     ]);
   });
 });
