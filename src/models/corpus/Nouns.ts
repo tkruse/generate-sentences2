@@ -425,7 +425,6 @@ export const getRandomNoun = (
   do {
     const randomIndex = Math.floor(Math.random() * Nouns.length);
     const next = Nouns[randomIndex]();
-    console.log(next, next.getCategories());
     if (next.getCategories().some((category) => category === nounCategory)) {
       return randomizeNoun(next, options);
     }
@@ -458,7 +457,6 @@ export const randomizeNoun = (
         .getCategories()
         .some((x) => next.getCategories().includes(x))
     );
-    console.log(next, randomAttribute, randomAttribute.getCategories());
 
     if (!newAttributes.includes(randomAttribute)) {
       newAttributes.push(randomAttribute);

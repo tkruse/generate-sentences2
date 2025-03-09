@@ -4,8 +4,9 @@ import { noun, Noun as SBNoun } from "satzbau";
 import { GrammaticalCase } from "./GrammaticalCase";
 import { Gender } from "./Gender";
 import { NounCategory } from "./NounCategory";
-import { Person, posessionDE } from "./Person";
+import { Person, Persons, posessionDE } from "./Person";
 import { renderColorizedByGender } from "./Coloring";
+import { getVerb } from "./corpus/Verbs";
 
 function parseGender(article: any): Gender {
   switch (article) {
@@ -69,6 +70,13 @@ export class Noun implements Words {
   public isPlural(): boolean {
     return this.hasCount > 1;
   }
+
+  renderSubjectVerb(verbTemplate: string): string {
+    const person = this.isPlural() ? Persons.THEY : Persons.HE;
+    const verb = getVerb(verbTemplate).setPerson(person);
+    return verb.renderDE();
+  }
+
   accusative(): Noun {
     this.case = GrammaticalCase.Accusative;
     return this;

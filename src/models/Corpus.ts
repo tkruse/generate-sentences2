@@ -9,15 +9,17 @@ import { GrammaticalCase } from "./GrammaticalCase";
 const sentenceGenerators = [
   // Person
   function (options: any) {
+    const noun = getRandomNoun(NounCategory.Living, options);
     return new Sentence(
-      getRandomNoun(NounCategory.Noisy, options).affirmed(),
-      sentence`Das klingt wie ${({ noun }) => noun}`,
+      noun,
+      sentence`Hier ${noun.renderSubjectVerb("wohnen")} ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
+    const noun = getRandomNoun(NounCategory.Noisy, options);
     return new Sentence(
-      getRandomNoun(NounCategory.Living, options),
-      sentence`So ehrlich wie ${({ noun }) => noun}`,
+      noun,
+      sentence`Da ${noun.renderSubjectVerb("sein")} ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
@@ -70,15 +72,17 @@ const sentenceGenerators = [
   },
   // Material
   function (options: any) {
+    const noun = getRandomNoun(NounCategory.Material, options);
     return new Sentence(
-      getRandomNoun(NounCategory.Material, options).affirmed(),
-      sentence`So schwer wie ${({ noun }) => noun}`,
+      noun,
+      sentence`${({ noun }) => noun} ${noun.renderSubjectVerb("sehen")} nett aus`,
     );
   },
   function (options: any) {
+    const noun = getRandomNoun(NounCategory.Material, options);
     return new Sentence(
-      getRandomNoun(NounCategory.Material, options).affirmed(),
-      sentence`Das fühlt sich an wie ${({ noun }) => noun}`,
+      noun,
+      sentence`Da ${noun.renderSubjectVerb("stehen")} ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
@@ -137,16 +141,17 @@ const sentenceGenerators = [
   },
   // Process
   function (options: any) {
+    const noun = getRandomNoun(NounCategory.Process, options);
     return new Sentence(
-      getRandomNoun(NounCategory.Process, options).affirmed(),
-      sentence`Zur gleichen Zeit wie ${({ noun }) => noun}`,
+      noun,
+      sentence`${({ noun }) => noun} ${noun.renderSubjectVerb("dauern")} zu lange`,
     );
   },
   function (options: any) {
-    return new Sentence(
-      getRandomNoun(NounCategory.Process, options).affirmed().accusative(),
-      sentence`Ich habe ${({ noun }) => noun}`,
-    );
+    const noun = getRandomNoun(NounCategory.Process, options)
+      .affirmed()
+      .accusative();
+    return new Sentence(noun, sentence`Ich habe ${({ noun }) => noun}`);
   },
   function (options: any) {
     return new Sentence(
@@ -186,9 +191,17 @@ const sentenceGenerators = [
   },
   // Food
   function (options: any) {
+    const noun = getRandomNoun(NounCategory.Edible, options);
     return new Sentence(
-      getRandomNoun(NounCategory.Edible, options).affirmed(),
-      sentence`Das riecht wie ${({ noun }) => noun}`,
+      noun,
+      sentence`${({ noun }) => noun} ${noun.renderSubjectVerb("schmecken")} mir gut`,
+    );
+  },
+  function (options: any) {
+    const noun = getRandomNoun(NounCategory.Edible, options);
+    return new Sentence(
+      noun,
+      sentence`Im Kühlschrank ${noun.renderSubjectVerb("sein")} ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
