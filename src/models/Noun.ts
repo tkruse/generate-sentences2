@@ -3,6 +3,7 @@ import { Attribute } from "./Attribute";
 import { noun, Noun as SBNoun } from "satzbau";
 import { GrammaticalCase } from "./GrammaticalCase";
 import { Gender } from "./Gender";
+import { NounCategory } from "./NounCategory";
 import { Person, posessionDE } from "./Person";
 import { renderColorizedByGender } from "./Coloring";
 
@@ -29,14 +30,21 @@ export class Noun implements Words {
   allAttributes: Attribute[];
   gender: Gender;
   possession?: Person;
+  categories: NounCategory[];
 
-  constructor(sbNounTemplate: any) {
+  // create noun from a SB string template(indicativ, plural, genitiv) and an optional vararg set of NounCategory
+  constructor(sbNounTemplate: any, ...categories: NounCategory[]) {
     this.wnoun = noun(sbNounTemplate);
     this.case = GrammaticalCase.Nominative;
     this.allAttributes = [];
     this.gender = parseGender(
       sbNounTemplate.split(",")[0].trim().split(" ")[0].trim(),
     );
+    this.categories = categories;
+  }
+
+  getCategories(): NounCategory[] {
+    return this.categories;
   }
 
   specific(): Noun {

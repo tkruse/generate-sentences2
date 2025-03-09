@@ -2,189 +2,185 @@
 import { Sentence } from "./Sentence";
 
 import { sentence } from "satzbau";
-import {
-  getRandomMaterialNoun,
-  getRandomPersonNoun,
-  getRandomProcessNoun,
-  NounState,
-} from "./corpus/Nouns";
+import { getRandomNoun, NounState } from "./corpus/Nouns";
+import { NounCategory } from "./NounCategory";
 import { GrammaticalCase } from "./GrammaticalCase";
 
 const sentenceGenerators = [
   // Person
   function (options: any) {
     return new Sentence(
-      getRandomPersonNoun(options).affirmed(),
+      getRandomNoun(NounCategory.Noisy, options).affirmed(),
       sentence`Das klingt wie ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomPersonNoun(options),
+      getRandomNoun(NounCategory.Living, options),
       sentence`In dem Zimmer wohnt ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomPersonNoun(options).affirmed().dative(),
+      getRandomNoun(NounCategory.Living, options).affirmed().dative(),
       sentence`Ein Frühstück mit ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomPersonNoun(options).affirmed().dative(),
+      getRandomNoun(NounCategory.Drawable, options).affirmed().dative(),
       sentence`Ein Foto von ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomPersonNoun(options).dative(),
+      getRandomNoun(NounCategory.Person, options).dative(),
       sentence`Wir schenken das ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomPersonNoun(options).accusative(),
+      getRandomNoun(NounCategory.Living, options).accusative(),
       sentence`Ich kenne ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomPersonNoun(options).accusative(),
+      getRandomNoun(NounCategory.Living, options).accusative(),
       sentence`Wir vermissen ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomPersonNoun(options).affirmed().accusative(),
+      getRandomNoun(NounCategory.Living, options).affirmed().accusative(),
       sentence`Ein Geschenk für ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomPersonNoun(options).affirmed().genitive(),
+      getRandomNoun(NounCategory.Living, options).affirmed().genitive(),
       sentence`Die Augen ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomPersonNoun(options).affirmed().genitive(),
+      getRandomNoun(NounCategory.Living, options).affirmed().genitive(),
       sentence`Das Zimmer ${({ noun }) => noun}`,
     );
   },
   // Material
   function (options: any) {
     return new Sentence(
-      getRandomMaterialNoun(options).affirmed(),
+      getRandomNoun(NounCategory.Material, options).affirmed(),
       sentence`So schwer wie ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomMaterialNoun(options).affirmed(),
+      getRandomNoun(NounCategory.Material, options).affirmed(),
       sentence`Das fühlt sich an wie ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomMaterialNoun(options).accusative(),
+      getRandomNoun(NounCategory.Property, options).accusative(),
       sentence`Ich habe hier ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomMaterialNoun(options).affirmed().accusative(),
+      getRandomNoun(NounCategory.Material, options).affirmed().accusative(),
       sentence`Ein Buch über ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomMaterialNoun(options).accusative(),
+      getRandomNoun(NounCategory.Property, options).accusative(),
       sentence`Er kauft ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomMaterialNoun(options).accusative(),
+      getRandomNoun(NounCategory.Material, options).accusative(),
       sentence`Dort findet man ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomMaterialNoun(options).affirmed().dative(),
+      getRandomNoun(NounCategory.Material, options).affirmed().dative(),
       sentence`Das gehört zu ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomMaterialNoun(options).affirmed().dative(),
+      getRandomNoun(NounCategory.Material, options).affirmed().dative(),
       sentence`Der Name von ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomMaterialNoun(options).affirmed().dative(),
+      getRandomNoun(NounCategory.Drawable, options).affirmed().dative(),
       sentence`Ein Bild mit ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomMaterialNoun(options).affirmed().genitive(),
+      getRandomNoun(NounCategory.Material, options).affirmed().genitive(),
       sentence`Ich sehe den Schatten ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomMaterialNoun(options).genitive(),
+      getRandomNoun(NounCategory.Property, options).genitive(),
       sentence`Sie senken den Preis ${({ noun }) => noun}`,
     );
   },
   // Process
   function (options: any) {
     return new Sentence(
-      getRandomProcessNoun(options).affirmed(),
+      getRandomNoun(NounCategory.Process, options).affirmed(),
       sentence`Zur gleichen Zeit wie ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomProcessNoun(options).affirmed().accusative(),
+      getRandomNoun(NounCategory.Process, options).affirmed().accusative(),
       sentence`Ich habe ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomProcessNoun(options).accusative(),
+      getRandomNoun(NounCategory.Process, options).accusative(),
       sentence`Ich brauche ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomProcessNoun(options).accusative(),
+      getRandomNoun(NounCategory.Process, options).accusative(),
       sentence`Sie unterbrechen ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomProcessNoun(options).affirmed().dative(),
+      getRandomNoun(NounCategory.Process, options).affirmed().dative(),
       sentence`Das kommt nach ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomProcessNoun(options).affirmed().dative(),
+      getRandomNoun(NounCategory.Process, options).affirmed().dative(),
       sentence`Er erzählt von ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomProcessNoun(options).affirmed().genitive(),
+      getRandomNoun(NounCategory.Process, options).affirmed().genitive(),
       sentence`Ich mache es während ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
     return new Sentence(
-      getRandomProcessNoun(options).affirmed().genitive(),
+      getRandomNoun(NounCategory.Process, options).affirmed().genitive(),
       sentence`Die Dauer ${({ noun }) => noun}`,
     );
   },

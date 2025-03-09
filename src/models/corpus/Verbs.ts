@@ -1,10 +1,9 @@
 import { Verb, VerbBase } from "../Verb";
 
-
 interface VerbBuilder {
   withUndetachablePrefix(prefix: string): void;
   withDetachablePrefix(prefix: string): void;
-  build() : Verb;
+  build(): Verb;
 }
 
 class ModalVerbBuilder implements VerbBuilder {
@@ -37,8 +36,18 @@ class ModalVerbBuilder implements VerbBuilder {
     this.detachablePrefix = prefix;
   }
   build() {
-    const verbBase = new VerbBase(this.infinitive, this.undetachablePrefix, this.detachablePrefix)
-    return Verb.modalVerb(verbBase, this.past, this.perfect, this.singularStemBase, this.pluralStemBase);
+    const verbBase = new VerbBase(
+      this.infinitive,
+      this.undetachablePrefix,
+      this.detachablePrefix,
+    );
+    return Verb.modalVerb(
+      verbBase,
+      this.past,
+      this.perfect,
+      this.singularStemBase,
+      this.pluralStemBase,
+    );
   }
 }
 
@@ -54,7 +63,7 @@ class IrregularVerbBuilder implements VerbBuilder {
     infinitive: string,
     past: string,
     perfect: string,
-    altStemBase?: string
+    altStemBase?: string,
   ) {
     this.infinitive = infinitive;
     this.past = past;
@@ -71,8 +80,17 @@ class IrregularVerbBuilder implements VerbBuilder {
   }
 
   build() {
-    const verbBase = new VerbBase(this.infinitive, this.undetachablePrefix, this.detachablePrefix)
-    return Verb.irregularVerb(verbBase, this.past, this.perfect, this.altStemBase);
+    const verbBase = new VerbBase(
+      this.infinitive,
+      this.undetachablePrefix,
+      this.detachablePrefix,
+    );
+    return Verb.irregularVerb(
+      verbBase,
+      this.past,
+      this.perfect,
+      this.altStemBase,
+    );
   }
 }
 
@@ -87,18 +105,26 @@ const irregularVerbs: { [key: string]: VerbBuilder } = {
   liegen: new IrregularVerbBuilder("liegen", "lag", "gelegen"),
   lügen: new IrregularVerbBuilder("lügen", "log", "gelogen"),
   müssen: new ModalVerbBuilder("müssen", "musste", "gemacht", "muss", "müss"),
-  schlafen: new IrregularVerbBuilder("schlafen", "schlief", "geschlafen", "schläf"),
+  schlafen: new IrregularVerbBuilder(
+    "schlafen",
+    "schlief",
+    "geschlafen",
+    "schläf",
+  ),
   schneiden: new IrregularVerbBuilder("schneiden", "schnitt", "geschnitten"),
   sein: new IrregularVerbBuilder("sein", "war", "gewesen", "sei"),
   sollen: new ModalVerbBuilder("sollen", "sollte", "gesollt", "soll", "soll"),
-  sprechen: new IrregularVerbBuilder("sprechen", "sprach", "gesprochen", "sprich"),
+  sprechen: new IrregularVerbBuilder(
+    "sprechen",
+    "sprach",
+    "gesprochen",
+    "sprich",
+  ),
   trinken: new IrregularVerbBuilder("trinken", "trank", "getrunken", "trink"),
   tun: new IrregularVerbBuilder("tun", "tat", "getan", "tu"),
   waschen: new IrregularVerbBuilder("waschen", "wusch", "gewaschen", "wäsch"),
   wollen: new ModalVerbBuilder("wollen", "wollte", "gewollt", "will", "woll"),
 };
-
-
 
 /**
  * Returns a verb object for the given infinitiveAndPrefixes.
@@ -116,8 +142,6 @@ export const getVerb = (infinitiveAndPrefixes: string): Verb => {
   const undetachablePrefix = plustokens.slice(0, -1)[0];
   const infinitive = plustokens.slice(-1)[0];
 
-
-
   const verbBuilder = irregularVerbs[infinitive];
   if (verbBuilder) {
     // if there was an undetachable prefix, add it to the verb
@@ -132,5 +156,7 @@ export const getVerb = (infinitiveAndPrefixes: string): Verb => {
     return verbBuilder.build();
   }
 
-  return Verb.regularVerb(new VerbBase(infinitive, undetachablePrefix, detachablePrefix));
+  return Verb.regularVerb(
+    new VerbBase(infinitive, undetachablePrefix, detachablePrefix),
+  );
 };

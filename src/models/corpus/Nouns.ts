@@ -1,94 +1,407 @@
 import { Noun } from "../Noun";
+import { NounCategory } from "../NounCategory";
 import { Attribute } from "../Attribute";
 import { randomPerson } from "../Person";
 import { GrammaticalCase } from "../GrammaticalCase";
 
-const materialNouns = [
-  () => new Noun("das Haus,die Häuser,des Hauses"),
-  () => new Noun("das Bett,-en,-es"),
-  () => new Noun("das Buch,die Bücher,des Buches"),
-  () => new Noun("das Messer,-,-s"),
-  () => new Noun("das Hemd,-en,-es"),
-  () => new Noun("das Bier,-e,-es"),
-  () => new Noun("das Glas,die Gläser,des Glases"),
-  () => new Noun("das Auto,-s,-s"),
-  () => new Noun("der Zug,die Züge,des Zuges"),
-  () => new Noun("der Bus,die Busse,des Busses"),
-  () => new Noun("der Koffer,-,-s"),
-  () => new Noun("der Apfel,die Äpfel,des Apfels"),
-  () => new Noun("der Ast,die Äste,des Astes"),
-  () => new Noun("der Schuh,-e,-es"),
-  () => new Noun("der Stein,-e,-es"),
-  () => new Noun("der Zettel,-,-s"),
-  () => new Noun("der Kasten,die Kästen,-s"),
-  () => new Noun("die Lampe,-n,-"),
-  () => new Noun("die Tasse,-n,-"),
-  () => new Noun("die Gabel,-n,-"),
-  () => new Noun("die Leiter,-n,-"),
-  () => new Noun("die Uhr,die Uhren,der Uhr"),
-  () => new Noun("die Heizung,die Heizungen,der Heizung"),
-  () => new Noun("die Nuss,die Nüsse,der Nuss"),
+// use constructor(sbNounTemplate: any, ...categories: NounCategory[])
+const Nouns = [
+  () =>
+    new Noun(
+      "das Haus,die Häuser,des Hauses",
+      NounCategory.Drawable,
+      NounCategory.Material,
+      NounCategory.Property,
+    ),
+  () =>
+    new Noun(
+      "das Bett,-en,-es",
+      NounCategory.Movable,
+      NounCategory.Material,
+      NounCategory.Property,
+    ),
+  () =>
+    new Noun(
+      "das Buch,die Bücher,des Buches",
+      NounCategory.Movable,
+      NounCategory.Material,
+      NounCategory.Property,
+    ),
+  () =>
+    new Noun(
+      "das Messer,-,-s",
+      NounCategory.Movable,
+      NounCategory.Material,
+      NounCategory.Property,
+    ),
+  () =>
+    new Noun(
+      "das Hemd,-en,-es",
+      NounCategory.Movable,
+      NounCategory.Material,
+      NounCategory.Property,
+    ),
+  () =>
+    new Noun(
+      "das Bier,-e,-es",
+      NounCategory.Edible,
+      NounCategory.Material,
+      NounCategory.Property,
+    ),
+  () =>
+    new Noun(
+      "das Glas,die Gläser,des Glases",
+      NounCategory.Movable,
+      NounCategory.Material,
+      NounCategory.Property,
+    ),
+  () =>
+    new Noun(
+      "das Auto,-s,-s",
+      NounCategory.Movable,
+      NounCategory.Material,
+      NounCategory.Property,
+      NounCategory.Noisy,
+    ),
+  () =>
+    new Noun(
+      "der Zug,die Züge,des Zuges",
+      NounCategory.Movable,
+      NounCategory.Material,
+      NounCategory.Property,
+      NounCategory.Noisy,
+    ),
+  () =>
+    new Noun(
+      "der Bus,die Busse,des Busses",
+      NounCategory.Movable,
+      NounCategory.Material,
+      NounCategory.Property,
+      NounCategory.Noisy,
+    ),
+  () =>
+    new Noun(
+      "der Koffer,-,-s",
+      NounCategory.Movable,
+      NounCategory.Material,
+      NounCategory.Property,
+    ),
+  () =>
+    new Noun(
+      "der Turm,die Türme,-s",
+      NounCategory.Drawable,
+      NounCategory.Material,
+      NounCategory.Property,
+    ),
+  () =>
+    new Noun(
+      "der Apfel,die Äpfel,des Apfels",
+      NounCategory.Edible,
+      NounCategory.Cookable,
+      NounCategory.Material,
+      NounCategory.Property,
+    ),
+  () =>
+    new Noun(
+      "der Ast,die Äste,des Astes",
+      NounCategory.Drawable,
+      NounCategory.Material,
+      NounCategory.Property,
+    ),
+  () =>
+    new Noun(
+      "der Schuh,-e,-es",
+      NounCategory.Drawable,
+      NounCategory.Movable,
+      NounCategory.Material,
+      NounCategory.Property,
+    ),
+  () =>
+    new Noun("der Stein,-e,-es", NounCategory.Drawable, NounCategory.Material),
+  () =>
+    new Noun("der Zettel,-,-s", NounCategory.Drawable, NounCategory.Material),
+  () =>
+    new Noun(
+      "der Kasten,die Kästen,-s",
+      NounCategory.Drawable,
+      NounCategory.Material,
+    ),
+  () =>
+    new Noun("die Lampe,-n,-", NounCategory.Drawable, NounCategory.Material),
+  () =>
+    new Noun("die Tasse,-n,-", NounCategory.Drawable, NounCategory.Material),
+  () =>
+    new Noun("die Gabel,-n,-", NounCategory.Drawable, NounCategory.Material),
+  () =>
+    new Noun("die Leiter,-n,-", NounCategory.Drawable, NounCategory.Material),
+  () =>
+    new Noun(
+      "die Uhr,die Uhren,der Uhr",
+      NounCategory.Drawable,
+      NounCategory.Material,
+      NounCategory.Noisy,
+    ),
+  () =>
+    new Noun(
+      "die Heizung,die Heizungen,der Heizung",
+      NounCategory.Drawable,
+      NounCategory.Material,
+    ),
+  () =>
+    new Noun(
+      "die Nuss,die Nüsse,der Nuss",
+      NounCategory.Drawable,
+      NounCategory.Material,
+    ),
+  () =>
+    new Noun(
+      "das Kind,die Kinder,des Kindes",
+      NounCategory.Person,
+      NounCategory.Living,
+      NounCategory.Drawable,
+      NounCategory.Noisy,
+    ),
+  () =>
+    new Noun(
+      "das Tier,die Tiere,des Tieres",
+      NounCategory.Living,
+      NounCategory.Drawable,
+      NounCategory.Noisy,
+    ),
+  () =>
+    new Noun(
+      "das Huhn,die Hühner,des Huhnes",
+      NounCategory.Living,
+      NounCategory.Drawable,
+      NounCategory.Noisy,
+    ),
+  () =>
+    new Noun(
+      "das Baby,die Babys,des Babys",
+      NounCategory.Person,
+      NounCategory.Living,
+      NounCategory.Drawable,
+      NounCategory.Noisy,
+    ),
+  () =>
+    new Noun(
+      "das Lama,die Lamas,des Lamas",
+      NounCategory.Living,
+      NounCategory.Drawable,
+      NounCategory.Noisy,
+    ),
+  () =>
+    new Noun(
+      "das Gespenst,die Gespenster,des Gespenstes",
+      NounCategory.Person,
+      NounCategory.Living,
+      NounCategory.Drawable,
+      NounCategory.Noisy,
+    ),
+  () =>
+    new Noun(
+      "der Sohn,die Söhne,des Sohnes",
+      NounCategory.Person,
+      NounCategory.Living,
+    ),
+  () =>
+    new Noun(
+      "der Enkel,-,-s",
+      NounCategory.Person,
+      NounCategory.Living,
+      NounCategory.Drawable,
+    ),
+  () =>
+    new Noun(
+      "der Esel,-,-s",
+      NounCategory.Person,
+      NounCategory.Living,
+      NounCategory.Drawable,
+      NounCategory.Noisy,
+    ),
+  () =>
+    new Noun(
+      "der Lehrer,die Lehrer,des Lehrers",
+      NounCategory.Person,
+      NounCategory.Living,
+      NounCategory.Noisy,
+    ),
+  () =>
+    new Noun(
+      "der Soldat,die Soldaten,des Soldaten",
+      NounCategory.Person,
+      NounCategory.Living,
+      NounCategory.Drawable,
+    ),
+  () =>
+    new Noun(
+      "der Postbote,die Postboten,des Postboten",
+      NounCategory.Person,
+      NounCategory.Living,
+      NounCategory.Drawable,
+      NounCategory.Noisy,
+    ),
+  () =>
+    new Noun(
+      "der Wurm,die Würmer,des Wurms",
+      NounCategory.Living,
+      NounCategory.Drawable,
+    ),
+  () =>
+    new Noun(
+      "die Tochter,die Töchter,der Tochter",
+      NounCategory.Person,
+      NounCategory.Living,
+    ),
+  () =>
+    new Noun(
+      "die Enkelin,die Enkelinnen,der Enkelin",
+      NounCategory.Person,
+      NounCategory.Living,
+    ),
+  () =>
+    new Noun(
+      "die Ärztin,die Ärztinnen,der Ärztin",
+      NounCategory.Person,
+      NounCategory.Living,
+    ),
+  () =>
+    new Noun(
+      "die Kuh,die Kühe,der Kuh",
+      NounCategory.Living,
+      NounCategory.Drawable,
+    ),
+  () =>
+    new Noun(
+      "die Taube,die Tauben,der Taube",
+      NounCategory.Living,
+      NounCategory.Drawable,
+    ),
+  () =>
+    new Noun(
+      "das Fest,-e,-es",
+      NounCategory.Process,
+      NounCategory.Drawable,
+      NounCategory.Noisy,
+    ),
+  () => new Noun("das Spiel,-e,-es", NounCategory.Process),
+  () => new Noun("das Essen,-,-s", NounCategory.Process),
+  () => new Noun("die Pause,-n,-", NounCategory.Process),
+  () => new Noun("die Arbeit,-en,-", NounCategory.Process),
+  () => new Noun("die Stunde,-n,-", NounCategory.Process),
+  () => new Noun("die Prüfung,-en,-", NounCategory.Process),
+  () => new Noun("der Urlaub,-e,-s", NounCategory.Process),
+  () =>
+    new Noun(
+      "der Sturm,die Stürme,-es",
+      NounCategory.Process,
+      NounCategory.Drawable,
+      NounCategory.Noisy,
+    ),
+  () => new Noun("der Umzug,die Umzüge,-es", NounCategory.Process),
+  () => new Noun("das Fleisch,-,-es", NounCategory.Edible),
+  () =>
+    new Noun(
+      "das Tofu,-s,-s",
+      NounCategory.Edible,
+      NounCategory.Cookable,
+      NounCategory.Drawable,
+      NounCategory.Material,
+      NounCategory.Property,
+    ),
+  () => new Noun("das Sashimi,-s,-s", NounCategory.Edible),
+  () =>
+    new Noun(
+      "der Fisch,-e,-es",
+      NounCategory.Edible,
+      NounCategory.Cookable,
+      NounCategory.Drawable,
+      NounCategory.Material,
+      NounCategory.Property,
+    ),
+  () =>
+    new Noun(
+      "der Käse,-,-s",
+      NounCategory.Edible,
+      NounCategory.Cookable,
+      NounCategory.Drawable,
+      NounCategory.Material,
+      NounCategory.Property,
+    ),
+  () =>
+    new Noun(
+      "der Quark,-s,-es",
+      NounCategory.Edible,
+      NounCategory.Cookable,
+      NounCategory.Material,
+      NounCategory.Property,
+    ),
+  () =>
+    new Noun(
+      "die Zwiebel,-n,-",
+      NounCategory.Edible,
+      NounCategory.Cookable,
+      NounCategory.Drawable,
+      NounCategory.Material,
+    ),
+  () =>
+    new Noun(
+      "die Paprika,-s,-",
+      NounCategory.Edible,
+      NounCategory.Cookable,
+      NounCategory.Drawable,
+      NounCategory.Material,
+    ),
+  () =>
+    new Noun(
+      "die Nuss,die Nüsse,der Nuss",
+      NounCategory.Edible,
+      NounCategory.Cookable,
+      NounCategory.Drawable,
+      NounCategory.Material,
+    ),
 ];
 
-export const materialAttributes = [
-  new Attribute("interessant"),
-  new Attribute("neu"),
-  new Attribute("schön"),
-  new Attribute("billig"),
-  new Attribute("leicht"),
-  new Attribute("gut"),
-  new Attribute("lustig"),
-  new Attribute("eckig"),
-];
-
-const personNouns = [
-  () => new Noun("das Kind,die Kinder,des Kindes"),
-  () => new Noun("das Tier,die Tiere,des Tieres"),
-  () => new Noun("das Huhn,die Hühner,des Huhnes"),
-  () => new Noun("das Baby,die Babys,des Babys"),
-  () => new Noun("das Lama,die Lamas,des Lamas"),
-  () => new Noun("das Gespenst,die Gespenster,des Gespenstes"),
-  () => new Noun("der Sohn,die Söhne,des Sohnes"),
-  () => new Noun("der Enkel,-,-s"),
-  () => new Noun("der Esel,-,-s"),
-  () => new Noun("der Lehrer,die Lehrer,des Lehrers"),
-  () => new Noun("der Soldat,die Soldaten,des Soldaten"),
-  () => new Noun("der Postbote,die Postboten,des Postboten"),
-  () => new Noun("die Tochter,die Töchter,der Tochter"),
-  () => new Noun("die Enkelin,die Enkelinnen,der Enkelin"),
-  () => new Noun("die Ärztin,die Ärztinnen,der Ärztin"),
-  () => new Noun("die Kuh,die Kühe,der Kuh"),
-  () => new Noun("die Taube,die Tauben,der Taube"),
-];
-
-export const personAttributes = [
-  new Attribute("schlau"),
-  new Attribute("schön"),
-  new Attribute("schüchtern"),
-  new Attribute("groß"),
-  new Attribute("gesund"),
-  new Attribute("lebhaft"),
-  new Attribute("laut"),
-];
-
-const processNouns = [
-  () => new Noun("das Fest,-e,-es"),
-  () => new Noun("das Spiel,-e,-es"),
-  () => new Noun("das Essen,-,-s"),
-  () => new Noun("die Pause,-n,-"),
-  () => new Noun("die Arbeit,-en,-"),
-  () => new Noun("die Stunde,-n,-"),
-  () => new Noun("die Prüfung,-en,-"),
-  () => new Noun("der Urlaub,-e,-s"),
-  () => new Noun("der Sturm,die Stürme,-es"),
-  () => new Noun("der Umzug,die Umzüge,-es"),
-];
-
-const processAttributes = [
-  new Attribute("lang"),
-  new Attribute("interessant"),
-  new Attribute("schön"),
-  new Attribute("einfach"),
+export const attributes = [
+  new Attribute("interessant", NounCategory.Material, NounCategory.Process),
+  new Attribute("neu", NounCategory.Material),
+  new Attribute("schön", NounCategory.Material),
+  new Attribute("billig", NounCategory.Material),
+  new Attribute("leicht", NounCategory.Material),
+  new Attribute("gut", NounCategory.Material),
+  new Attribute("lustig", NounCategory.Material, NounCategory.Person),
+  new Attribute("eckig", NounCategory.Material),
+  new Attribute("schlau", NounCategory.Person, NounCategory.Living),
+  new Attribute(
+    "schön",
+    NounCategory.Person,
+    NounCategory.Living,
+    NounCategory.Drawable,
+    NounCategory.Process,
+  ),
+  new Attribute("schüchtern", NounCategory.Person, NounCategory.Living),
+  new Attribute(
+    "groß",
+    NounCategory.Person,
+    NounCategory.Living,
+    NounCategory.Material,
+  ),
+  new Attribute("gesund", NounCategory.Person, NounCategory.Living),
+  new Attribute("lebhaft", NounCategory.Person, NounCategory.Living),
+  new Attribute(
+    "laut",
+    NounCategory.Person,
+    NounCategory.Living,
+    NounCategory.Noisy,
+  ),
+  new Attribute("lang", NounCategory.Process),
+  new Attribute("einfach", NounCategory.Process),
+  new Attribute("roh", NounCategory.Cookable),
+  new Attribute("gekocht", NounCategory.Cookable),
+  new Attribute("gebraten", NounCategory.Cookable),
+  new Attribute("frisch", NounCategory.Cookable),
+  new Attribute("süß", NounCategory.Edible, NounCategory.Cookable),
+  new Attribute("gesalzen", NounCategory.Edible, NounCategory.Cookable),
 ];
 
 /* eslint-disable */
@@ -99,45 +412,28 @@ export enum NounState {
   POSSESSED = "possessiv",
 }
 
-export const getRandomMaterialNoun = (options: {
-  attributeMaxCount: number;
-  minimum: number;
-  maximum: number;
-  allowedStates: NounState[];
-  allowedGrammaticalCases: GrammaticalCase[];
-}): Noun => {
-  const randomIndex = Math.floor(Math.random() * materialNouns.length);
-  const next = materialNouns[randomIndex]();
-  return randomizeNoun(next, materialAttributes, options);
-};
-
-export const getRandomPersonNoun = (options: {
-  attributeMaxCount: number;
-  minimum: number;
-  maximum: number;
-  allowedStates: NounState[];
-  allowedGrammaticalCases: GrammaticalCase[];
-}): Noun => {
-  const randomIndex = Math.floor(Math.random() * personNouns.length);
-  const next = personNouns[randomIndex]();
-  return randomizeNoun(next, personAttributes, options);
-};
-
-export const getRandomProcessNoun = (options: {
-  attributeMaxCount: number;
-  minimum: number;
-  maximum: number;
-  allowedStates: NounState[];
-  allowedGrammaticalCases: GrammaticalCase[];
-}): Noun => {
-  const randomIndex = Math.floor(Math.random() * processNouns.length);
-  const next = processNouns[randomIndex]();
-  return randomizeNoun(next, processAttributes, options);
+export const getRandomNoun = (
+  nounCategory: NounCategory,
+  options: {
+    attributeMaxCount: number;
+    minimum: number;
+    maximum: number;
+    allowedStates: NounState[];
+    allowedGrammaticalCases: GrammaticalCase[];
+  },
+): Noun => {
+  do {
+    const randomIndex = Math.floor(Math.random() * Nouns.length);
+    const next = Nouns[randomIndex]();
+    console.log(next, next.getCategories());
+    if (next.getCategories().some((category) => category === nounCategory)) {
+      return randomizeNoun(next, options);
+    }
+  } while (true);
 };
 
 export const randomizeNoun = (
   next: Noun,
-  attributes: Attribute[],
   options: {
     attributeMaxCount: number;
     minimum: number;
@@ -152,8 +448,18 @@ export const randomizeNoun = (
   const attributeQuantity = Math.floor(Math.random() * attributeMaxCount);
 
   for (let i = 0; i < attributeQuantity; i++) {
-    const randomAttribute =
-      attributes[Math.floor(Math.random() * attributes.length)];
+    let randomAttribute;
+    do {
+      randomAttribute =
+        attributes[Math.floor(Math.random() * attributes.length)];
+      // repeat until an attribute is found who has an overlap of getCategories with next noun getCategories
+    } while (
+      !randomAttribute
+        .getCategories()
+        .some((x) => next.getCategories().includes(x))
+    );
+    console.log(next, randomAttribute, randomAttribute.getCategories());
+
     if (!newAttributes.includes(randomAttribute)) {
       newAttributes.push(randomAttribute);
     }
