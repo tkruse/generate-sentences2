@@ -42,12 +42,7 @@ const Nouns = [
       NounCategory.Property,
     ),
   () =>
-    new Noun(
-      "das Bier,-e,-es",
-      NounCategory.Edible,
-      NounCategory.Material,
-      NounCategory.Property,
-    ),
+    new Noun("das Bier,-e,-es", NounCategory.Material, NounCategory.Property),
   () =>
     new Noun(
       "das Glas,die Gläser,des Glases",
