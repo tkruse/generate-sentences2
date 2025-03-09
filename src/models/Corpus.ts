@@ -17,7 +17,7 @@ const sentenceGenerators = [
   function (options: any) {
     return new Sentence(
       getRandomNoun(NounCategory.Living, options),
-      sentence`In dem Zimmer wohnt ${({ noun }) => noun}`,
+      sentence`So ehrlich wie ${({ noun }) => noun}`,
     );
   },
   function (options: any) {
@@ -182,6 +182,49 @@ const sentenceGenerators = [
     return new Sentence(
       getRandomNoun(NounCategory.Process, options).affirmed().genitive(),
       sentence`Die Dauer ${({ noun }) => noun}`,
+    );
+  },
+  // Food
+  function (options: any) {
+    return new Sentence(
+      getRandomNoun(NounCategory.Edible, options).affirmed(),
+      sentence`Das riecht wie ${({ noun }) => noun}`,
+    );
+  },
+  function (options: any) {
+    return new Sentence(
+      getRandomNoun(NounCategory.Edible, options).accusative(),
+      sentence`Ich koche heute ${({ noun }) => noun}`,
+    );
+  },
+  function (options: any) {
+    return new Sentence(
+      getRandomNoun(NounCategory.Edible, options).accusative(),
+      sentence`Ich esse ${({ noun }) => noun}`,
+    );
+  },
+  function (options: any) {
+    return new Sentence(
+      getRandomNoun(NounCategory.Edible, options).affirmed().dative(),
+      sentence`Der Wein passt gut zu ${({ noun }) => noun}`,
+    );
+  },
+  function (options: any) {
+    return new Sentence(
+      getRandomNoun(NounCategory.Edible, options).dative(),
+      sentence`Ich probiere von ${({ noun }) => noun}`,
+    );
+  },
+  function (options: any) {
+    return new Sentence(
+      getRandomNoun(NounCategory.Edible, options).affirmed().genitive(),
+      sentence`Der Geschmack ${({ noun }) => noun}`,
+    );
+  },
+  function (options: any) {
+    return new Sentence(
+      getRandomNoun(NounCategory.Edible, options).affirmed().genitive(),
+      sentence`Der Geruch ${({ noun }) => noun}`,
     );
   },
 ];
