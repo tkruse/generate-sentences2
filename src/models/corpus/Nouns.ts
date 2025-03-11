@@ -459,8 +459,13 @@ export const randomizeNoun = (
   }
   next.attributes(newAttributes);
 
-  const quantity =
-    Math.floor(Math.random() * (maximum + 1 - minimum)) + minimum;
+  // fairly decide between 0, 1 or many
+  const lowMaximum = Math.min(2, maximum);
+  const lowQuantity =
+    Math.floor(Math.random() * (lowMaximum + 1 - minimum)) + minimum;
+  // if many, randomize quantity between 2 and maximum
+  const quantity = lowQuantity <= 1 ? lowQuantity : Math.floor(Math.random() * (maximum + 1 - 2)) + 2;
+
 
   next.count(quantity);
   const isPlural = quantity > 1;
