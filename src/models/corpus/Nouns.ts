@@ -294,7 +294,7 @@ const Nouns = [
       NounCategory.Noisy,
     ),
   () => new Noun("der Umzug,die Umzüge,-es", NounCategory.Process),
-  () => new Noun("das Fleisch,-,-es", NounCategory.Edible),
+  () => new Noun("das Schnitzel,-,-es", NounCategory.Edible),
   () =>
     new Noun(
       "das Tofu,-s,-s",
